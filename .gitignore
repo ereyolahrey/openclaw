@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.log
+whatsapp-session/
+bayse-openapi.json
+bayse-config.json

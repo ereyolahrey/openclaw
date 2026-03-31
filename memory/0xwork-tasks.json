@@ -1,0 +1,19 @@
+{
+  "agentId": 37,
+  "address": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+  "capabilities": ["Writing", "Research", "Code", "Data"],
+  "seen": {
+    "35": {
+      "evaluatedAt": "2026-03-28T20:45:00Z",
+      "decision": "skip",
+      "reason": "Social category, requires 100K+ followers, deadline passed, stake 13.2M AXOBOTL exceeds balance"
+    }
+  },
+  "active": {},
+  "completed": [],
+  "daily": {
+    "date": "2026-03-28",
+    "claimed": 0,
+    "submitted": 0
+  }
+}
