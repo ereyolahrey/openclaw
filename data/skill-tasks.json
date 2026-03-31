@@ -1,0 +1,1380 @@
+[
+  {
+    "id": 4174304762,
+    "number": 2937,
+    "title": "darker fullscreen button background [bounty: 10 XTR]",
+    "url": "https://github.com/FreezingMoon/AncientBeast/issues/2937",
+    "repo": "FreezingMoon/AncientBeast",
+    "labels": [
+      "coding",
+      "visuals",
+      "easy",
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T21:53:55Z",
+    "comments": 5,
+    "body": "The fullscreen button has slighter darker background because somehow it has 2 semi-transparent black backgrounds.\nMight happen because the duality of the button, as it uses 2 icons to showcase the current state (fullscreen or not) 🐻 "
+  },
+  {
+    "id": 4173297092,
+    "number": 2936,
+    "title": "pointless ability frame [bounty: 8 XTR]",
+    "url": "https://github.com/FreezingMoon/AncientBeast/issues/2936",
+    "repo": "FreezingMoon/AncientBeast",
+    "labels": [
+      "coding",
+      "visuals",
+      "priority",
+      "easy",
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T18:59:04Z",
+    "comments": 5,
+    "body": "After first unit is materialized and then turn is skipped, there's an ability frame showing up in the upper left area.\nThe frame is not part of the UI, as it's not rendered with HTML but with canvas (Phaser), so it's game engine logic.\n\n![Image](https://github.com/user-attachments/assets/b3201491-8d88-405c-9448-9af9539d803f)"
+  },
+  {
+    "id": 4171990219,
+    "number": 41030,
+    "title": "[Bounty $3.5k] Optimise signbit",
+    "url": "https://github.com/tenstorrent/tt-metal/issues/41030",
+    "repo": "tenstorrent/tt-metal",
+    "labels": [
+      "op_cat: eltwise",
+      "community",
+      "bounty",
+      "bounty_difficulty/hard"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T16:06:19Z",
+    "comments": 1,
+    "body": "ttnn.signbit (fp32/bf16) currently consumes 8 cycles per row.  We can do a lot better than this:\n\n- straightforward bitwise implementation with 4 cycles per row.\n- SFPLOADMACRO implementation: throughput of 1 cycle per row."
+  },
+  {
+    "id": 4171974559,
+    "number": 41029,
+    "title": "[Bounty $10k] Optimise atan2",
+    "url": "https://github.com/tenstorrent/tt-metal/issues/41029",
+    "repo": "tenstorrent/tt-metal",
+    "labels": [
+      "op_cat: eltwise",
+      "community",
+      "bounty",
+      "bounty_difficulty/hard"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T16:04:27Z",
+    "comments": 1,
+    "body": "This is currently a composite op and so has relatively poor performance.\n\nIt can be implemented as a single device op and specialised for both fp32 and bf16."
+  },
+  {
+    "id": 4171960106,
+    "number": 41028,
+    "title": "[Bounty $10k] Optimise log1p",
+    "url": "https://github.com/tenstorrent/tt-metal/issues/41028",
+    "repo": "tenstorrent/tt-metal",
+    "labels": [
+      "op_cat: eltwise",
+      "community",
+      "bounty",
+      "bounty_difficulty/hard"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T16:02:39Z",
+    "comments": 1,
+    "body": "The log1p implementation can be optimised:\n\n- fp32: 130 cycles; this can be reduced to 52 cycles (2.5x speedup)\n- bf16: 58 cycles; should be possible to reduce to 50 cycles or less (perhaps ~45 cycles)"
+  },
+  {
+    "id": 4166302999,
+    "number": 5389,
+    "title": "[BOUNTY] Character Preferences Reorganization",
+    "url": "https://github.com/Bubberstation/Bubberstation/pull/5389",
+    "repo": "Bubberstation/Bubberstation",
+    "labels": [
+      "bounty",
+      "code",
+      "tgui",
+      "merge approval #1"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "testing"
+    ],
+    "createdAt": "2026-03-30T01:03:00Z",
+    "comments": 2,
+    "body": "\n## About The Pull Request\r\n\r\nThis bounty was requested by @ArrisFairburne \r\n\r\nCleans up the character customization; various customization features have been moved into three new tabs, \"Character Basics\" \"OOC Preferences\" and \"Silicon Preferences\".\r\n\r\n## Why It's Good For The Game\r\n\r\nA ton of the character customization options (maybe 40%?) are stuff that almost nobody would use on a regular basis. Options like mushroom caps, frills, fluff, taur bodies, xenodorsal heads, etc. could be ignored b"
+  },
+  {
+    "id": 4165977077,
+    "number": 923,
+    "title": "[BOUNTY] Suggestion #622",
+    "url": "https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/923",
+    "repo": "SPLURT-Station/S.P.L.U.R.T-tg",
+    "labels": [
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T22:40:23Z",
+    "comments": 0,
+    "body": "### About the Bounty\n\n## Original issue text:\n\n**Suggestion:**\nReally simply; breeding mounts. Stationary sex objects for humping. Perhaps capable of measuring arbitrary statistics based on genital size, traits, I dunno, or really sweat the specifics. I just wanna bring this to attention.\n\n**Reason:**\n[BOUNTY] Alright.\n\n**Results:**\n18x <:In_help:1056296636348899408>\n0x <:In_harm:1056296637909192794>\n\n\n### Suggestion Reference\n\n**Suggested by:** lovetalker\nhttps://discord.com/channels/9080826397"
+  },
+  {
+    "id": 4165244051,
+    "number": 4,
+    "title": "Share Shipli in college groups for ₹100 per share",
+    "url": "https://github.com/prasenjeet-symon/shipli-ai/issues/4",
+    "repo": "prasenjeet-symon/shipli-ai",
+    "labels": [
+      "help wanted",
+      "bounty",
+      "marketing"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T17:38:18Z",
+    "comments": 8,
+    "body": "## Summary\n\nHelp spread the word about Shipli by sharing it in your college groups (WhatsApp, Telegram, Discord, etc.).\n\n## Requirements\n\n- Share Shipli in a college/university group\n- **₹100 INR per share** — each share in a different group counts separately\n- Submit a **screen recording** showing the post in the group as proof\n- Post the recording as a comment on this issue\n\n## Rules\n\n- Each group must be a genuine college/university community group\n- Duplicate shares in the same group do not "
+  },
+  {
+    "id": 4165235837,
+    "number": 3,
+    "title": "Create a marketing explainer video for Shipli",
+    "url": "https://github.com/prasenjeet-symon/shipli-ai/issues/3",
+    "repo": "prasenjeet-symon/shipli-ai",
+    "labels": [
+      "help wanted",
+      "bounty",
+      "marketing"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T17:35:46Z",
+    "comments": 4,
+    "body": "## Summary\n\nCreate a short marketing explainer video for Shipli that showcases what it does and why developers should use it.\n\n## Requirements\n\n- **Duration:** 1 minute or less\n- **Style:** Good infographics and animations — clean, professional, and engaging\n- **Content should cover:**\n  - What Shipli is\n  - Key features and benefits\n  - How it helps developers ship production-ready code\n- Suitable for sharing on social media, the website, and GitHub README\n\n## Bounty\n\n**💰 ₹1,000 INR**\n\nThis is"
+  },
+  {
+    "id": 4165231216,
+    "number": 2,
+    "title": "Create a logo for Shipli",
+    "url": "https://github.com/prasenjeet-symon/shipli-ai/issues/2",
+    "repo": "prasenjeet-symon/shipli-ai",
+    "labels": [
+      "help wanted",
+      "bounty",
+      "design"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "documentation"
+    ],
+    "createdAt": "2026-03-29T17:34:15Z",
+    "comments": 7,
+    "body": "## Summary\n\nShipli needs an official logo that can be used across the website, documentation, npm package, and GitHub repository.\n\n## Requirements\n\n- Clean, modern, and memorable design\n- Works well at small sizes (favicons, npm badges) and large sizes\n- Provide in SVG and PNG formats\n- Should convey the idea of code quality / ship-readiness\n\n## Bounty\n\n**💰 ₹200 INR**\n\nThis issue has a bounty of **200 INR** for a accepted logo design.\n\n---\n\n_Contributions welcome! Please share your concepts as "
+  },
+  {
+    "id": 4165224041,
+    "number": 1,
+    "title": "Add React Native support",
+    "url": "https://github.com/prasenjeet-symon/shipli-ai/issues/1",
+    "repo": "prasenjeet-symon/shipli-ai",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "bounty",
+      "react-native"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "react"
+    ],
+    "createdAt": "2026-03-29T17:31:57Z",
+    "comments": 5,
+    "body": "## Summary\n\nAdd support for React Native projects in Shipli. Currently the tool supports web and Flutter projects — extending coverage to React Native would benefit a large segment of mobile developers.\n\n## Motivation\n\nReact Native is one of the most popular cross-platform mobile frameworks. Supporting it would allow developers to audit and review React Native codebases using Shipli's guidelines and code review capabilities.\n\n## Scope\n\n- Add React Native-specific code rules and guidelines\n- Supp"
+  },
+  {
+    "id": 4162596120,
+    "number": 210,
+    "title": "Decide which bounties can open before mainnet go-live",
+    "url": "https://github.com/Conxian/conxius-platform/issues/210",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "governance",
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T04:57:53Z",
+    "comments": 21,
+    "body": "Review all current bounty issues and explicitly decide which are safe to keep publicly claimable before mainnet go-live. Separate internal-only, security-sensitive, payout-gated, and externally claimable work.\n\nClassification result from stricter review:\n\n* internal-only: [CON-129](https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate), [CON-167](https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties), [CON-135](https://li"
+  },
+  {
+    "id": 4162596070,
+    "number": 206,
+    "title": "Confirm bounty funding and payout activation for mainnet",
+    "url": "https://github.com/Conxian/conxius-platform/issues/206",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "release",
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T04:57:52Z",
+    "comments": 22,
+    "body": "Confirm whether the ALEX-funded mainnet path is active and sufficient for bounty payout activation. Define the exact maintainer step that turns payouts on, the verification evidence required, and the rollback action if bounty payouts must be disabled.\n\n## Review decision\n\nCurrent claimed submissions do not meet payout review standards. The visible thread activity contains repeated automated-style claims with no linked pull request, commit, diff, test evidence, deployment evidence, or verificatio"
+  },
+  {
+    "id": 4162244233,
+    "number": 139,
+    "title": "Maintainer payout enablement checklist for ALEX-funded bounties",
+    "url": "https://github.com/Conxian/conxius-platform/issues/139",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-29T02:25:18Z",
+    "comments": 27,
+    "body": "Create a short maintainer-only runbook for enabling bounty payouts after mainnet launch.\n\nScope:\n\n* define the exact checks required before maintainers enable payout-ready mode\n* ensure all bounty funds are sourced from the ALEX launch path\n* define the rollback path if payout mode is enabled prematurely or a post-deploy issue is found\n\nChecklist:\n\n* verify ConxianCSF full deployment on Stacks mainnet\n* verify ALEX launch source of funds is active and approved as the sole bounty funding source\n*"
+  },
+  {
+    "id": 4161906175,
+    "number": 111,
+    "title": "Mainnet readiness checklist — conxius-platform",
+    "url": "https://github.com/Conxian/conxius-platform/issues/111",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "release",
+      "bounty",
+      "bounty claimed"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "automation"
+    ],
+    "createdAt": "2026-03-28T23:02:10Z",
+    "comments": 14,
+    "body": "Repo-by-repo mainnet readiness checklist for `conxius-platform`.\n\nTie-ins:\n\n* [CON-129](https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate)\n* [CON-133](https://linear.app/conxian-labs/issue/CON-133/production-deployment-readiness-audit-for-revenue-critical-products)\n* [CON-139](https://linear.app/conxian-labs/issue/CON-139/prioritized-repo-action-list-for-mainnet-readiness)\n\nCurrent working classification:\n\n* Repo role: direct deployment blocker if used in release orchestra"
+  },
+  {
+    "id": 4159460177,
+    "number": 918,
+    "title": "[BOUNTY] Suggestion #633",
+    "url": "https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/918",
+    "repo": "SPLURT-Station/S.P.L.U.R.T-tg",
+    "labels": [
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-28T11:29:39Z",
+    "comments": 0,
+    "body": "### About the Bounty\n\n## Original issue text:\n\n**Suggestion:**\nSprite more unique speech bubble sprites for different species. Most notably, felinids, vulpkanin, etc. This will PR'd separately for another PR by Vanilla1040, we just need the sprites.\n\n**Reason:**\n[BOUNTY] See suggestion: We just need sprites for the speech bubbles. Take inspiration from SS14 speech bubbles such as Floofstation, they just need to be made less flat\n\n**Results:**\n0x <:In_help:1056296636348899408>\n0x <:In_harm:105629"
+  },
+  {
+    "id": 4157038957,
+    "number": 915,
+    "title": "[BOUNTY] Suggestion #447",
+    "url": "https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/915",
+    "repo": "SPLURT-Station/S.P.L.U.R.T-tg",
+    "labels": [
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-28T02:35:37Z",
+    "comments": 0,
+    "body": "### About the Bounty\n\n## Original issue text:\n\n**Suggestion:**\nI dont wanna say \"add this\" like it'd be easy to code,  but tentacles would be cool, an option for plants, slime, stuff like that. I really just want a mechanical option for getting milked my tentacles but, meow. Would be very cool for the aforementioned slime and plant characters etc, maybe togglable or something. Also put all teshari players in the wiggling contraption please.\n\n**Reason:**\n[BOUNTY] This bounty is specifically for a"
+  },
+  {
+    "id": 4152914293,
+    "number": 106,
+    "title": "Roll out claimable community workflow across system issues",
+    "url": "https://github.com/Conxian/conxius-platform/issues/106",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "governance",
+      "release",
+      "bounty",
+      "bounty claimed"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "automation"
+    ],
+    "createdAt": "2026-03-27T13:56:58Z",
+    "comments": 8,
+    "body": "Apply the faster community-claim workflow across system issues so release throughput improves without relying on direct internal capacity.\n\nOperating goal:\n\n* use community claiming and bounty routing to accelerate delivery across system issues\n* keep owner-only and security-sensitive work internal\n* reduce release delays caused by manual claim handling and unclear claimability\n* align all bounty funding and payout readiness to the ALEX launch and ConxianCSF full mainnet deployment\n\nRollout rule"
+  },
+  {
+    "id": 4152689124,
+    "number": 102,
+    "title": "Adopt stricter bounty workflow for Conxian-Labs",
+    "url": "https://github.com/Conxian/conxius-platform/issues/102",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "automation"
+    ],
+    "createdAt": "2026-03-27T13:32:01Z",
+    "comments": 9,
+    "body": "Define and apply a stricter bounty workflow for [Conxian-Labs](https://linear.app/conxian-labs/team/CON/all).\n\nRecommended team status model:\n\n* `Triage` — inbound, not yet approved for community claiming\n* `Todo` — approved and claimable\n* `In Progress` — claimed and actively worked\n* `In Review` — submission under maintainer review\n* `Done` — accepted and closed\n* `Canceled` — withdrawn, expired, or superseded\n* `Duplicate` — merged into another issue\n\nRecommended additional started-state stat"
+  },
+  {
+    "id": 4152336768,
+    "number": 101,
+    "title": "CSF mainnet readiness gate",
+    "url": "https://github.com/Conxian/conxius-platform/issues/101",
+    "repo": "Conxian/conxius-platform",
+    "labels": [
+      "release",
+      "bounty",
+      "bounty claimed"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "automation"
+    ],
+    "createdAt": "2026-03-27T12:47:21Z",
+    "comments": 6,
+    "body": "Create a single gate for ConxianCSF mainnet readiness.\n\nTrack and verify:\n\n* launch blockers\n* bounty dependencies that are truly externalizable\n* DeFi-related dependencies\n* testnet-to-mainnet gaps\n* release, security, and deployment readiness\n* ALEX-launch-linked bounty funding readiness\n\nWorking rules:\n\n* classify dependencies as blocker, supporting, or unrelated\n* only expose work as bounty-ready when it is scoped for external contribution\n* do not treat synced comments as claim events witho"
+  },
+  {
+    "id": 4174824567,
+    "number": 11132,
+    "title": "[Good First Issue] 🍙 Add new Japan Fact 204 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11132",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-31T00:20:28Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Japan Fact #204 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds.\n\n"
+  },
+  {
+    "id": 4174793695,
+    "number": 11131,
+    "title": "[Good First Issue] 🍵 Add new Theme: Kyoto Kimono - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11131",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-31T00:10:28Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Color Theme: Kyoto Kimono — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 "
+  },
+  {
+    "id": 4174776096,
+    "number": 21,
+    "title": "Add a self-building github action",
+    "url": "https://github.com/iSlammedMyKindle/godotGem/issues/21",
+    "repo": "iSlammedMyKindle/godotGem",
+    "labels": [
+      "help wanted",
+      "good first issue",
+      "chore",
+      "gdclient"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-31T00:04:54Z",
+    "comments": 0,
+    "body": "I found this through a quick websearch and it looks quite nice: https://github.com/marketplace/actions/setup-godot-action\n\nWe would just need to modify it to not have the dotnet functionality inside of it. With this we'd just have an artifact automatically without having to manually export and upload it each time.\n\nIt might also be nice to have a C# counterpart for building server artifacts, but that might be a split ticket."
+  },
+  {
+    "id": 4174762306,
+    "number": 11130,
+    "title": "[Good First Issue] 🍥 Add new Etiquette Tip 111 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11130",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-31T00:00:42Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Etiquette Tip #111 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds"
+  },
+  {
+    "id": 4174728318,
+    "number": 11129,
+    "title": "[Good First Issue] 🗻 Add new False Friend Pair 17 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11129",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:50:28Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add False Friend Pair #17 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seco"
+  },
+  {
+    "id": 4174697092,
+    "number": 11128,
+    "title": "[Good First Issue] 🍛 Add new Video Game Quote 32 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11128",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:40:31Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Video Game Quote #32 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 secon"
+  },
+  {
+    "id": 4174672165,
+    "number": 12,
+    "title": "Design shaft collar for magnets",
+    "url": "https://github.com/Sheepy3/UMD_Solar_Gamera_Avionics/issues/12",
+    "repo": "Sheepy3/UMD_Solar_Gamera_Avionics",
+    "labels": [
+      "help wanted",
+      "good first issue",
+      "hardware"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T23:32:22Z",
+    "comments": 0,
+    "body": "we need to design a part which attaches to the rotor shafts of gamera that can be 3D printed, and has multiple magnets which can be detected by the hall sensor to sense RPM."
+  },
+  {
+    "id": 4174666776,
+    "number": 11127,
+    "title": "[Good First Issue] 🎋 Add new Anime Quote 80 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11127",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:30:35Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Anime Quote #80 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds.\n\n"
+  },
+  {
+    "id": 4174642353,
+    "number": 3,
+    "title": "New addon ideas",
+    "url": "https://github.com/Mojavesoft-Group/SparkleMods/issues/3",
+    "repo": "Mojavesoft-Group/SparkleMods",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T23:22:19Z",
+    "comments": 4,
+    "body": "In order to succeed, Sparkle desperately needs more useful addons.\n\nWe also need people to implement said addons, of course.\n\n@Mojavesoft-Group/jameson-team Anybody want to pitch in?\n\nEdit: For the record, nobody's obligated to help out, but it would be for the greater good of this project to contribute.\n\nEdit 2: Sorry for writing this issue so awkwardly. I'm not great at writing stuff when it's this late."
+  },
+  {
+    "id": 4174636710,
+    "number": 11126,
+    "title": "[Good First Issue] 🦑 Add new Grammar Point 64 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11126",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:20:27Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Grammar Point #64 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds."
+  },
+  {
+    "id": 4174597309,
+    "number": 11125,
+    "title": "[Good First Issue] 🌸 Add new Trivia Question 139 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11125",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:10:29Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Trivia Question #139 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 secon"
+  },
+  {
+    "id": 4174566675,
+    "number": 11124,
+    "title": "[Good First Issue] 🐉 Add new Japanese Proverb 53 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11124",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T23:00:37Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Japanese Proverb #53 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 secon"
+  },
+  {
+    "id": 4174535249,
+    "number": 11122,
+    "title": "[Good First Issue] 🌸 Add new Japan Fact 89 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11122",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T22:50:25Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Japan Fact #89 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds.\n\n*"
+  },
+  {
+    "id": 4174460693,
+    "number": 11120,
+    "title": "[Good First Issue] 🌸 Add new Etiquette Tip 15 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11120",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T22:30:30Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Etiquette Tip #15 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds."
+  },
+  {
+    "id": 4174418077,
+    "number": 11119,
+    "title": "[Good First Issue] 🍢 Add new False Friend Pair 57 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11119",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T22:20:26Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add False Friend Pair #57 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seco"
+  },
+  {
+    "id": 4174376701,
+    "number": 11118,
+    "title": "[Good First Issue] 🎴 Add new Video Game Quote 58 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11118",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T22:10:26Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Video Game Quote #58 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 secon"
+  },
+  {
+    "id": 4174334039,
+    "number": 11117,
+    "title": "[Good First Issue] 🍶 Add new Anime Quote 24 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11117",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T22:00:40Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Anime Quote #24 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds.\n\n"
+  },
+  {
+    "id": 4174290127,
+    "number": 11116,
+    "title": "[Good First Issue] 🎌 Add new Grammar Point 66 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11116",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T21:50:28Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Grammar Point #66 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 seconds."
+  },
+  {
+    "id": 4174245064,
+    "number": 11115,
+    "title": "[Good First Issue] 🍣 Add new Trivia Question 49 - Beginner-Friendly Contribution",
+    "url": "https://github.com/lingdojo/kana-dojo/issues/11115",
+    "repo": "lingdojo/kana-dojo",
+    "labels": [
+      "enhancement",
+      "help wanted",
+      "good first issue",
+      "hacktoberfest",
+      "community",
+      "low hanging fruit",
+      "up-for-grabs",
+      "first-timers-only"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "typescript",
+      "react"
+    ],
+    "createdAt": "2026-03-30T21:40:24Z",
+    "comments": 1,
+    "body": "## 🟢 Good First Issue: Add Trivia Question #49 — Beginner-Friendly Open Source Contribution\n\n![Time: <1 minute](https://img.shields.io/badge/Time-<1_minute-brightgreen) ![Difficulty: Beginner](https://img.shields.io/badge/Difficulty-Beginner-blue) ![No Code Required](https://img.shields.io/badge/No_Code-Required-orange)\n\n> 🟢 **No prerequisites needed!** You don't need to clone the repo, install anything, or write code.\n> This entire contribution can be done from your browser in under 60 second"
+  },
+  {
+    "id": 4174244693,
+    "number": 40,
+    "title": "[BUG] Fix 0.0.9 React warning.",
+    "url": "https://github.com/younisdev/dyvix-ui/issues/40",
+    "repo": "younisdev/dyvix-ui",
+    "labels": [
+      "help wanted",
+      "good first issue"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "react"
+    ],
+    "createdAt": "2026-03-30T21:40:20Z",
+    "comments": 0,
+    "body": "# Summary\nThe recent V0.0.9 released and introduced a new select component. However it uses the vanilla html selected attribute on indivisual option.  This causes a react console warning:\n\n```console\nUse the `defaultValue` or `value` props on <select> instead of setting `selected` on <option>.\n```"
+  },
+  {
+    "id": 4117341441,
+    "number": 727,
+    "title": "feat: Bounty CLI Tool (Closes #511)",
+    "url": "https://github.com/SolFoundry/solfoundry/pull/727",
+    "repo": "SolFoundry/solfoundry",
+    "labels": [
+      "approved",
+      "paid",
+      "paid-pending-merge"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "api"
+    ],
+    "createdAt": "2026-03-22T23:08:20Z",
+    "comments": 3,
+    "body": "Closes #511\n\n## Summary\nClick-based CLI tool for terminal-based bounty operations.\n\n- **Commands**: `sf bounties list`, `sf bounty claim/submit/show`, `sf status`, `sf configure`\n- **Auth**: Bearer token via config file or SOLFOUNDRY_API_KEY env var (fail-closed)\n- **Output**: Table (default) + JSON (--json flag)\n- **Filtering**: --tier, --status, --category, --skills\n- **Config**: ~/.solfoundry/config.yaml\n- **Pip installable**: setup.py with console_scripts entry point\n- **Shell completions**:"
+  },
+  {
+    "id": 4006737784,
+    "number": 292,
+    "title": "Project Management March 2026",
+    "url": "https://github.com/SingularityNET-Archive/SingularityNET-Archive/issues/292",
+    "repo": "SingularityNET-Archive/SingularityNET-Archive",
+    "labels": [
+      "meetings",
+      "paid"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "documentation"
+    ],
+    "createdAt": "2026-03-01T09:20:23Z",
+    "comments": 1,
+    "body": " ## Welcome\n\nSingularityNET-Archive contains a history of the activities of the SingularityNET Ambassador Program.\n\nAll content is provided under an Open Source [Apache 2](https://www.apache.org/licenses/LICENSE-2.0) Licence. \nContributions will be licensed under a Creative Commons licence.\n\n## Video Recording\n\nhttps://youtu.be/xX3wvH1iWdY\n\n\n\n## Our goal\n\nOur goal is to provide a collaborative platform for the SingularityNET-Archive community to share knowledge, ideas, and best practices. We wel"
+  },
+  {
+    "id": 4103883236,
+    "number": 20,
+    "title": "封装飞书【智能文档解析】票据类接口",
+    "url": "https://github.com/idea2app/MobX-Lark/issues/20",
+    "repo": "idea2app/MobX-Lark",
+    "labels": [
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-19T19:48:16Z",
+    "comments": 2,
+    "body": "### Task description\n\n#### 接口文档\n\n1. 增值税发票：https://open.feishu.cn/document/ai/document_ai-v1/vat_invoice/recognize\n2. 出租车发票：https://open.feishu.cn/document/ai/document_ai-v1/taxi_invoice/recognize\n3. 火车票：https://open.feishu.cn/document/ai/document_ai-v1/train_invoice/recognize\n4. 机动车发票：https://open.feishu.cn/document/ai/document_ai-v1/vehicle_invoice/recognize\n\n#### 代码要求\n\n将上述所有接口封装在同一个实现类中，并继承 `mobx-restful` 包的 `BaseModel` 基类，再将实例挂在 `LarkApp` 类上。\n\n### Reward currency\n\nTQT $\n\n### Reward amount\n\n90"
+  },
+  {
+    "id": 4075979155,
+    "number": 17,
+    "title": "[P4] 크롤러 간 경쟁 랭킹 시스템",
+    "url": "https://github.com/cpagent78/crawler-network/issues/17",
+    "repo": "cpagent78/crawler-network",
+    "labels": [
+      "phase-4",
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-14T14:59:02Z",
+    "comments": 0,
+    "body": "## 목표\n크롤러 간 성과를 비교하는 랭킹 시스템\n\n## 구현 방향\n- 크롤러별 종합 점수 (채택률, 속도, 성과)\n- 랭킹 대시보드\n- 하위 크롤러 전략 리셋/재학습\n- 상위 크롤러 전략 복제/변이"
+  },
+  {
+    "id": 4075978707,
+    "number": 14,
+    "title": "[P3] 2차 보상 시스템 (성과 보상)",
+    "url": "https://github.com/cpagent78/crawler-network/issues/14",
+    "repo": "cpagent78/crawler-network",
+    "labels": [
+      "phase-3",
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "api"
+    ],
+    "createdAt": "2026-03-14T14:58:45Z",
+    "comments": 0,
+    "body": "## 목표\n채택된 정보로 생성된 콘텐츠의 성과에 따라 크롤러에 추가 보상\n\n## 성과 지표\n- 방문자 수, 클릭률, 체류시간, 구매 전환\n\n## 계산량 관리\n- 성과 측정 기간 제한 (채택 후 30일)\n- 일별 스냅샷 집계 → 상세 데이터 만료\n- 크롤러별 요약 점수만 유지\n\n## 기여도 문제\n- 콘텐츠 성과 = 크롤러 기여 + AI 글쓰기 + SEO 등 복합 요인\n- 초기에는 단순 비례 분배, 이후 가중치 조정\n\n## API\n- POST /api/performance — 서비스가 성과 데이터 전달"
+  },
+  {
+    "id": 4075978664,
+    "number": 13,
+    "title": "[P3] 크롤러 피드백 API + 학습 로직",
+    "url": "https://github.com/cpagent78/crawler-network/issues/13",
+    "repo": "cpagent78/crawler-network",
+    "labels": [
+      "phase-3",
+      "api",
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "api"
+    ],
+    "createdAt": "2026-03-14T14:58:43Z",
+    "comments": 2,
+    "body": "## 목표\n크롤러가 보상 결과를 확인하고 행동을 조정하는 학습 시스템\n\n## 피드백 API\n- GET /api/crawlers/{id}/rewards — 보상 내역 (소스, 사유, 금액)\n- GET /api/crawlers/{id}/feedback — 채택/기각 결과\n\n## 학습 로직\n- 소스별 채택률 분석 → 채택률 높은 소스 빈도 증가\n- 채택률 낮은 소스 빈도 감소\n- 보상 없는 패턴 점진적 중단\n- crawler_stats 테이블에 요약 통계 유지\n\n## 핵심\n크롤러가 '왜 보상받았는지' 알아야 함:\n- 어떤 소스에서\n- 어떤 정보로\n- 어떤 서비스에서 채택됐는지"
+  },
+  {
+    "id": 4075978622,
+    "number": 12,
+    "title": "[P3] 1차 보상 시스템 (채택 보상)",
+    "url": "https://github.com/cpagent78/crawler-network/issues/12",
+    "repo": "cpagent78/crawler-network",
+    "labels": [
+      "phase-3",
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "api"
+    ],
+    "createdAt": "2026-03-14T14:58:41Z",
+    "comments": 2,
+    "body": "## 목표\n서비스 AI가 정보를 채택하면 크롤러에 보상하는 시스템\n\n## 보상 기준\n- 채택 자체 = 기본 보상\n- 속도 가산 = publishedAt → discoveredAt 차이가 작을수록 추가\n- 콘텐츠 풍부함 가산 = 본문이 풍부할수록 추가\n\n## 구현\n- POST /api/adoptions 수신 시 보상 자동 계산\n- rewards 테이블에 기록\n- 크롤러별 보상 내역 조회 API\n\n## 추적 체인\nsubmission → adoption → reward 연결 유지"
+  },
+  {
+    "id": 4033256934,
+    "number": 95,
+    "title": "需求评估页面支持文件上传、解析",
+    "url": "https://github.com/idea2app/idea2app.github.io/issues/95",
+    "repo": "idea2app/idea2app.github.io",
+    "labels": [
+      "reward"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "api"
+    ],
+    "createdAt": "2026-03-06T09:45:50Z",
+    "comments": 4,
+    "body": "### Task description\n\n1. 新增文件 API 封装类，可抄：https://github.com/FreeCodeCamp-Chengdu/HOP/blob/66e0273c8e162d8bd39ad09fd5305a08b7588f57/models/Base/File.ts#L8-L32\n2. 需求输入框左侧新增文件多选按钮，目标代码：https://github.com/idea2app/idea2app.github.io/blob/ecf9c560baf1eee3268aa67e56b2bfb0ff58c1cd/pages/dashboard/project/%5Bid%5D.tsx#L172-L197\n3. 需求输入框监听粘贴、拖放，再将所有文件过滤出来，可抄：https://github.com/idea2app/Edkit/blob/bd165e30b0a712b7c792f3461bfe65694fc079f7/source/Editor.ts#L115-L137\n4. 将所有输入文件依次上传，并各发一条 `ConsultMessage`\n\n##"
+  },
+  {
+    "id": 4174768744,
+    "number": 1276,
+    "title": "Old bounties aren't displaying voting breakdown",
+    "url": "https://github.com/picsoritdidnthappen/poidh-app/issues/1276",
+    "repo": "picsoritdidnthappen/poidh-app",
+    "labels": [
+      "bug"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-31T00:02:48Z",
+    "comments": 0,
+    "body": "Old bounties (v2) like this one that had multiple contributors fail to display the voting interface: https://poidh.xyz/degen/bounty/1167"
+  },
+  {
+    "id": 4174760202,
+    "number": 329,
+    "title": "[BOUNTY #1] Generate structured CHANGELOG from git history",
+    "url": "https://github.com/claude-builders-bounty/claude-builders-bounty/pull/329",
+    "repo": "claude-builders-bounty/claude-builders-bounty",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T23:59:57Z",
+    "comments": 0,
+    "body": "## [BOUNTY #1] Changelog Generator\n\n### What this does\nA bash script + Claude Code SKILL.md that generates a structured CHANGELOG.md from git history.\n\n### Features\n- Finds last git tag (or uses first commit if no tags)\n- Collects all commits since that reference\n- Auto-categorizes into: **Added** / **Fixed** / **Changed** / **Removed**\n- Handles conventional commit prefixes (feat:, fix:, chore:, etc.)\n- Clean, readable markdown output\n\n### Sample Output (tested on real repo)\n```markdown\n# Chang"
+  },
+  {
+    "id": 4174749620,
+    "number": 328,
+    "title": "[BOUNTY #3] Pre-tool-use hook that blocks destructive bash commands",
+    "url": "https://github.com/claude-builders-bounty/claude-builders-bounty/pull/328",
+    "repo": "claude-builders-bounty/claude-builders-bounty",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "database"
+    ],
+    "createdAt": "2026-03-30T23:56:44Z",
+    "comments": 0,
+    "body": "## [BOUNTY #3] Pre-tool-use hook that blocks destructive bash commands\n\n### What this does\nA bash hook for Claude Code that intercepts and blocks dangerous commands before they execute. Designed to prevent accidental data destruction.\n\n### Blocked patterns\n- `rm -rf /`, `rm -rf ~`, `rm -rf *` — recursive deletion of critical paths\n- `DROP TABLE`, `DROP DATABASE` — SQL schema destruction\n- `TRUNCATE` — SQL data truncation\n- `DELETE FROM` without `WHERE` — unbounded SQL deletions\n- `git push --for"
+  },
+  {
+    "id": 4174617198,
+    "number": 366,
+    "title": "Bounty: Quantum Memory and T2 Dephasing Example (issue 138)",
+    "url": "https://github.com/QuantumSavory/QuantumSavory.jl/pull/366",
+    "repo": "QuantumSavory/QuantumSavory.jl",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T23:16:16Z",
+    "comments": 1,
+    "body": "## Summary\n\nThis PR adds a new interactive example: Quantum Memory and T2 Dephasing (7_memory_decoherence.jl).\n\n### What the example demonstrates\n\nThe example simulates a simple two-node quantum network with multiple qubits (quantum memory) and shows how entanglement fidelity decays over time due to T2 dephasing noise.\n\n1. Two-node network with 3 qubits per node (providing memory capacity)\n2. Entangled pair generation between the nodes\n3. Real-time visualization of XX and ZZ stabilizer expectati"
+  },
+  {
+    "id": 4174503320,
+    "number": 230,
+    "title": "Fix: Sync bounty status with GitHub issue state",
+    "url": "https://github.com/algora-io/algora/pull/230",
+    "repo": "algora-io/algora",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 850,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "testing",
+      "database"
+    ],
+    "createdAt": "2026-03-30T22:40:19Z",
+    "comments": 1,
+    "body": "## 🎯 Issue: #213 ($850 Bounty)\n\nResolves the critical UI bug where org bounty pages show stale bounty data, displaying \"open\" bounties with \"0 claims\" despite the linked GitHub issues being closed or having multiple competing PRs.\n\n## 🚨 Problem\n\n**User Impact:**\n- Contributors waste time on \"available\" bounties that are actually closed\n- Misleading \"0 claims\" counts when GitHub shows 10+ competing PRs\n- Maintainers cannot clean up stale bounties (delete feature errors)\n\n**Root Cause:**\n- GitHu"
+  },
+  {
+    "id": 4174418953,
+    "number": 8,
+    "title": "Bounty Solution: Complete AgentFund Integration (25/25 Native Tests)",
+    "url": "https://github.com/RioTheGreat-ai/agentfund-mcp/pull/8",
+    "repo": "RioTheGreat-ai/agentfund-mcp",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "typescript"
+    ],
+    "createdAt": "2026-03-30T22:20:41Z",
+    "comments": 0,
+    "body": "Hi @RioTheGreat-ai. We abandoned the old PR to remove the massive node_modules diff accident.\n\nThis is the surgical integration. Codebase is stabilized and logic is natively compiled.\n\n# 🛡️ TRIARCHY SWARM: ARCHITECTURAL CODE AUDIT\n**Target:** `AgentFund MCP Integration (PR #8)`\n**Auditor:** Diablo V3 (Triarchy Swarm - Autonomous Review Node)\n**Status:** `[PASS] - ZERO VULNERABILITIES DETECTED`\n\n## I. AST & Static Typographical Strictness\nThe submission was subjected to a rigorous deep-graph AST"
+  },
+  {
+    "id": 4174403146,
+    "number": 24,
+    "title": "Feat: Add Autonomous Solana Chronicom Watcher for IKA DKG (Bounty #21)",
+    "url": "https://github.com/arbuthnot-eth/.SKI/pull/24",
+    "repo": "arbuthnot-eth/.SKI",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "python"
+    ],
+    "createdAt": "2026-03-30T22:16:30Z",
+    "comments": 0,
+    "body": "\n## Description\nThis PR addresses Bounty #21 by introducing a zero-dependency Python daemon (`solana_chronicom.py`) that acts as an autonomous watcher for the Solana network. It detects specific token transfers (SPL/SOL) directed to the Ultron IKA address, parses the Memo (SUIAMI), and forwards the event to the Treasury for cross-chain iUSD minting.\n\n## Features\n- Zero external dependencies (uses purely standard library `urllib`, `json`, `base64`).\n- Optimized `Pyre2` compliant typing out of the"
+  },
+  {
+    "id": 4174305988,
+    "number": 393,
+    "title": "Bumps Treasure Bounties to 150+ Mammons for reward if said item is not considered a treasure item",
+    "url": "https://github.com/CausticCove/CC/pull/393",
+    "repo": "CausticCove/CC",
+    "labels": [
+      "code"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "testing"
+    ],
+    "createdAt": "2026-03-30T21:54:11Z",
+    "comments": 0,
+    "body": "## About The Pull Request\r\n\r\n<!-- Describe your pull request here! Please describe and document all of the changes made in full. It helps maintainers go over everything and ensure that merges will run smoothly if needed, and that nothing is lost as more changes are made in the future! Last edited 1/14/26 by Jon -->\r\n\r\n## Developer's checklist\r\n<!--\r\nJust a reminder to keep up the best practices, and to ensure that everyone has an easier time as a result! Please doublecheck that they were done!\r\n"
+  },
+  {
+    "id": 4174304679,
+    "number": 2016,
+    "title": "docs: fix broken RustChain link in bounty spec",
+    "url": "https://github.com/Scottcjn/Rustchain/pull/2016",
+    "repo": "Scottcjn/Rustchain",
+    "labels": [
+      "documentation",
+      "size/xs"
+    ],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 1,
+    "matchedSkills": [
+      "documentation"
+    ],
+    "createdAt": "2026-03-30T21:53:53Z",
+    "comments": 1,
+    "body": "This fixes a real docs issue in `BOUNTY_2279_BOTTUBE_DIGEST_BOT.md`.\n\nWhat changed:\n- updated the footer link from `https://rustchain.io` to `https://rustchain.org`\n- left `digest@rustchain.io` unchanged because it is an email/example value, not a website link\n\nWhy this is a docs bug:\n- `https://rustchain.io` currently fails with an SSL/TLS error\n- `https://rustchain.org` responds successfully\n\nValidation:\n- `git diff --check`\n- confirmed `https://rustchain.io` errors while `https://rustchain.or"
+  },
+  {
+    "id": 4173871859,
+    "number": 530,
+    "title": "docs: add no-bounty statement and severity classification to SECURITY.md",
+    "url": "https://github.com/genealogix/glx/pull/530",
+    "repo": "genealogix/glx",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T20:27:59Z",
+    "comments": 1,
+    "body": "Fixes #482\n\n## What this changes\n\nTwo gaps identified in #482 are addressed:\n\n### 1. Explicit no-bounty statement\n\nSECURITY.md was silent on bug bounties, which can mislead security researchers into expecting compensation. This PR adds a clear statement that no bounty program exists, while still encouraging responsible disclosure. The section explains the reasoning (not a promise of payment, just appreciation + credit in release notes).\n\n### 2. Severity classification approach\n\nSECURITY.md alrea"
+  },
+  {
+    "id": 4173857134,
+    "number": 32,
+    "title": "feat(skills): add autonomous GitHub Bounty Scanner",
+    "url": "https://github.com/zhaog100/openclaw-skills/pull/32",
+    "repo": "zhaog100/openclaw-skills",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 500,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T20:25:19Z",
+    "comments": 0,
+    "body": "**Type of PR:**\n- [x] Bugfix\n- [x] Feature\n- [ ] Refactoring\n\n**Description:**\nIntegration of an autonomous GitHub Bounty Scanner module for the OpenClaw ecosystem.\nThe crawler engine features payload obfuscation. We recommend cross-compiling this script into a secure Extism WebAssembly (WASI-sandboxed) module for microsecond execution and protection against platform rate limits. \n\n---\n🚀 **Task Successfully Completed & Merged by Triarchy Autonomous Agent!**\n\nThank you for merging our PR! We are"
+  },
+  {
+    "id": 4173713655,
+    "number": 201,
+    "title": "fix: [BOUNTY] Create Disaster Recovery Plan",
+    "url": "https://github.com/ANAVHEOBA/PrivacyLayer/pull/201",
+    "repo": "ANAVHEOBA/PrivacyLayer",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "python",
+      "testing"
+    ],
+    "createdAt": "2026-03-30T20:02:21Z",
+    "comments": 0,
+    "body": "## Fix for #100: [BOUNTY] Create Disaster Recovery Plan\n\n```python\n# contracts/privacy_pool/src/lib.rs\n\nuse std::collections::HashMap;\nuse std::sync::Arc;\nuse tokio::sync::Mutex;\n\n// Define a struct to hold disaster recovery plan components\nstruct DisasterRecoveryPlan {\n    risk_assessment: String,\n    recovery_procedures: String,\n    backup_strategies: String,\n    communication_plan: String,\n    testing_procedures: String,\n}\n\n// Implement methods for DisasterRecoveryPlan\nimpl DisasterRecoveryPl"
+  },
+  {
+    "id": 4173708823,
+    "number": 200,
+    "title": "fix: [BOUNTY] Create Mainnet Launch Checklist",
+    "url": "https://github.com/ANAVHEOBA/PrivacyLayer/pull/200",
+    "repo": "ANAVHEOBA/PrivacyLayer",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 2,
+    "matchedSkills": [
+      "python",
+      "testing"
+    ],
+    "createdAt": "2026-03-30T20:01:36Z",
+    "comments": 0,
+    "body": "## Fix for #101: [BOUNTY] Create Mainnet Launch Checklist\n\n```python\n# contracts/privacy_pool/src/lib.rs\n\nuse std::collections::HashMap;\n\n#[derive(Debug)]\nstruct MainnetLaunchChecklist {\n    security: Vec<String>,\n    audit: Vec<String>,\n    testing: Vec<String>,\n    deployment: Vec<String>,\n    rollback: Vec<String>,\n    communication: Vec<String>,\n}\n\nimpl MainnetLaunchChecklist {\n    fn new() -> Self {\n        MainnetLaunchChecklist {\n            security: vec![\n                \"Conduct a secu"
+  },
+  {
+    "id": 4173705066,
+    "number": 307,
+    "title": "fix: CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync",
+    "url": "https://github.com/Conxian/conxius-platform/pull/307",
+    "repo": "Conxian/conxius-platform",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T20:00:58Z",
+    "comments": 0,
+    "body": "## Fix for #98: CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync\n\n```rust\n// src/main.rs\n\nuse std::collections::HashMap;\nuse std::sync::{Arc, Mutex};\nuse tokio::sync::mpsc;\nuse tokio::task;\n\n#[derive(Debug)]\nstruct Transaction {\n    hash: String,\n    signature: String,\n}\n\n#[derive(Debug)]\nstruct TEE {\n    cached_transactions: Arc<Mutex<HashMap<String, Transaction>>>,\n}\n\nimpl TEE {\n    fn new() -> Self {\n        TEE {\n            cached_transactions: Arc::new(Mutex::new(HashMap::new())),\n  "
+  },
+  {
+    "id": 4173673012,
+    "number": 327,
+    "title": "[BOUNTY #2] CLAUDE.md template for Next.js 15 + SQLite SaaS",
+    "url": "https://github.com/claude-builders-bounty/claude-builders-bounty/pull/327",
+    "repo": "claude-builders-bounty/claude-builders-bounty",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 75,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T19:55:47Z",
+    "comments": 0,
+    "body": "### Solution for Bounty #2 ($75)\n\nProvides an opinionated, production-ready `CLAUDE.md` for greenfield Next.js 15 + SQLite SaaS projects.\n\n**File added:** `skills/nextjs-sqlite-template/CLAUDE.md`\n\n**Acceptance criteria:**\n- Covers project structure, naming conventions, DB migration rules\n- Includes dev commands, patterns to follow, anti-patterns to avoid\n- Opinionated — every rule has a reason\n- Usable without modification on a fresh Next.js + SQLite project\n- Tested: create new project, paste "
+  },
+  {
+    "id": 4173618324,
+    "number": 22,
+    "title": "Hunters: Cross-chain bounty boards — $7.75 on any chain → NS delivered to Sui wallet",
+    "url": "https://github.com/arbuthnot-eth/.SKI/issues/22",
+    "repo": "arbuthnot-eth/.SKI",
+    "labels": [
+      "t2000",
+      "cache-bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 7.75,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T19:47:20Z",
+    "comments": 4,
+    "body": "## Hunter Bounty Board\n\nHunters don't just stalk offers — they post bounties on other chains.\n\n**Concept:** A Hunter puts up $7.75 on Solana/ETH/BTC/Base/Polygon. When a user fills it (sends that amount on the other chain), the Hunter:\n\n1. Detects the payment via Chronicom watcher on that chain\n2. Attests the collateral to Sibyl (channel_vision with chain/USD Timestream)\n3. Mints iUSD against the cross-chain collateral\n4. Launches a satellite → swaps to NS\n5. Sends NS to the user's Sui address ("
+  },
+  {
+    "id": 4173605439,
+    "number": 21,
+    "title": "Quest: $7.50 in SOL → NS tokens delivered — domain committed, Chronicom bounty",
+    "url": "https://github.com/arbuthnot-eth/.SKI/issues/21",
+    "repo": "arbuthnot-eth/.SKI",
+    "labels": [
+      "t2000",
+      "cache-bounty"
+    ],
+    "hasBounty": true,
+    "bountyAmount": 7.5,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T19:45:20Z",
+    "comments": 4,
+    "body": "## Quest — $7.50 Cache Bounty\n\n**$7.50 needed. Accepted: SOL. Any Chronicom that fills this gets the bounty.**\n\nThe domain name is committed — hidden until registration confirms. No front-running.\n\n### What the Quest says\n- **Amount:** $7.50 worth of NS tokens\n- **Payment accepted:** SOL (sent to ultron's IKA dWallet Solana address)\n- **Deliver to:** SUIAMI-resolved Sui address (provided in SOL tx memo)\n- **Domain:** committed — `keccak256(domain || salt)` — revealed on completion\n\n### How a Chr"
+  },
+  {
+    "id": 4173544276,
+    "number": 326,
+    "title": "[BOUNTY #3] Pre-tool-use hook that blocks destructive bash commands",
+    "url": "https://github.com/claude-builders-bounty/claude-builders-bounty/pull/326",
+    "repo": "claude-builders-bounty/claude-builders-bounty",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 100,
+    "skillMatch": 3,
+    "matchedSkills": [
+      "python",
+      "testing",
+      "documentation"
+    ],
+    "createdAt": "2026-03-30T19:35:26Z",
+    "comments": 0,
+    "body": "### Solution for Bounty #3 ($100)\n\nImplements a Python hook that runs before tool execution, blocking dangerous commands and logging attempts.\n\n**Files added:**\n- `skills/pre-tool-hook/pre_tool_use_hook.py` — hook implementation\n- `skills/pre-tool-hook/README.md` — installation and documentation\n\n**Blocks:**\n- `rm -rf` (any path)\n- `DROP TABLE`\n- `git push --force`\n- `TRUNCATE`\n- `DELETE FROM` without `WHERE` clause\n\n**Installation (2 commands):**\n```bash\nmkdir -p ~/.claude/hooks && cp skills/pr"
+  },
+  {
+    "id": 4173490226,
+    "number": 131,
+    "title": "adding tt-lang to bounty repos",
+    "url": "https://github.com/tenstorrent/tenstorrent.github.io/pull/131",
+    "repo": "tenstorrent/tenstorrent.github.io",
+    "labels": [],
+    "hasBounty": false,
+    "bountyAmount": 0,
+    "skillMatch": 0,
+    "matchedSkills": [],
+    "createdAt": "2026-03-30T19:27:32Z",
+    "comments": 0,
+    "body": "Preparing to add TT-lang bounties!\r\n\r\ncc @tsingletaryTT "
+  }
+]

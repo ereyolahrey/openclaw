@@ -1,0 +1,15 @@
+[
+  {
+    "timestamp": "2026-03-31T00:25:23.681Z",
+    "platform": "polymarket",
+    "market": "Will MegaETH perform an airdrop by June 30? ",
+    "side": "BUY",
+    "tokenIndex": 1,
+    "price": 0.542,
+    "edge": "0.308",
+    "currentAssetPrice": 2021.3,
+    "threshold": 30,
+    "gapPercent": "6637.67",
+    "response": "{\"error\":\"not enough balance / allowance: the balance is not enough -> balance: 0, order amount: 2700000\",\"status\":400}"
+  }
+]

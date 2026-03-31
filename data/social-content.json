@@ -1,0 +1,19 @@
+[
+  {
+    "id": "content_1774916825312",
+    "category": "trading-tips",
+    "title": "Trading Tip",
+    "text": "💡 Prediction Market Trading Tip\n\nFX hourly markets are less volatile than crypto. Lower edge but more consistent wins.\n\nBuilding automated trading bots that run 24/7 on Bayse, Polymarket, and more.\n\n#CryptoTrading #PredictionMarkets #AlgoTrading",
+    "platform": "twitter",
+    "type": "single-post",
+    "createdAt": "2026-03-31T00:27:05.312Z",
+    "posted": true,
+    "metrics": {
+      "views": 0,
+      "likes": 0,
+      "retweets": 0,
+      "replies": 0
+    },
+    "postResult": "{\"dryRun\":true}"
+  }
+]

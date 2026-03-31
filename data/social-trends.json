@@ -1,0 +1,92 @@
+[
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Pudgy Penguins",
+    "symbol": "PENGU",
+    "rank": 109,
+    "score": 0,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Based",
+    "symbol": "BASED",
+    "rank": 642,
+    "score": 1,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Solana",
+    "symbol": "SOL",
+    "rank": 7,
+    "score": 2,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Bittensor",
+    "symbol": "TAO",
+    "rank": 34,
+    "score": 3,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "rank": 1,
+    "score": 4,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Hyperliquid",
+    "symbol": "HYPE",
+    "rank": 16,
+    "score": 5,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Ondo",
+    "symbol": "ONDO",
+    "rank": 58,
+    "score": 6,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Monad",
+    "symbol": "MON",
+    "rank": 148,
+    "score": 7,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "River",
+    "symbol": "RIVER",
+    "rank": 121,
+    "score": 8,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  },
+  {
+    "source": "coingecko",
+    "type": "trending-coin",
+    "name": "Sui",
+    "symbol": "SUI",
+    "rank": 32,
+    "score": 9,
+    "fetchedAt": "2026-03-31T00:27:04.406Z"
+  }
+]
