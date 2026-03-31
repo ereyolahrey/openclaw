@@ -1,0 +1,142 @@
+{
+  "trendingRepos": [
+    {
+      "repo": "sindresorhus/awesome",
+      "name": "AWESOME",
+      "topic": "trending"
+    },
+    {
+      "repo": "freeCodeCamp/freeCodeCamp",
+      "name": "FREECODECAMP",
+      "topic": "trending"
+    },
+    {
+      "repo": "public-apis/public-apis",
+      "name": "PUBLIC-APIS",
+      "topic": "trending"
+    },
+    {
+      "repo": "EbookFoundation/free-programming-books",
+      "name": "FREE-PROGRAMMING-BOOKS",
+      "topic": "trending"
+    },
+    {
+      "repo": "kamranahmedse/developer-roadmap",
+      "name": "DEVELOPER-ROADMAP",
+      "topic": "trending"
+    },
+    {
+      "repo": "openclaw/openclaw",
+      "name": "OPENCLAW",
+      "topic": "ai"
+    },
+    {
+      "repo": "donnemartin/system-design-primer",
+      "name": "SYSTEM-DESIGN-PRIMER",
+      "topic": "trending"
+    },
+    {
+      "repo": "vinta/awesome-python",
+      "name": "AWESOME-PYTHON",
+      "topic": "trending"
+    },
+    {
+      "repo": "awesome-selfhosted/awesome-selfhosted",
+      "name": "AWESOME-SELFHOSTED",
+      "topic": "trending"
+    },
+    {
+      "repo": "facebook/react",
+      "name": "REACT",
+      "topic": "trending"
+    },
+    {
+      "repo": "torvalds/linux",
+      "name": "LINUX",
+      "topic": "trending"
+    },
+    {
+      "repo": "TheAlgorithms/Python",
+      "name": "PYTHON",
+      "topic": "trending"
+    },
+    {
+      "repo": "ossu/computer-science",
+      "name": "COMPUTER-SCIENCE",
+      "topic": "trending"
+    },
+    {
+      "repo": "tensorflow/tensorflow",
+      "name": "TENSORFLOW",
+      "topic": "ai"
+    },
+    {
+      "repo": "ohmyzsh/ohmyzsh",
+      "name": "OHMYZSH",
+      "topic": "trending"
+    }
+  ],
+  "hotTokens": [
+    {
+      "name": "GPT-SOVITS github.com/rvc-boss/GPT-SOVITS",
+      "symbol": "GPT-SOVITS",
+      "vol24": 425710,
+      "mc": 35765141
+    },
+    {
+      "name": "IONIC-FRAMEWORK github.com/ionic-team/IONIC-FRAMEWORK",
+      "symbol": "IONIC-FRAMEWORK",
+      "vol24": 421966,
+      "mc": 48958969
+    },
+    {
+      "name": "FISH-SPEECH github.com/fishaudio/FISH-SPEECH",
+      "symbol": "FISH-SPEECH",
+      "vol24": 369923,
+      "mc": 37556812
+    },
+    {
+      "name": "JIEBA github.com/fxsjy/JIEBA",
+      "symbol": "JIEBA",
+      "vol24": 315935,
+      "mc": 24309352
+    },
+    {
+      "name": "PAPERS-WE-LOVE github.com/papers-we-love/PAPERS-WE-LOVE",
+      "symbol": "PAPERS-WE-LOVE",
+      "vol24": 264971,
+      "mc": 14456691
+    },
+    {
+      "name": "CS-VIDEO-COURSES github.com/developer-y/CS-VIDEO-COURSES",
+      "symbol": "CS-VIDEO-COURSES",
+      "vol24": 264845,
+      "mc": 15110176
+    },
+    {
+      "name": "MUSICFREE github.com/maotoumao/MUSICFREE",
+      "symbol": "MUSICFREE",
+      "vol24": 249311,
+      "mc": 10673346
+    },
+    {
+      "name": "SPOTUBE github.com/krtirtho/SPOTUBE",
+      "symbol": "SPOTUBE",
+      "vol24": 244841,
+      "mc": 9044193
+    },
+    {
+      "name": "REVOKEMSGPATCHER github.com/huiyadanli/REVOKEMSGPATCHER",
+      "symbol": "REVOKEMSGPATCHER",
+      "vol24": 234393,
+      "mc": 17086331
+    },
+    {
+      "name": "FLUX github.com/black-forest-labs/FLUX",
+      "symbol": "FLUX",
+      "vol24": 221584,
+      "mc": 9357959
+    }
+  ],
+  "lastFetch": "2026-03-31T01:15:12.575Z"
+}

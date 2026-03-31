@@ -1,0 +1,43 @@
+{
+  "tokens": [
+    {
+      "name": "SWE-AGENT github.com/princeton-nlp/SWE-agent",
+      "symbol": "SWE-AGENT",
+      "strategy": "github",
+      "contractAddress": null,
+      "launchedAt": "2026-03-31T01:15:24.852Z",
+      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h",
+      "feesEarned": 0,
+      "feesClaimed": 0
+    },
+    {
+      "name": "PNPM github.com/pnpm/pnpm",
+      "symbol": "PNPM",
+      "strategy": "github",
+      "contractAddress": null,
+      "launchedAt": "2026-03-31T01:16:40.543Z",
+      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h",
+      "feesEarned": 0,
+      "feesClaimed": 0
+    },
+    {
+      "name": "LLAMA github.com/meta-llama/llama",
+      "symbol": "LLAMA",
+      "strategy": "github",
+      "contractAddress": "0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3",
+      "launchedAt": "2026-03-31T01:26:34.717Z",
+      "launchOutput": "Job ID:  job_DVKBZDWFZLXVC5GU\nThread ID:  thr_ZJ54UB4K4JL77Y7F\n\n\nyour token has been deployed! the ca is 0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3",
+      "feesEarned": 0,
+      "feesClaimed": 0
+    }
+  ],
+  "stats": {
+    "totalLaunched": 3,
+    "totalFeesEarned": 0,
+    "totalFeesClaimed": 0
+  },
+  "lastLaunchDate": "2026-03-31",
+  "launchesToday": 3,
+  "dailyHistory": []
+}
