@@ -1,3 +1,11 @@
+Metadata-Version: 2.4
+Name: openclaw
+Version: 0.1.0
+Summary: A general-purpose everything agent
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
 # openclaw
 
 **OpenClaw** is a general-purpose *everything agent* — a command-line AI agent that can reason about tasks and use built-in tools to accomplish them.
@@ -38,7 +46,7 @@ openclaw "What is 123 * 456?"
 
 ```bash
 export OPENAI_API_KEY=sk-...
-openclaw --model openai "Summarize the file README.md"
+openclaw --model openai "Summarise the file README.md"
 ```
 
 When no `--model` is provided the agent runs in *tool-only* mode, which dispatches explicit `Action: … / Input: …` lines directly to the tools — useful for testing and scripting.
