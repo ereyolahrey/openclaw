@@ -1081,6 +1081,39 @@
       "outcome": "LOSS",
       "payout": 0,
       "resolvedAt": "2026-04-03T15:02:01Z"
+    },
+    {
+      "version": 3,
+      "time": "2026-04-03T15:07:04.269Z",
+      "direction": "UP",
+      "amount": 200,
+      "outcomeId": "d27a5c60-ff34-4467-9860-a03e82f3e8fd",
+      "outcomeName": "Up",
+      "eventId": "f3e6cb2f-cb1d-4624-ae33-3f13d7bf30b6",
+      "marketId": "50a7bdd7-516e-43d8-8f3a-780a52daae12",
+      "threshold": 66929.8,
+      "price": 66948,
+      "diffPct": "0.0272",
+      "sharePrice": 0.58,
+      "minsBeforeClose": "8.0",
+      "confidence": 0.43367411863919575,
+      "rawScore": 9.757667669381904,
+      "maxScore": 22.5,
+      "signals": {
+        "position": "ABOVE by 0.0272%",
+        "momentum": "3up/2down (UP 20%)",
+        "trend1h": "+0.2661% (str: 100%)",
+        "acceleration": "toward threshold",
+        "gapStrength": "0.41x typical (UP)",
+        "volumeTrend": "1.0x (flat)",
+        "bayseMarket": "Up=0.58 Down=0.42 (UP 16c spread)",
+        "rsi": "62.4",
+        "emaCross": "EMA3=66940 vs EMA8=66894 (BULL)",
+        "day24h": "+0.25%",
+        "agreesWithMarket": "YES"
+      },
+      "outcome": null,
+      "payout": null
     }
   ],
   "stats": {

@@ -11,7 +11,7 @@
  *   - Speed > strategy — timing is everything
  *
  * Sources monitored:
- *   1. clanker.world API — newest clanker token launches
+ *   1. api.bankr.bot/token-launches — bankr's own fresh token launches
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
  */
@@ -284,24 +284,24 @@ class BankrLauncher {
   async _fetchAllSources() {
     const all = [];
 
-    // Source 1: clanker.world API — newest tokens (most reliable for fresh launches)
+    // Source 1: bankr.bot API — fresh bankr token launches
     try {
-      const data = await this._httpGet("https://www.clanker.world/api/tokens?sort=desc&limit=20");
-      if (data?.data && Array.isArray(data.data)) {
-        for (const t of data.data) {
-          const addr = t.contract_address || t.address;
-          if (!addr || !t.name || !t.symbol) continue;
+      const data = await this._httpGet("https://api.bankr.bot/token-launches");
+      if (data?.launches && Array.isArray(data.launches)) {
+        for (const t of data.launches) {
+          if (!t.tokenAddress || !t.tokenName || !t.tokenSymbol) continue;
+          if (t.status !== "deployed") continue; // Only deployed tokens
           all.push({
-            name: t.name,
-            symbol: t.symbol,
-            address: addr.toLowerCase(),
-            source: "clanker",
+            name: t.tokenName,
+            symbol: t.tokenSymbol,
+            address: t.tokenAddress.toLowerCase(),
+            source: "bankr",
           });
         }
-        this.log.info(`  Clanker: ${all.length} tokens fetched`);
+        this.log.info(`  Bankr: ${all.length} tokens fetched`);
       }
     } catch (e) {
-      this.log.warn(`Clanker API error: ${e.message}`);
+      this.log.warn(`Bankr API error: ${e.message}`);
     }
 
     // Source 2: DexScreener token profiles — newly promoted Base tokens
