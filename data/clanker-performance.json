@@ -27,12 +27,6 @@
     {
       "addr": "0x70519B13715b909b5E1d696eD069dfcC0c774b07",
       "strategy": "live_duplicate",
-      "checkAt": 1775224812159,
-      "type": "6h"
-    },
-    {
-      "addr": "0x70519B13715b909b5E1d696eD069dfcC0c774b07",
-      "strategy": "live_duplicate",
       "checkAt": 1775289612159,
       "type": "24h"
     },
@@ -47,12 +41,6 @@
       "strategy": "live_duplicate",
       "checkAt": 1775300411721,
       "type": "24h"
-    },
-    {
-      "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
-      "strategy": "live_duplicate",
-      "checkAt": 1775224812822,
-      "type": "1h"
     },
     {
       "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
@@ -89,12 +77,20 @@
   "insights": [],
   "freshVolumeTokens": [
     {
+      "name": "Base DOG",
+      "symbol": "DOG",
+      "vol24": 20203,
+      "source": "dexscreener",
+      "addr": "0x8825f3de4129DCC0fb1dC5c329a4dAA43e9De762",
+      "discoveredAt": "2026-04-03T14:30:07.423Z"
+    },
+    {
       "name": "gork (gork.world)",
       "symbol": "GORK",
       "vol24": 9171,
       "source": "dexscreener",
       "addr": "0xe6826060f7511f4bbdebd391861BE14AD07e762B",
-      "discoveredAt": "2026-04-03T13:30:01.454Z"
+      "discoveredAt": "2026-04-03T14:30:01.232Z"
     },
     {
       "name": "Lit coin",
@@ -102,15 +98,31 @@
       "vol24": 6575,
       "source": "dexscreener",
       "addr": "0x6F807250508AC8E2808d19439c956732cF4CEcBA",
-      "discoveredAt": "2026-04-03T13:30:05.514Z"
+      "discoveredAt": "2026-04-03T14:30:05.054Z"
+    },
+    {
+      "name": "GROK59K",
+      "symbol": "GROK59K",
+      "vol24": 2011,
+      "source": "dexscreener",
+      "addr": "0x0035D1fE4f5f9506D09Abb98e40eb0dc1f32c8F0",
+      "discoveredAt": "2026-04-03T14:30:14.549Z"
     },
     {
       "name": "BasePEPE",
       "symbol": "BasePEPE",
-      "vol24": 1144,
+      "vol24": 1059,
       "source": "dexscreener",
       "addr": "0xC68cbcf67f07374Ec4f92f35C53e7A813bBFaB07",
-      "discoveredAt": "2026-04-03T13:30:02.641Z"
+      "discoveredAt": "2026-04-03T14:30:01.889Z"
+    },
+    {
+      "name": "Chainbase Token",
+      "symbol": "C",
+      "vol24": 888,
+      "source": "dexscreener",
+      "addr": "0xba12BC7B210E61e5D3110B997A63Ea216e0E18F7",
+      "discoveredAt": "2026-04-03T14:30:10.030Z"
     },
     {
       "name": "New XAI gork",
@@ -118,8 +130,8 @@
       "vol24": 654,
       "source": "dexscreener",
       "addr": "0x5ED32Cc6707F669AdB5CaaE6F2d80a37ffC72271",
-      "discoveredAt": "2026-04-03T13:30:01.454Z"
+      "discoveredAt": "2026-04-03T14:30:01.232Z"
     }
   ],
-  "lastFreshScan": "2026-04-03T13:44:55.379Z"
+  "lastFreshScan": "2026-04-03T14:30:23.549Z"
 }

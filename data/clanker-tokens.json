@@ -230,6 +230,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T09:45:01.073Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T14:45:01.561Z"
         }
       }
     },
@@ -261,7 +266,13 @@
       "launchedAt": "2026-04-03T13:00:12.821Z",
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T14:45:02.392Z"
+        }
+      }
     },
     {
       "name": "DOG",

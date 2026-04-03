@@ -29,13 +29,6 @@
       "addr": "0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3",
       "strategy": "live_duplicate",
       "topic": null,
-      "checkAt": 1775224846137,
-      "type": "6h"
-    },
-    {
-      "addr": "0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3",
-      "strategy": "live_duplicate",
-      "topic": null,
       "checkAt": 1775289646137,
       "type": "24h"
     },
@@ -66,13 +59,6 @@
       "topic": null,
       "checkAt": 1775300432756,
       "type": "24h"
-    },
-    {
-      "addr": "0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
-      "strategy": "live_duplicate",
-      "topic": null,
-      "checkAt": 1775224837472,
-      "type": "1h"
     },
     {
       "addr": "0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
@@ -119,39 +105,39 @@
       "vol24": 299801,
       "source": "dexscreener",
       "addr": "0xdA5F00a13507C66e9147653507466598D467D54e",
-      "discoveredAt": "2026-04-03T14:00:49.493Z"
+      "discoveredAt": "2026-04-03T14:30:14.794Z"
     },
     {
       "name": "Defense of the Agents",
       "symbol": "DOTA",
-      "vol24": 214018,
+      "vol24": 213789,
       "source": "dexscreener",
       "addr": "0x5F09821CBb61e09D2a83124Ae0B56aaa3ae85B07",
-      "discoveredAt": "2026-04-03T14:00:46.466Z"
+      "discoveredAt": "2026-04-03T14:30:12.949Z"
     },
     {
       "name": "WINDOWS95 github.com/felixrieseberg/WINDOWS95",
       "symbol": "WINDOWS95",
-      "vol24": 76810,
+      "vol24": 76031,
       "source": "top-bankr-clone",
       "addr": "0xADF1c52bb591F40642fCB1F5d184EBd5C9b6cC69",
-      "discoveredAt": "2026-04-03T14:01:04.778Z"
+      "discoveredAt": "2026-04-03T14:30:24.114Z"
     },
     {
       "name": "SOCIAL-APP github.com/bluesky-social/SOCIAL-APP",
       "symbol": "SOCIAL-APP",
-      "vol24": 75051,
+      "vol24": 76016,
       "source": "top-bankr-clone",
       "addr": "0xADF94C3f6FD1D4B8DfdB8921Ea3065B584bf6442",
-      "discoveredAt": "2026-04-03T14:01:05.126Z"
+      "discoveredAt": "2026-04-03T14:30:24.438Z"
     },
     {
       "name": "DOG",
       "symbol": "BaseDOG",
-      "vol24": 46924,
+      "vol24": 46837,
       "source": "dexscreener",
       "addr": "0x9d2b69D21D36B058f5250eF66476616CccB0a49E",
-      "discoveredAt": "2026-04-03T14:00:45.613Z"
+      "discoveredAt": "2026-04-03T14:30:12.573Z"
     },
     {
       "name": "Base DOG",
@@ -159,15 +145,15 @@
       "vol24": 20203,
       "source": "dexscreener",
       "addr": "0x8825f3de4129DCC0fb1dC5c329a4dAA43e9De762",
-      "discoveredAt": "2026-04-03T14:00:51.191Z"
+      "discoveredAt": "2026-04-03T14:30:15.601Z"
     },
     {
       "name": "clawd.atg.eth",
       "symbol": "CLAWD",
-      "vol24": 13964,
+      "vol24": 12916,
       "source": "top-bankr-clone",
       "addr": "0x9f86dB9fc6f7c9408e8Fda3Ff8ce4e78ac7a6b07",
-      "discoveredAt": "2026-04-03T14:01:04.416Z"
+      "discoveredAt": "2026-04-03T14:30:23.766Z"
     },
     {
       "name": "gork (gork.world)",
@@ -175,7 +161,7 @@
       "vol24": 9171,
       "source": "dexscreener",
       "addr": "0xe6826060f7511f4bbdebd391861BE14AD07e762B",
-      "discoveredAt": "2026-04-03T14:00:45.213Z"
+      "discoveredAt": "2026-04-03T14:30:12.393Z"
     },
     {
       "name": "Lit coin",
@@ -183,31 +169,31 @@
       "vol24": 6575,
       "source": "dexscreener",
       "addr": "0x6F807250508AC8E2808d19439c956732cF4CEcBA",
-      "discoveredAt": "2026-04-03T14:00:49.041Z"
+      "discoveredAt": "2026-04-03T14:30:14.585Z"
     },
     {
       "name": "GROK59K",
       "symbol": "GROK59K",
-      "vol24": 2017,
+      "vol24": 2011,
       "source": "dexscreener",
       "addr": "0x0035D1fE4f5f9506D09Abb98e40eb0dc1f32c8F0",
-      "discoveredAt": "2026-04-03T14:00:55.509Z"
+      "discoveredAt": "2026-04-03T14:30:18.088Z"
     },
     {
       "name": "BasePEPE",
       "symbol": "BasePEPE",
-      "vol24": 1144,
+      "vol24": 1059,
       "source": "dexscreener",
       "addr": "0xC68cbcf67f07374Ec4f92f35C53e7A813bBFaB07",
-      "discoveredAt": "2026-04-03T14:00:45.996Z"
+      "discoveredAt": "2026-04-03T14:30:12.748Z"
     },
     {
       "name": "Chainbase Token",
       "symbol": "C",
-      "vol24": 865,
+      "vol24": 888,
       "source": "dexscreener",
       "addr": "0xba12BC7B210E61e5D3110B997A63Ea216e0E18F7",
-      "discoveredAt": "2026-04-03T14:00:53.423Z"
+      "discoveredAt": "2026-04-03T14:30:16.883Z"
     },
     {
       "name": "New XAI gork",
@@ -215,24 +201,24 @@
       "vol24": 654,
       "source": "dexscreener",
       "addr": "0x5ED32Cc6707F669AdB5CaaE6F2d80a37ffC72271",
-      "discoveredAt": "2026-04-03T14:00:45.213Z"
-    },
-    {
-      "name": "Omma AI",
-      "symbol": "Omma AI",
-      "vol24": 409,
-      "source": "clanker",
-      "addr": "0x3dc2fE98c9E0067005D7AaB752e5b7EDc0548b95",
-      "discoveredAt": "2026-04-03T14:00:40.903Z"
+      "discoveredAt": "2026-04-03T14:30:12.393Z"
     },
     {
       "name": "gitlawb",
       "symbol": "GITLAWB",
-      "vol24": 326,
+      "vol24": 305,
       "source": "dexscreener",
       "addr": "0x5F980Dcfc4c0fa3911554cf5ab288ed0eb13DBa3",
-      "discoveredAt": "2026-04-03T14:00:47.794Z"
+      "discoveredAt": "2026-04-03T14:30:13.780Z"
+    },
+    {
+      "name": "ZipRater",
+      "symbol": "ZIPPY",
+      "vol24": 190,
+      "source": "clanker",
+      "addr": "0x8DE7b52c7E154F4373A3968AaDbf8A7923eC3960",
+      "discoveredAt": "2026-04-03T14:30:03.751Z"
     }
   ],
-  "lastFreshScan": "2026-04-03T14:01:06.329Z"
+  "lastFreshScan": "2026-04-03T14:30:25.519Z"
 }

@@ -311,6 +311,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T09:30:01.582Z"
+        },
+        "6h": {
+          "vol24": 3.33,
+          "vol1h": 0.4,
+          "checkedAt": "2026-04-03T14:30:01.232Z"
         }
       }
     },
@@ -363,7 +368,13 @@
       "launchOutput": "Job ID:  job_ZUXLL6XJXBFWLYD3\nThread ID:  thr_A69KNGQUJ2AA4U6W\n\n\nyour token has been deployed! the ca is 0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 23.3s (job_ZUXLL6XJXBFWLYD3)",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T14:30:01.999Z"
+        }
+      }
     },
     {
       "name": "Omma AI",
