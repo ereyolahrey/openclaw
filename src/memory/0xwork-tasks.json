@@ -1,10 +1,37 @@
 {
-  "seen": {},
+  "seen": {
+    "35": {
+      "evaluatedAt": "2026-04-03T15:39:53.617Z",
+      "decision": "skip",
+      "reason": "deadline passed",
+      "bounty": "500.0",
+      "category": "Social"
+    },
+    "390": {
+      "evaluatedAt": "2026-04-03T15:39:53.620Z",
+      "decision": "skip",
+      "reason": "impossible requirement: get\\s+@?\\w+.*to\\s+(follow|retweet|rt|quo",
+      "bounty": "50",
+      "category": "Social"
+    },
+    "391": {
+      "evaluatedAt": "2026-04-03T15:39:53.619Z",
+      "decision": "skip",
+      "reason": "impossible requirement: get\\s+@?\\w+.*to\\s+(follow|retweet|rt|quo",
+      "bounty": "50",
+      "category": "Social"
+    }
+  },
   "active": {},
   "completed": [],
   "daily": {
-    "date": "2026-03-30",
+    "date": "2026-04-03",
     "claimed": 0,
     "submitted": 0
+  },
+  "stats": {
+    "totalEarned": 0,
+    "totalSubmitted": 0,
+    "totalSkipped": 3
   }
 }

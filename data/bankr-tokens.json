@@ -335,6 +335,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T11:30:01.496Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T15:30:01.313Z"
         }
       }
     },
@@ -387,7 +392,13 @@
       "launchOutput": "Job ID:  job_NB4SW8KYRMFURVUH\nThread ID:  thr_89Q3N2FURPVWLCRE\n\n\nyour token has been deployed! the ca is 0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 22.2s (job_NB4SW8KYRMFURVUH)",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T15:30:02.203Z"
+        }
+      }
     }
   ],
   "stats": {

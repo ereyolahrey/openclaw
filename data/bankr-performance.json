@@ -36,13 +36,6 @@
       "addr": "0x844df404F3aad84a2F40462211346EC34b60CBA3",
       "strategy": "live_duplicate",
       "topic": null,
-      "checkAt": 1775228443312,
-      "type": "6h"
-    },
-    {
-      "addr": "0x844df404F3aad84a2F40462211346EC34b60CBA3",
-      "strategy": "live_duplicate",
-      "topic": null,
       "checkAt": 1775293243312,
       "type": "24h"
     },
@@ -73,13 +66,6 @@
       "topic": null,
       "checkAt": 1775307637472,
       "type": "24h"
-    },
-    {
-      "addr": "0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
-      "strategy": "live_duplicate",
-      "topic": null,
-      "checkAt": 1775228435662,
-      "type": "1h"
     },
     {
       "addr": "0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
@@ -220,5 +206,9 @@
       "discoveredAt": "2026-04-03T14:30:03.751Z"
     }
   ],
-  "lastFreshScan": "2026-04-03T14:30:25.519Z"
+  "lastFreshScan": "2026-04-03T14:30:25.519Z",
+  "duplications": {
+    "total": 0,
+    "successful": 0
+  }
 }

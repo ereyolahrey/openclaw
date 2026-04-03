@@ -1112,13 +1112,81 @@
         "day24h": "+0.25%",
         "agreesWithMarket": "YES"
       },
+      "outcome": "WIN",
+      "payout": 330,
+      "resolvedAt": "2026-04-03T15:17:02Z"
+    },
+    {
+      "version": 3,
+      "time": "2026-04-03T15:22:07.943Z",
+      "direction": "UP",
+      "amount": 100,
+      "outcomeId": "0fddbb02-af42-4773-bb64-1c5718d0a7cd",
+      "outcomeName": "Up",
+      "eventId": "65f40c33-4b16-475f-80cb-1a35d38ebc4a",
+      "marketId": "692f227e-f0e7-471b-873c-8f83a6d874db",
+      "threshold": 66966.01,
+      "price": 66898,
+      "diffPct": "-0.1016",
+      "sharePrice": 0.15,
+      "minsBeforeClose": "7.9",
+      "confidence": 0.5004286189964756,
+      "rawScore": -11.259643927420703,
+      "maxScore": 22.5,
+      "signals": {
+        "position": "BELOW by 0.1016%",
+        "momentum": "1up/4down (DOWN 60%)",
+        "trend1h": "-0.0460% (str: 31%)",
+        "acceleration": "away threshold",
+        "gapStrength": "1.79x typical (DOWN)",
+        "volumeTrend": "1.0x (flat)",
+        "bayseMarket": "Up=0.15 Down=0.85 (DOWN 70c spread)",
+        "rsi": "55.3",
+        "emaCross": "EMA3=66914 vs EMA8=66912 (BULL)",
+        "day24h": "+0.24%",
+        "agreesWithMarket": "YES"
+      },
+      "outcome": "LOSS",
+      "payout": 0,
+      "resolvedAt": "2026-04-03T15:32:00Z"
+    },
+    {
+      "version": 3,
+      "time": "2026-04-03T15:37:04.733Z",
+      "direction": "UP",
+      "amount": 100,
+      "outcomeId": "edf81c46-3e12-476e-8ac4-e52d4dce313c",
+      "outcomeName": "Up",
+      "eventId": "6e2fdeb1-d454-4f54-9c2a-74c198fa0bfc",
+      "marketId": "7046be0f-924b-4c42-982e-bada7c562639",
+      "threshold": 66933.71,
+      "price": 66903,
+      "diffPct": "-0.0459",
+      "sharePrice": 0.12,
+      "minsBeforeClose": "7.9",
+      "confidence": 0.389999845923864,
+      "rawScore": -8.77499653328694,
+      "maxScore": 22.5,
+      "signals": {
+        "position": "BELOW by 0.0459%",
+        "momentum": "2up/3down (DOWN 20%)",
+        "trend1h": "+0.0578% (str: 39%)",
+        "acceleration": "away threshold",
+        "gapStrength": "1.02x typical (DOWN)",
+        "volumeTrend": "1.0x (flat)",
+        "bayseMarket": "Up=0.12 Down=0.88 (DOWN 76c spread)",
+        "rsi": "51.5",
+        "emaCross": "EMA3=66894 vs EMA8=66904 (BEAR)",
+        "day24h": "-0.05%",
+        "agreesWithMarket": "YES"
+      },
       "outcome": null,
       "payout": null
     }
   ],
   "stats": {
-    "wins": 9,
-    "losses": 19,
-    "totalPnl": -4463
+    "wins": 10,
+    "losses": 20,
+    "totalPnl": -4433
   }
 }
