@@ -1,11 +1,6 @@
 {
   "trendingRepos": [
     {
-      "repo": "sindresorhus/awesome",
-      "name": "AWESOME",
-      "topic": "trending"
-    },
-    {
       "repo": "freeCodeCamp/freeCodeCamp",
       "name": "FREECODECAMP",
       "topic": "trending"
@@ -74,69 +69,101 @@
       "repo": "ohmyzsh/ohmyzsh",
       "name": "OHMYZSH",
       "topic": "trending"
+    },
+    {
+      "repo": "microsoft/vscode",
+      "name": "VSCODE",
+      "topic": "trending"
+    },
+    {
+      "repo": "Significant-Gravitas/AutoGPT",
+      "name": "AUTOGPT",
+      "topic": "ai"
+    },
+    {
+      "repo": "n8n-io/n8n",
+      "name": "N8N",
+      "topic": "ai"
+    },
+    {
+      "repo": "flutter/flutter",
+      "name": "FLUTTER",
+      "topic": "trending"
+    },
+    {
+      "repo": "twbs/bootstrap",
+      "name": "BOOTSTRAP",
+      "topic": "trending"
+    },
+    {
+      "repo": "massgravel/Microsoft-Activation-Scripts",
+      "name": "MICROSOFT-ACTIVATION-SCRIPTS",
+      "topic": "trending"
     }
   ],
   "hotTokens": [
     {
-      "name": "GPT-SOVITS github.com/rvc-boss/GPT-SOVITS",
-      "symbol": "GPT-SOVITS",
-      "vol24": 425710,
-      "mc": 35765141
+      "name": "Solana",
+      "symbol": "SOL",
+      "vol24": 1454459,
+      "mc": 4649547
     },
     {
-      "name": "IONIC-FRAMEWORK github.com/ionic-team/IONIC-FRAMEWORK",
-      "symbol": "IONIC-FRAMEWORK",
-      "vol24": 421966,
-      "mc": 48958969
+      "name": "Edge",
+      "symbol": "EDGE",
+      "vol24": 554194,
+      "mc": 24260472
     },
     {
-      "name": "FISH-SPEECH github.com/fishaudio/FISH-SPEECH",
-      "symbol": "FISH-SPEECH",
-      "vol24": 369923,
-      "mc": 37556812
+      "name": "Coinbase Wrapped XRP",
+      "symbol": "cbXRP",
+      "vol24": 431072,
+      "mc": 67763338
     },
     {
-      "name": "JIEBA github.com/fxsjy/JIEBA",
-      "symbol": "JIEBA",
-      "vol24": 315935,
-      "mc": 24309352
+      "name": "Horizen",
+      "symbol": "ZEN",
+      "vol24": 414949,
+      "mc": 93103071
     },
     {
-      "name": "PAPERS-WE-LOVE github.com/papers-we-love/PAPERS-WE-LOVE",
-      "symbol": "PAPERS-WE-LOVE",
-      "vol24": 264971,
-      "mc": 14456691
+      "name": "Aerodrome",
+      "symbol": "AERO",
+      "vol24": 257968,
+      "mc": 291651744
     },
     {
-      "name": "CS-VIDEO-COURSES github.com/developer-y/CS-VIDEO-COURSES",
-      "symbol": "CS-VIDEO-COURSES",
-      "vol24": 264845,
-      "mc": 15110176
+      "name": "Defense of the Agents",
+      "symbol": "DOTA",
+      "vol24": 217381,
+      "mc": 306484
     },
     {
-      "name": "MUSICFREE github.com/maotoumao/MUSICFREE",
-      "symbol": "MUSICFREE",
-      "vol24": 249311,
-      "mc": 10673346
+      "name": "BankrCoin",
+      "symbol": "BNKR",
+      "vol24": 104227,
+      "mc": 32252456
     },
     {
-      "name": "SPOTUBE github.com/krtirtho/SPOTUBE",
-      "symbol": "SPOTUBE",
-      "vol24": 244841,
-      "mc": 9044193
+      "name": "Juno Agent",
+      "symbol": "JUNO",
+      "vol24": 48318,
+      "mc": 639518
     },
     {
-      "name": "REVOKEMSGPATCHER github.com/huiyadanli/REVOKEMSGPATCHER",
-      "symbol": "REVOKEMSGPATCHER",
-      "vol24": 234393,
-      "mc": 17086331
+      "name": "Superform",
+      "symbol": "UP",
+      "vol24": 34647,
+      "mc": 9112792
     },
     {
-      "name": "FLUX github.com/black-forest-labs/FLUX",
-      "symbol": "FLUX",
-      "vol24": 221584,
-      "mc": 9357959
+      "name": "Mamo",
+      "symbol": "MAMO",
+      "vol24": 18691,
+      "mc": 7524653
     }
   ],
-  "lastFetch": "2026-03-31T01:15:12.575Z"
+  "lastFetch": "2026-04-03T11:00:35.841Z",
+  "latestBankrInsight": "Job ID:  job_HTR72786NVKBQ5ES\nThread ID:  thr_9AQ2ZDTXVZBZRM4B\n\n\ntrending tokens on bankr and base:\n\nclanker ecosystem (bankr-integrated)\n• bankrcoin (bnkr): $4.45m volume | $0.000336\n• clawd.atg.eth (clawd): $1.48m volume | $0.000025\n• tokenbot (clanker): $1.27m volume | $24.36\n• noice (noice): $827k volume | $0.000039\n• debtreliefbot (drb): $770k volume | $0.000081\n\ntrending on base (on-chain)\n• venice token (vvv): $4.61m volume | $7.02\n• checkmate (check): $2.87m volume | $0.063\n• keeta (kta): $1.05m volume | $0.159\n• rune (rune): $283k volume | $1.57 (up 1,885% in 24h)\n• minebean (bean): $609k volume | $14.59\n\ntop volume keywords this week:\n• ai agents: tokens like dota (defense of the agents) and drb are driving significant narrative volume.\n• bankr/clanker: the core ecosystem remains the primary volume driver on base.\n• runes: recent surge in interest for rune-themed assets on base.\n• privacy: anon and related social-privacy tokens continue to maintain steady trading activity.",
+  "lastInsightFetch": "2026-04-02T18:49:47.477Z"
 }

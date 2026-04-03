@@ -1,0 +1,125 @@
+{
+  "strategyScores": {
+    "live_duplicate": {
+      "totalVol": 0,
+      "count": 0
+    },
+    "ai_agent": {
+      "totalVol": 0,
+      "count": 0
+    },
+    "duplicate": {
+      "totalVol": 0,
+      "count": 0
+    },
+    "viral": {
+      "totalVol": 0,
+      "count": 0
+    }
+  },
+  "adaptiveMix": {
+    "live_duplicate": 5,
+    "ai_agent": 1,
+    "duplicate": 2,
+    "viral": 2
+  },
+  "volumeChecks": [
+    {
+      "addr": "0x70519B13715b909b5E1d696eD069dfcC0c774b07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775224812159,
+      "type": "6h"
+    },
+    {
+      "addr": "0x70519B13715b909b5E1d696eD069dfcC0c774b07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775289612159,
+      "type": "24h"
+    },
+    {
+      "addr": "0x4d11fD06816cbAfc7676f548cBc0E6eA19B4eB07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775235611721,
+      "type": "6h"
+    },
+    {
+      "addr": "0x4d11fD06816cbAfc7676f548cBc0E6eA19B4eB07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775300411721,
+      "type": "24h"
+    },
+    {
+      "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775224812822,
+      "type": "1h"
+    },
+    {
+      "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775242812822,
+      "type": "6h"
+    },
+    {
+      "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
+      "strategy": "live_duplicate",
+      "checkAt": 1775307612822,
+      "type": "24h"
+    },
+    {
+      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+      "strategy": "live_duplicate",
+      "checkAt": 1775228410021,
+      "type": "1h"
+    },
+    {
+      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+      "strategy": "live_duplicate",
+      "checkAt": 1775246410021,
+      "type": "6h"
+    },
+    {
+      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+      "strategy": "live_duplicate",
+      "checkAt": 1775311210021,
+      "type": "24h"
+    }
+  ],
+  "lastAdaptation": null,
+  "insights": [],
+  "freshVolumeTokens": [
+    {
+      "name": "gork (gork.world)",
+      "symbol": "GORK",
+      "vol24": 9171,
+      "source": "dexscreener",
+      "addr": "0xe6826060f7511f4bbdebd391861BE14AD07e762B",
+      "discoveredAt": "2026-04-03T13:30:01.454Z"
+    },
+    {
+      "name": "Lit coin",
+      "symbol": "LITCOIN",
+      "vol24": 6575,
+      "source": "dexscreener",
+      "addr": "0x6F807250508AC8E2808d19439c956732cF4CEcBA",
+      "discoveredAt": "2026-04-03T13:30:05.514Z"
+    },
+    {
+      "name": "BasePEPE",
+      "symbol": "BasePEPE",
+      "vol24": 1144,
+      "source": "dexscreener",
+      "addr": "0xC68cbcf67f07374Ec4f92f35C53e7A813bBFaB07",
+      "discoveredAt": "2026-04-03T13:30:02.641Z"
+    },
+    {
+      "name": "New XAI gork",
+      "symbol": "gork",
+      "vol24": 654,
+      "source": "dexscreener",
+      "addr": "0x5ED32Cc6707F669AdB5CaaE6F2d80a37ffC72271",
+      "discoveredAt": "2026-04-03T13:30:01.454Z"
+    }
+  ],
+  "lastFreshScan": "2026-04-03T13:44:55.379Z"
+}

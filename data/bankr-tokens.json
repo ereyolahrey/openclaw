@@ -6,9 +6,10 @@
       "strategy": "github",
       "contractAddress": null,
       "launchedAt": "2026-03-31T01:15:24.852Z",
-      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h",
+      "launchOutput": "failed - interactive prompt hang",
       "feesEarned": 0,
-      "feesClaimed": 0
+      "feesClaimed": 0,
+      "failed": true
     },
     {
       "name": "PNPM github.com/pnpm/pnpm",
@@ -16,9 +17,10 @@
       "strategy": "github",
       "contractAddress": null,
       "launchedAt": "2026-03-31T01:16:40.543Z",
-      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h",
+      "launchOutput": "failed - interactive prompt hang",
       "feesEarned": 0,
-      "feesClaimed": 0
+      "feesClaimed": 0,
+      "failed": true
     },
     {
       "name": "LLAMA github.com/meta-llama/llama",
@@ -30,14 +32,368 @@
       "launchOutput": "Job ID:  job_DVKBZDWFZLXVC5GU\nThread ID:  thr_ZJ54UB4K4JL77Y7F\n\n\nyour token has been deployed! the ca is 0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x1cb2E6b7bf7797A85f04C317cb123A323C754ba3",
       "feesEarned": 0,
       "feesClaimed": 0
+    },
+    {
+      "name": "OPEN-WEBUI github.com/open-webui/open-webui",
+      "symbol": "OPEN-WEBUI",
+      "strategy": "github",
+      "contractAddress": null,
+      "launchedAt": "2026-04-02T08:19:53.904Z",
+      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\u001b[2K\u001b[G▸ Image URL for your token (press Enter to skip):\u001b[51G\u001b[2K\u001b[G▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h▸ Associate with a tweet? Paste URL (press Enter to skip):\u001b[60G\n\u001b[?25h",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "failed": true
+    },
+    {
+      "name": "TABBY github.com/TabbyML/tabby",
+      "symbol": "TABBY",
+      "strategy": "github",
+      "topic": "ai",
+      "contractAddress": "0xF5898cAb6381836Ec9aca51FaD359fdC3312fBa3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xF5898cAb6381836Ec9aca51FaD359fdC3312fBa3",
+      "launchedAt": "2026-04-02T08:27:27.423Z",
+      "launchOutput": "Job ID:  job_WE7TXHCUTXTPTQ27\nThread ID:  thr_FY4EQXF9V6B2L9KQ\n\n\nyour token has been deployed! the ca is 0xF5898cAb6381836Ec9aca51FaD359fdC3312fBa3\n\nview it on bankr: https://www.bankr.bot/launches/0xF5898cAb6381836Ec9aca51FaD359fdC3312fBa3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 24.5s (job_WE7TXHCUTXTPTQ27)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T09:30:01.352Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:30:00.974Z"
+        }
+      }
+    },
+    {
+      "name": "TMUX github.com/tmux/tmux",
+      "symbol": "TMUX",
+      "strategy": "github",
+      "topic": "devtools",
+      "contractAddress": "0x260E0a1241Eb5F04178Fa1f178Faf1f8DD059ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x260E0a1241Eb5F04178Fa1f178Faf1f8DD059ba3",
+      "launchedAt": "2026-04-02T10:00:24.985Z",
+      "launchOutput": "Job ID:  job_G23KJ856W7UWZ9ZH\nThread ID:  thr_6E67D3YKXNSZ24BM\n\n\nyour token has been deployed! the ca is 0x260E0a1241Eb5F04178Fa1f178Faf1f8DD059ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x260E0a1241Eb5F04178Fa1f178Faf1f8DD059ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 16.2s (job_G23KJ856W7UWZ9ZH)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T11:30:01.725Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:30:01.589Z"
+        }
+      }
+    },
+    {
+      "name": "CHATDEV github.com/OpenBMB/ChatDev",
+      "symbol": "CHATDEV",
+      "strategy": "github",
+      "topic": "ai",
+      "contractAddress": "0x09385f8C612080385AA6333290e9385aB8FfBba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x09385f8C612080385AA6333290e9385aB8FfBba3",
+      "launchedAt": "2026-04-02T11:00:26.023Z",
+      "launchOutput": "Job ID:  job_VQ7BU3HLVC5BA938\nThread ID:  thr_3R2TCN6ZLKEDCJUY\n\n\nyour token has been deployed! the ca is 0x09385f8C612080385AA6333290e9385aB8FfBba3\n\nview it on bankr: https://www.bankr.bot/launches/0x09385f8C612080385AA6333290e9385aB8FfBba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 18.3s (job_VQ7BU3HLVC5BA938)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T12:30:01.799Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:30:02.410Z"
+        }
+      }
+    },
+    {
+      "name": "FASTCHAT github.com/lm-sys/FastChat",
+      "symbol": "FASTCHAT",
+      "strategy": "github",
+      "contractAddress": null,
+      "launchedAt": "2026-04-02T12:23:58.439Z",
+      "launchOutput": "▸ Image URL for your token (press Enter to skip):\u001b[51G\u001b[2K\u001b[G▸ Image URL for your token (press Enter to skip):\u001b[51G\u001b[2K\u001b[G▸ Image URL for your token (press Enter to skip):\u001b[51G\n\u001b[?25h▸ Associate with a tweet? Paste URL (press Enter to skip):\u001b[60G\n\u001b[?25h",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "failed": true
+    },
+    {
+      "name": "LLAMA.CPP github.com/ggerganov/llama.cpp",
+      "symbol": "LLAMA.CPP",
+      "strategy": "github",
+      "topic": "ai",
+      "contractAddress": "0x517bed7a2480D6B7c84BF4BBCc700Bbc47CECbA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x517bed7a2480D6B7c84BF4BBCc700Bbc47CECbA3",
+      "launchedAt": "2026-04-02T13:00:24.984Z",
+      "launchOutput": "Job ID:  job_D3DLRB9UXGFK2HZ5\nThread ID:  thr_RP752ZSDHTDQLNX4\n\n\nyour token has been deployed! the ca is 0x517bed7a2480D6B7c84BF4BBCc700Bbc47CECbA3\n\nview it on bankr: https://www.bankr.bot/launches/0x517bed7a2480D6B7c84BF4BBCc700Bbc47CECbA3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 17.6s (job_D3DLRB9UXGFK2HZ5)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:30:01.805Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:30:03.203Z"
+        }
+      }
+    },
+    {
+      "name": "Robot Trading Agent",
+      "symbol": "ROBTRADE",
+      "strategy": "sniper",
+      "topic": null,
+      "contractAddress": "0x75629E536E43D8DF3393DfA21DD282a1A50dEBA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x75629E536E43D8DF3393DfA21DD282a1A50dEBA3",
+      "launchedAt": "2026-04-02T14:00:31.208Z",
+      "launchOutput": "Job ID:  job_2FYWU25AK5NW3JAK\nThread ID:  thr_4MJFEE3R2LPVGXUH\n\n\nyour token has been deployed! the ca is 0x75629E536E43D8DF3393DfA21DD282a1A50dEBA3\n\nview it on bankr: https://www.bankr.bot/launches/0x75629E536E43D8DF3393DfA21DD282a1A50dEBA3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 15.7s (job_2FYWU25AK5NW3JAK)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:30:02.627Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T20:30:00.823Z"
+        }
+      }
+    },
+    {
+      "name": "Agent Protocol GPT",
+      "symbol": "AGENTGPT",
+      "strategy": "sniper",
+      "topic": null,
+      "contractAddress": "0x9E6efbFf451E17590Ab8D11c2A9f2D6816Ed4bA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x9E6efbFf451E17590Ab8D11c2A9f2D6816Ed4bA3",
+      "launchedAt": "2026-04-02T15:00:28.933Z",
+      "launchOutput": "Job ID:  job_QYSWHMZGLTGT9QC4\nThread ID:  thr_2BW9A727APWEQUYJ\n\n\nyour token has been deployed! the ca is 0x9E6efbFf451E17590Ab8D11c2A9f2D6816Ed4bA3\n\nview it on bankr: https://www.bankr.bot/launches/0x9E6efbFf451E17590Ab8D11c2A9f2D6816Ed4bA3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 16.3s (job_QYSWHMZGLTGT9QC4)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:30:04.029Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T21:30:02.419Z"
+        }
+      }
+    },
+    {
+      "name": "FLUX github.com/black-forest-labs/FLUX",
+      "symbol": "FLUX",
+      "strategy": "duplicate",
+      "topic": null,
+      "contractAddress": "0x846FfE64817A4bB8feaED6B24F7EEa694955CbA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x846FfE64817A4bB8feaED6B24F7EEa694955CbA3",
+      "launchedAt": "2026-04-02T16:00:35.714Z",
+      "launchOutput": "Job ID:  job_WLEL494Q8SEJXQUM\nThread ID:  thr_EMHRE5B6E8JTH7XS\n\n\nyour token has been deployed! the ca is 0x846FfE64817A4bB8feaED6B24F7EEa694955CbA3\n\nview it on bankr: https://www.bankr.bot/launches/0x846FfE64817A4bB8feaED6B24F7EEa694955CbA3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 18.4s (job_WLEL494Q8SEJXQUM)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:30:04.891Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T23:30:01.048Z"
+        }
+      }
+    },
+    {
+      "name": "FLUX github.com/black-forest-labs/FLUX",
+      "symbol": "FLUX",
+      "strategy": "duplicate",
+      "topic": null,
+      "contractAddress": "0xa472b640890687dd2095d1b77476E6b1B4821ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xa472b640890687dd2095d1b77476E6b1B4821ba3",
+      "launchedAt": "2026-04-02T18:30:38.433Z",
+      "launchOutput": "Job ID:  job_CBSZREEW9YCTWN82\nThread ID:  thr_UM4PW9ZLSREUGQST\n\n\nyour token has been deployed! the ca is 0xa472b640890687dd2095d1b77476E6b1B4821ba3\n\nview it on bankr: https://www.bankr.bot/launches/0xa472b640890687dd2095d1b77476E6b1B4821ba3\n\ni was unable to generate an image as no image generation tool is currently available in my suite. you can update the token metadata or image manually on the bankr platform if needed.\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 2",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T20:30:01.625Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T03:30:00.272Z"
+        }
+      }
+    },
+    {
+      "name": "FLUX github.com/black-forest-labs/FLUX",
+      "symbol": "FLUX",
+      "strategy": "duplicate",
+      "topic": null,
+      "contractAddress": "0xbd690d78bD1350f65a9274A1855A2197DD4e3Ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xbd690d78bD1350f65a9274A1855A2197DD4e3Ba3",
+      "launchedAt": "2026-04-02T18:50:18.196Z",
+      "launchOutput": "Job ID:  job_H54JU8EBTNRF6NTB\nThread ID:  thr_QMRSSBYWE54GNJQV\n\n\nyour token has been deployed! the ca is 0xbd690d78bD1350f65a9274A1855A2197DD4e3Ba3\n\nview it on bankr: https://www.bankr.bot/launches/0xbd690d78bD1350f65a9274A1855A2197DD4e3Ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 23.0s (job_H54JU8EBTNRF6NTB)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T20:30:02.468Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T03:30:00.780Z"
+        }
+      }
+    },
+    {
+      "name": "AWESOME",
+      "symbol": "AWESOME",
+      "strategy": "trending",
+      "topic": "trending",
+      "contractAddress": "0x2F632031D4558d5475aE82957C252Cd787eCDBa3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x2F632031D4558d5475aE82957C252Cd787eCDBa3",
+      "launchedAt": "2026-04-02T19:00:32.539Z",
+      "launchOutput": "Job ID:  job_7GKDP445CU8U4MPN\nThread ID:  thr_UKZ537JYTPZ4NCXU\n\n\nyour token has been deployed! the ca is 0x2F632031D4558d5475aE82957C252Cd787eCDBa3\n\nview it on bankr: https://www.bankr.bot/launches/0x2F632031D4558d5475aE82957C252Cd787eCDBa3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 23.6s (job_7GKDP445CU8U4MPN)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T20:30:03.280Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T03:30:01.285Z"
+        }
+      }
+    },
+    {
+      "name": "Defense of the Agents",
+      "symbol": "DOTA",
+      "strategy": "live_duplicate",
+      "topic": null,
+      "contractAddress": "0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3",
+      "launchedAt": "2026-04-03T08:00:46.136Z",
+      "launchOutput": "Job ID:  job_YWKWECPSNYUVEFFE\nThread ID:  thr_8CS24UUFYSFF2GSS\n\n\nyour token has been deployed! the ca is 0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x9b6F4E47B72C15D13e3E5d95807A934a0C166Ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 28.5s (job_YWKWECPSNYUVEFFE)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T09:30:01.582Z"
+        }
+      }
+    },
+    {
+      "name": "BOTCOIN",
+      "symbol": "BOTCOIN",
+      "strategy": "live_duplicate",
+      "topic": null,
+      "contractAddress": "0x844df404F3aad84a2F40462211346EC34b60CBA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x844df404F3aad84a2F40462211346EC34b60CBA3",
+      "launchedAt": "2026-04-03T09:00:43.311Z",
+      "launchOutput": "Job ID:  job_AR3RWEUK4CQEFAGV\nThread ID:  thr_4NWQT3JLYE7WGC6P\n\n\nyour token has been deployed! the ca is 0x844df404F3aad84a2F40462211346EC34b60CBA3\n\nview it on bankr: https://www.bankr.bot/launches/0x844df404F3aad84a2F40462211346EC34b60CBA3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 27.2s (job_AR3RWEUK4CQEFAGV)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T11:30:01.496Z"
+        }
+      }
+    },
+    {
+      "name": "BOTCOIN",
+      "symbol": "BOTCOIN",
+      "strategy": "live_duplicate",
+      "topic": null,
+      "contractAddress": "0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3",
+      "launchedAt": "2026-04-03T11:00:32.754Z",
+      "launchOutput": "Job ID:  job_YLCT4BRDN4LHV8KS\nThread ID:  thr_NLNUFN42Z3PQ6QZW\n\n\nyour token has been deployed! the ca is 0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3\n\nview it on bankr: https://www.bankr.bot/launches/0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 21.9s (job_YLCT4BRDN4LHV8KS)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T13:30:01.401Z"
+        }
+      }
+    },
+    {
+      "name": "BOTCOIN",
+      "symbol": "BOTCOIN",
+      "strategy": "live_duplicate",
+      "topic": null,
+      "contractAddress": "0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
+      "launchedAt": "2026-04-03T13:00:37.471Z",
+      "launchOutput": "Job ID:  job_ZUXLL6XJXBFWLYD3\nThread ID:  thr_A69KNGQUJ2AA4U6W\n\n\nyour token has been deployed! the ca is 0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 23.3s (job_ZUXLL6XJXBFWLYD3)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Omma AI",
+      "symbol": "Omma AI",
+      "strategy": "live_duplicate",
+      "topic": null,
+      "contractAddress": "0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
+      "launchedAt": "2026-04-03T14:00:35.660Z",
+      "launchOutput": "Job ID:  job_NB4SW8KYRMFURVUH\nThread ID:  thr_89Q3N2FURPVWLCRE\n\n\nyour token has been deployed! the ca is 0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3\n\nview it on bankr: https://www.bankr.bot/launches/0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3\n\n- Submitting prompt...\n✔ Prompt submitted\n- Processing...\n✔ Completed in 22.2s (job_NB4SW8KYRMFURVUH)",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 3,
+    "totalLaunched": 16,
     "totalFeesEarned": 0,
     "totalFeesClaimed": 0
   },
-  "lastLaunchDate": "2026-03-31",
-  "launchesToday": 3,
-  "dailyHistory": []
+  "lastLaunchDate": "2026-04-03",
+  "launchesToday": 5,
+  "dailyHistory": [
+    {
+      "date": "2026-03-31",
+      "launched": 0
+    }
+  ],
+  "clubGoal": {
+    "target": 0.01,
+    "subscribed": false
+  }
 }

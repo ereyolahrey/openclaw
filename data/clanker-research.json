@@ -1,0 +1,121 @@
+{
+  "hotTokens": [
+    {
+      "name": "tokenbot",
+      "symbol": "CLANKER",
+      "vol24": 248188,
+      "mc": 24661150,
+      "txns24": 784,
+      "addr": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb"
+    },
+    {
+      "name": "tokenbot",
+      "symbol": "CLANKER",
+      "vol24": 40168,
+      "mc": 24740045,
+      "txns24": 417,
+      "addr": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb"
+    },
+    {
+      "name": "tokenbot",
+      "symbol": "CLANKER",
+      "vol24": 35817,
+      "mc": 24771039,
+      "txns24": 117,
+      "addr": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb"
+    }
+  ],
+  "trendingRepos": [
+    {
+      "repo": "sindresorhus/awesome",
+      "name": "awesome",
+      "stars": 451313,
+      "topic": "general"
+    },
+    {
+      "repo": "freeCodeCamp/freeCodeCamp",
+      "name": "freeCodeCamp",
+      "stars": 440610,
+      "topic": "general"
+    },
+    {
+      "repo": "public-apis/public-apis",
+      "name": "public-apis",
+      "stars": 418547,
+      "topic": "general"
+    },
+    {
+      "repo": "EbookFoundation/free-programming-books",
+      "name": "free-programming-books",
+      "stars": 384931,
+      "topic": "general"
+    },
+    {
+      "repo": "kamranahmedse/developer-roadmap",
+      "name": "developer-roadmap",
+      "stars": 352099,
+      "topic": "general"
+    },
+    {
+      "repo": "openclaw/openclaw",
+      "name": "openclaw",
+      "stars": 346256,
+      "topic": "ai"
+    },
+    {
+      "repo": "donnemartin/system-design-primer",
+      "name": "system-design-primer",
+      "stars": 341155,
+      "topic": "general"
+    },
+    {
+      "repo": "vinta/awesome-python",
+      "name": "awesome-python",
+      "stars": 290368,
+      "topic": "general"
+    },
+    {
+      "repo": "awesome-selfhosted/awesome-selfhosted",
+      "name": "awesome-selfhosted",
+      "stars": 283629,
+      "topic": "general"
+    },
+    {
+      "repo": "facebook/react",
+      "name": "react",
+      "stars": 244350,
+      "topic": "general"
+    },
+    {
+      "repo": "torvalds/linux",
+      "name": "linux",
+      "stars": 226657,
+      "topic": "general"
+    },
+    {
+      "repo": "TheAlgorithms/Python",
+      "name": "Python",
+      "stars": 219237,
+      "topic": "general"
+    },
+    {
+      "repo": "ossu/computer-science",
+      "name": "computer-science",
+      "stars": 202887,
+      "topic": "general"
+    },
+    {
+      "repo": "tensorflow/tensorflow",
+      "name": "tensorflow",
+      "stars": 194441,
+      "topic": "ai"
+    },
+    {
+      "repo": "ohmyzsh/ohmyzsh",
+      "name": "ohmyzsh",
+      "stars": 185864,
+      "topic": "general"
+    }
+  ],
+  "lastFetch": "2026-04-03T04:04:08.045Z"
+}

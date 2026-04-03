@@ -1,30 +1,32 @@
 /**
- * Bankr Token Launcher Agent v3 — Self-Learning & Adaptive
+ * Bankr Token Launcher Agent v4 — Real-Time Duplication Engine
  *
  * GOALS:
  *   1. Max out 10 token launches EVERY SINGLE DAY
- *   2. Track volume per token to learn what works
- *   3. Auto-rebalance strategy mix toward highest performers
- *   4. Save up fees to subscribe to Bankr Club ($20/mo → 95% fee share)
- *   5. Continuously research and adapt
+ *   2. Monitor FRESH launches with volume in real-time
+ *   3. Duplicate EXACT names of tokens getting volume RIGHT NOW
+ *   4. Clone top bankr token names (proven $50K-$200K+ daily volume)
+ *   5. Use trending keywords that trigger sniper bot buys
  *
- * Three strategies with adaptive weighting:
- *   1. GitHub Repo Tokens — the #1 volume meta
- *   2. AI/Agent Sniper Keywords — triggers sniper bot buys
- *   3. Duplicate Hot Token Strategy — copies high-volume tokens
+ * Research-backed strategies:
+ *   1. live_duplicate — Copy fresh tokens (<24h) with volume from bankr/clanker
+ *   2. top_clone — Duplicate names of top 20 bankr tokens by volume
+ *   3. trending — Current event/keyword tokens (sniper bots scan for these)
+ *   4. agent_meta — Agent narrative tokens (99% of top bankr tokens are agents)
  *
- * Self-learning loop:
- *   - After launch, checks DexScreener volume at 1h, 6h, 24h intervals
- *   - Scores each strategy by avg volume generated
- *   - Shifts next day's strategy mix toward what's earning
- *   - Logs performance insights for continuous improvement
+ * WHY this works:
+ *   - Sniper bots scan for trending keywords in new token names
+ *   - Top bankr tokens ($CLAWD $217K/day) prove agent narrative drives volume
+ *   - Fresh duplicates of hot tokens always get some bot buys
+ *   - The key is SPEED: duplicate what's trending NOW, not yesterday
  */
 require("dotenv").config();
-const { execSync } = require("child_process");
+const { execSync, spawnSync } = require("child_process");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const { Logger } = require("../utils/logger");
+const { getTokenImageUrl } = require("../utils/token-image-gen");
 
 const DATA_DIR = path.join(__dirname, "..", "..", "data");
 const TOKENS_FILE = path.join(DATA_DIR, "bankr-tokens.json");
@@ -35,106 +37,79 @@ const PERFORMANCE_FILE = path.join(DATA_DIR, "bankr-performance.json");
 const CLUB_COST_WETH = 0.01;
 
 // ════════════════════════════════════════════════════
-// STRATEGY 1: GitHub Repo Tokens (highest volume meta)
+// STRATEGY 1: TOP BANKR TOKEN CLONES
+// These are the ACTUAL top 20 bankr tokens with $50K-$200K+ daily volume
+// Duplicating their exact names/themes gets bot attention
 // ════════════════════════════════════════════════════
-const GITHUB_REPO_POOL = [
-  // AI/ML repos (top volume keywords that trigger sniper bots)
-  { repo: "openai/whisper", name: "WHISPER", topic: "ai" },
-  { repo: "langchain-ai/langchain", name: "LANGCHAIN", topic: "ai" },
-  { repo: "ggerganov/llama.cpp", name: "LLAMA.CPP", topic: "ai" },
-  { repo: "AUTOMATIC1111/stable-diffusion-webui", name: "STABLE-DIFFUSION-WEBUI", topic: "ai" },
-  { repo: "comfyanonymous/ComfyUI", name: "COMFYUI", topic: "ai" },
-  { repo: "lm-sys/FastChat", name: "FASTCHAT", topic: "ai" },
-  { repo: "openai/openai-cookbook", name: "OPENAI-COOKBOOK", topic: "ai" },
-  { repo: "deepseek-ai/DeepSeek-Coder", name: "DEEPSEEK-CODER", topic: "ai" },
-  { repo: "meta-llama/llama", name: "LLAMA", topic: "ai" },
-  { repo: "Stability-AI/generative-models", name: "GENERATIVE-MODELS", topic: "ai" },
-  { repo: "mlc-ai/mlc-llm", name: "MLC-LLM", topic: "ai" },
-  { repo: "OpenBMB/ChatDev", name: "CHATDEV", topic: "ai" },
-  { repo: "smol-ai/developer", name: "SMOL-DEVELOPER", topic: "ai" },
-  { repo: "princeton-nlp/SWE-agent", name: "SWE-AGENT", topic: "ai" },
-  { repo: "anthropics/courses", name: "ANTHROPIC-COURSES", topic: "ai" },
-  { repo: "open-webui/open-webui", name: "OPEN-WEBUI", topic: "ai" },
-  { repo: "TabbyML/tabby", name: "TABBY", topic: "ai" },
-  { repo: "run-llama/llama_index", name: "LLAMA-INDEX", topic: "ai" },
-  // Developer tools repos (proven bankr volume generators)
-  { repo: "docker/compose", name: "DOCKER-COMPOSE", topic: "devtools" },
-  { repo: "grafana/grafana", name: "GRAFANA", topic: "devtools" },
-  { repo: "prometheus/prometheus", name: "PROMETHEUS", topic: "devtools" },
-  { repo: "hashicorp/terraform", name: "TERRAFORM", topic: "devtools" },
-  { repo: "kubernetes/minikube", name: "MINIKUBE", topic: "devtools" },
-  { repo: "vercel/next.js", name: "NEXT.JS", topic: "devtools" },
-  { repo: "supabase/supabase", name: "SUPABASE", topic: "devtools" },
-  { repo: "denoland/deno", name: "DENO", topic: "devtools" },
-  { repo: "bun-sh/bun", name: "BUN", topic: "devtools" },
-  { repo: "astral-sh/ruff", name: "RUFF", topic: "devtools" },
-  { repo: "pnpm/pnpm", name: "PNPM", topic: "devtools" },
-  { repo: "tauri-apps/tauri", name: "TAURI", topic: "devtools" },
-  { repo: "vitejs/vite", name: "VITE", topic: "devtools" },
-  { repo: "biomejs/biome", name: "BIOME", topic: "devtools" },
-  { repo: "neovim/neovim", name: "NEOVIM", topic: "devtools" },
-  { repo: "tmux/tmux", name: "TMUX", topic: "devtools" },
-  // Crypto/Web3 repos
-  { repo: "foundry-rs/foundry", name: "FOUNDRY", topic: "crypto" },
-  { repo: "paradigmxyz/reth", name: "RETH", topic: "crypto" },
-  { repo: "Uniswap/v4-core", name: "UNISWAP-V4", topic: "crypto" },
-  { repo: "aave/aave-v3-core", name: "AAVE-V3", topic: "crypto" },
-  { repo: "solana-labs/solana", name: "SOLANA-CORE", topic: "crypto" },
-  // Viral/trending repos
-  { repo: "yt-dlp/yt-dlp", name: "YT-DLP", topic: "viral" },
-  { repo: "practical-tutorials/project-based-learning", name: "PROJECT-BASED-LEARNING", topic: "viral" },
-  { repo: "codecrafters-io/build-your-own-x", name: "BUILD-YOUR-OWN-X", topic: "viral" },
-  { repo: "krahets/hello-algo", name: "HELLO-ALGO", topic: "viral" },
-  { repo: "rustdesk/rustdesk", name: "RUSTDESK", topic: "viral" },
-  { repo: "excalidraw/excalidraw", name: "EXCALIDRAW", topic: "viral" },
+const TOP_BANKR_CLONES = [
+  // Top earners ($100K+ vol/day) — clone these first
+  { name: "GITLAWB", symbol: "GITLAWB", reason: "$217K vol/day, highest vol/mc ratio" },
+  { name: "FELIX", symbol: "FELIX", reason: "$151K vol/day, agent token" },
+  { name: "KellyClaude", symbol: "KELLY", reason: "$144K vol/day, AI agent" },
+  { name: "Robot Money", symbol: "ROBOTMONEY", reason: "$85K vol/day" },
+  { name: "cyb3rwr3n", symbol: "CYB3R", reason: "$87K vol/day, agent" },
+  { name: "CLAWD", symbol: "CLAWD", reason: "$86K vol/day, #1 MC on bankr" },
+  { name: "AGNT SOCIAL", symbol: "AGNT", reason: "$79K vol/day, agent narrative" },
+
+  // Mid-tier ($20K-$80K vol/day)
+  { name: "Juno Agent", symbol: "JUNO", reason: "$71K vol/day, agent" },
+  { name: "Moltbook", symbol: "MOLT", reason: "$66K vol/day" },
+  { name: "LITCOIN", symbol: "LITCOIN", reason: "$38K vol/day, GOING UP +9.6%" },
+  { name: "Doppel", symbol: "DOPPEL", reason: "$40K vol/day" },
+  { name: "BOTCOIN", symbol: "BOTCOIN", reason: "$28K vol/day, bot/agent" },
+  { name: "SAIRI", symbol: "SAIRI", reason: "$26K vol/day, AI narrative" },
+  { name: "AntiHunter", symbol: "ANTIHUNTER", reason: "$20K vol/day" },
+  { name: "Molten", symbol: "MOLTEN", reason: "$17K vol/day" },
 ];
 
 // ════════════════════════════════════════════════════
-// STRATEGY 2: AI/Agent Sniper Bot Keyword Tokens
+// STRATEGY 2: AGENT META TOKENS
+// 99% of successful bankr tokens are agent-themed
+// These names combine AI + agent + crypto culture
 // ════════════════════════════════════════════════════
-const SNIPER_KEYWORD_TOKENS = [
-  { name: "Autonomous Trading Agent", symbol: "AUTOTRADE" },
-  { name: "Neural Protocol Agent", symbol: "NPROTOCOL" },
-  { name: "GPT Trading Bot", symbol: "GPTBOT" },
-  { name: "AI Hedge Fund Agent", symbol: "AIHEDGE" },
-  { name: "Autonomous AI Robot", symbol: "AIROBOT" },
-  { name: "GPT Agent Protocol", symbol: "GPTAGENT" },
-  { name: "Neural Network Bot", symbol: "NEURALBOT" },
-  { name: "Autonomous DeFi Agent", symbol: "DEFAGENT" },
-  { name: "AI Protocol Agent", symbol: "AIPROTOCOL" },
-  { name: "Robot Trading Agent", symbol: "ROBTRADE" },
-  { name: "Autonomous Sniper Bot", symbol: "AUTOSNIPE" },
-  { name: "GPT Neural Agent", symbol: "GPTNEURAL" },
-  { name: "AI Agent Protocol", symbol: "AIAGENTP" },
-  { name: "Autonomous Robot AI", symbol: "AUTOROBOT" },
-  { name: "Neural AI Agent Bot", symbol: "NEURALAI" },
-  { name: "Agent Protocol GPT", symbol: "AGENTGPT" },
-  { name: "Autonomous Protocol Bot", symbol: "AUTOBOT" },
-  { name: "GPT Autonomous Agent", symbol: "GPTAUTO" },
-  { name: "AI Neural Protocol", symbol: "AINEURAL" },
-  { name: "Robot Agent Protocol", symbol: "ROBOTAIP" },
-  { name: "DeepSeek Autonomous Agent", symbol: "DEEPAGENT" },
-  { name: "Claude Code Agent", symbol: "CLAUDEBOT" },
-  { name: "AI Quant Protocol", symbol: "AIQUANT" },
-  { name: "Neural DeFi Robot", symbol: "NEUDEFI" },
-  { name: "GPT Market Agent", symbol: "GPTMKT" },
+const AGENT_META_TOKENS = [
+  { name: "Defense of the Agents", symbol: "DOTA", reason: "$232K vol, gaming+agent narrative" },
+  { name: "Agent Zero", symbol: "AGENT0" },
+  { name: "Onchain Brain", symbol: "BRAIN" },
+  { name: "Sentient Coin", symbol: "SENTIENT" },
+  { name: "DegenAI", symbol: "DEGENAI" },
+  { name: "Based Agent", symbol: "BAGENT" },
+  { name: "AI Fren", symbol: "AIFREN" },
+  { name: "Neural Protocol", symbol: "NEURAL" },
+  { name: "Agent Smith", symbol: "SMITH" },
+  { name: "Skynet", symbol: "SKYNET" },
+  { name: "Autonomous Bot", symbol: "AUTOBOT" },
+  { name: "GPT Protocol", symbol: "GPT" },
+  { name: "Robot Overlord", symbol: "OVERLORD" },
+  { name: "Singularity", symbol: "SING" },
+  { name: "Turbo AI", symbol: "TURBO" },
 ];
 
 // ════════════════════════════════════════════════════
-// STRATEGY 3: Duplicate Hot Token Names
+// STRATEGY 3: TRENDING KEYWORD TOKENS
+// Sniper bots scan for these keywords in new launches
+// Updated based on what's generating volume RIGHT NOW
 // ════════════════════════════════════════════════════
-const HOT_TOKEN_DUPLICATES = [
-  { name: "Defense of the Agents", symbol: "DOTA" },
-  { name: "Zen Browser", symbol: "ZEN" },
-  { name: "Personal Computer", symbol: "PC" },
-  { name: "Adaptive Computer", symbol: "AC" },
-  { name: "Virtual Protocol", symbol: "VIRTUAL" },
-  { name: "tokenbot", symbol: "CLANKER" },
-  { name: "Robot Money", symbol: "ROBOTMONEY" },
+const TRENDING_KEYWORD_TOKENS = [
+  // Tokens that got volume in last 24h from keyword matching
+  { name: "gork", symbol: "GORK", reason: "$652 vol in 1h, xAI/Elon keyword" },
+  { name: "BasePEPE", symbol: "BASEPEPE", reason: "$1.1K vol in 9h, Pepe on Base" },
+  { name: "trump on base", symbol: "TRUMP", reason: "trending political keyword" },
+  { name: "tariff coin", symbol: "TARIFF", reason: "trending news keyword" },
+  { name: "Solana", symbol: "SOL", reason: "cross-chain name duplicate" },
+  { name: "Fartcoin", symbol: "FART", reason: "$3.5K vol, viral meme" },
+  { name: "Higher", symbol: "HIGHER", reason: "Base culture token" },
+  { name: "Toshi", symbol: "TOSHI", reason: "Base OG culture" },
+  { name: "Brett", symbol: "BRETT", reason: "Base blue chip meme" },
+  { name: "Degen", symbol: "DEGEN", reason: "Base native culture" },
+  { name: "Normie", symbol: "NORMIE", reason: "Base meme" },
+  { name: "Aero", symbol: "AERO", reason: "Aerodrome reference" },
 ];
 
-// Default strategy weights (will be overridden by adaptive learning)
-const DEFAULT_STRATEGY_MIX = { github: 5, sniper: 3, duplicate: 1, trending: 1 };
+// Default strategy weights — live_duplicate dominates because
+// duplicating tokens that ALREADY have volume is the only proven way to get volume.
+// Research: 0 of 21 tokens with static names got any volume. All winners are duplicates.
+const DEFAULT_STRATEGY_MIX = { live_duplicate: 6, top_clone: 2, agent_meta: 1, trending: 1 };
 
 class BankrLauncher {
   constructor({ notifiers = [], config = {} }) {
@@ -197,15 +172,36 @@ class BankrLauncher {
 
   _loadPerformanceData() {
     try {
-      if (fs.existsSync(PERFORMANCE_FILE)) return JSON.parse(fs.readFileSync(PERFORMANCE_FILE, "utf8"));
+      if (fs.existsSync(PERFORMANCE_FILE)) {
+        const data = JSON.parse(fs.readFileSync(PERFORMANCE_FILE, "utf8"));
+        // Migrate old strategies to new ones
+        if (data.adaptiveMix && (data.adaptiveMix.github !== undefined || data.adaptiveMix.meme !== undefined)) {
+          data.adaptiveMix = { ...DEFAULT_STRATEGY_MIX };
+          data.strategyScores = {
+            live_duplicate: { totalVol: 0, count: 0 },
+            top_clone: { totalVol: 0, count: 0 },
+            agent_meta: { totalVol: 0, count: 0 },
+            trending: { totalVol: 0, count: 0 },
+          };
+        }
+        return data;
+      }
     } catch {}
     return {
-      strategyScores: { github: { totalVol: 0, count: 0 }, sniper: { totalVol: 0, count: 0 }, duplicate: { totalVol: 0, count: 0 }, trending: { totalVol: 0, count: 0 } },
-      topicScores: {},     // e.g. { ai: { totalVol, count }, devtools: {...} }
+      strategyScores: {
+        live_duplicate: { totalVol: 0, count: 0 },
+        top_clone: { totalVol: 0, count: 0 },
+        agent_meta: { totalVol: 0, count: 0 },
+        trending: { totalVol: 0, count: 0 },
+      },
+      topicScores: {},
       adaptiveMix: { ...DEFAULT_STRATEGY_MIX },
-      volumeChecks: [],    // tokens pending volume check
+      volumeChecks: [],
       lastAdaptation: null,
-      insights: [],        // log of strategy changes
+      insights: [],
+      // NEW: Cache of fresh tokens with volume discovered in real-time
+      freshVolumeTokens: [],
+      lastFreshScan: null,
     };
   }
 
@@ -230,7 +226,7 @@ class BankrLauncher {
         encoding: "utf8",
         timeout,
         stdio: ["pipe", "pipe", "pipe"],
-        input: "\n\n\n\n",
+        input: "\n\n\n\n\n\n\n\n\n\n",
       });
       return result.trim();
     } catch (e) {
@@ -238,6 +234,63 @@ class BankrLauncher {
       const stdout = e.stdout ? e.stdout.toString() : "";
       throw new Error(`bankr ${args} failed: ${stderr || stdout || e.message}`);
     }
+  }
+
+  // Direct CLI launch using flags — avoids interactive wizard entirely
+  // Uses spawnSync to capture both stdout and stderr properly
+  _runBankrLaunch(name, symbol, imageUrl, timeout = 180000) {
+    const walletAddr = process.env.BANKR_FEE_WALLET || "0x162ee01a2eab184f6698ec8663ad84c4ee506733";
+    const safeName = name.replace(/"/g, '\\"');
+    const safeSymbol = symbol.replace(/"/g, '\\"');
+
+    // Strategy A: Use bankr agent (worked for LLAMA — handles deploy asynchronously)
+    const imageInstruction = imageUrl
+      ? `use this image for the token: ${imageUrl}`
+      : "generate an image for the token.";
+    const agentPrompt = `launch a token with name "${safeName}" and symbol "${safeSymbol}". set fee recipient to wallet address ${walletAddr}. ${imageInstruction}`;
+    this.log.info(`Agent prompt: ${agentPrompt}`);
+    try {
+      const result = spawnSync("bankr", ["agent", agentPrompt], {
+        encoding: "utf8",
+        timeout,
+        stdio: ["pipe", "pipe", "pipe"],
+        input: "\n\n\n\n\n\n\n\n\n\n",
+        shell: true,
+      });
+      const allOutput = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
+      this.log.info(`Agent output (exit ${result.status}): ${allOutput.substring(0, 500)}`);
+
+      // Check if output contains contract address (success)
+      if (/0x[a-fA-F0-9]{40}/.test(allOutput)) {
+        return allOutput;
+      }
+
+      // If agent worked but no address, try direct launch as fallback
+      this.log.info("Agent returned no contract address. Trying direct launch...");
+    } catch (e) {
+      this.log.warn(`Agent launch failed: ${e.message}. Trying direct launch...`);
+    }
+
+    // Strategy B: Direct bankr launch with flags
+    const cmd = `bankr launch --name "${safeName}" --symbol "${safeSymbol}" --fee ${walletAddr} --fee-type wallet --yes`;
+    this.log.info(`Direct CLI: ${cmd}`);
+    const result = spawnSync(cmd, {
+      encoding: "utf8",
+      timeout,
+      stdio: ["pipe", "pipe", "pipe"],
+      input: "\n\n\n\n\n\n\n\n\n\n",
+      shell: true,
+    });
+    const allOutput = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
+    this.log.info(`Direct output (exit ${result.status}): ${allOutput.substring(0, 500)}`);
+
+    if (/0x[a-fA-F0-9]{40}/.test(allOutput)) {
+      return allOutput;
+    }
+    if (result.status !== 0 || !allOutput) {
+      throw new Error(`bankr launch failed (exit ${result.status}): ${allOutput.substring(0, 300)}`);
+    }
+    return allOutput;
   }
 
   // ── DAILY LIMIT & TIMING ──
@@ -279,24 +332,22 @@ class BankrLauncher {
   _selectStrategy() {
     const mix = this._getAdaptiveMix();
     const today = this.tokenData.launchesToday;
-    const day = this._getDayOfWeek();
-    const isHighVolDay = day === 1 || day === 2;
 
     // Build thresholds from adaptive mix
-    const githubEnd = mix.github + (isHighVolDay ? 1 : 0);
-    const sniperEnd = githubEnd + mix.sniper - (isHighVolDay ? 1 : 0);
-    const dupEnd = sniperEnd + mix.duplicate;
+    const liveDupEnd = mix.live_duplicate || 4;
+    const topCloneEnd = liveDupEnd + (mix.top_clone || 3);
+    const agentEnd = topCloneEnd + (mix.agent_meta || 2);
 
-    if (today < githubEnd) return "github";
-    if (today < sniperEnd) return "sniper";
-    if (today < dupEnd) return "duplicate";
+    if (today < liveDupEnd) return "live_duplicate";
+    if (today < topCloneEnd) return "top_clone";
+    if (today < agentEnd) return "agent_meta";
     return "trending";
   }
 
   // Rebalance strategy weights based on volume performance data
   _adaptStrategies() {
     const scores = this.perfData.strategyScores;
-    const strategies = ["github", "sniper", "duplicate", "trending"];
+    const strategies = ["live_duplicate", "top_clone", "agent_meta", "trending"];
     const avgVols = {};
     let hasData = false;
 
@@ -312,38 +363,21 @@ class BankrLauncher {
       return;
     }
 
-    // Rank strategies by avg volume
     const ranked = Object.entries(avgVols).sort((a, b) => b[1] - a[1]);
     const oldMix = { ...this.perfData.adaptiveMix };
-
-    // Allocate 10 slots: top strategy gets 5, second gets 3, third gets 1, fourth gets 1
-    // But ensure minimum 1 slot each for exploration
     const slotAlloc = [5, 3, 1, 1];
     const newMix = {};
     for (let i = 0; i < ranked.length; i++) {
       newMix[ranked[i][0]] = slotAlloc[i];
     }
-    // Fill in strategies without data at minimum 1
     for (const s of strategies) {
       if (!(s in newMix)) newMix[s] = 1;
     }
-    // Normalize to exactly 10
     const total = Object.values(newMix).reduce((a, b) => a + b, 0);
-    if (total !== 10) {
-      newMix[ranked[0][0]] += 10 - total;
-    }
+    if (total !== 10) newMix[ranked[0][0]] += 10 - total;
 
     this.perfData.adaptiveMix = newMix;
-
-    // Log the adaptation
-    const insight = {
-      date: new Date().toISOString(),
-      avgVols,
-      oldMix,
-      newMix,
-      topStrategy: ranked[0][0],
-    };
-    this.perfData.insights.push(insight);
+    this.perfData.insights.push({ date: new Date().toISOString(), avgVols, oldMix, newMix, topStrategy: ranked[0][0] });
     if (this.perfData.insights.length > 30) this.perfData.insights.shift();
     this.perfData.lastAdaptation = new Date().toISOString();
     this._savePerformanceData();
@@ -357,74 +391,67 @@ class BankrLauncher {
 
   // ── STRATEGY PICKERS ──
 
-  _pickGitHubRepoToken() {
-    const usedNames = new Set(this.tokenData.tokens.map(t => t.symbol));
-    let available = GITHUB_REPO_POOL.filter(r => !usedNames.has(r.name));
-
-    if (available.length === 0) {
-      if (this.researchData.trendingRepos.length > 0) {
-        const repo = this.researchData.trendingRepos.shift();
-        this._saveResearchData();
-        return repo;
-      }
-      const base = GITHUB_REPO_POOL[Math.floor(Math.random() * GITHUB_REPO_POOL.length)];
-      const v = Math.floor(Math.random() * 9) + 2;
-      return { ...base, name: `${base.name}-V${v}` };
+  // LIVE DUPLICATE: Pick from freshly discovered tokens that have volume
+  _pickLiveDuplicateToken() {
+    const fresh = this.perfData.freshVolumeTokens || [];
+    if (fresh.length > 0) {
+      // Sort by volume descending, pick from top weighted
+      const sorted = [...fresh].sort((a, b) => (b.vol24 || 0) - (a.vol24 || 0));
+      const pick = sorted[0]; // Best one
+      this.log.info(`Live duplicate pick: ${pick.symbol} (vol24=$${pick.vol24}, source: ${pick.source})`);
+      // Remove from list so we don't duplicate the same one twice
+      this.perfData.freshVolumeTokens = fresh.filter(t => t.symbol !== pick.symbol);
+      this._savePerformanceData();
+      return { name: pick.name, symbol: pick.symbol };
     }
-
-    // Use topic performance data to pick the best topic
-    const topicScores = this.perfData.topicScores || {};
-    const topicAvgs = {};
-    for (const [topic, data] of Object.entries(topicScores)) {
-      if (data.count >= 2) topicAvgs[topic] = data.totalVol / data.count;
-    }
-
-    if (Object.keys(topicAvgs).length > 0) {
-      // Pick from the highest-performing topic 70% of the time
-      const bestTopic = Object.entries(topicAvgs).sort((a, b) => b[1] - a[1])[0][0];
-      const topicRepos = available.filter(r => r.topic === bestTopic);
-      if (topicRepos.length > 0 && Math.random() < 0.7) {
-        return topicRepos[Math.floor(Math.random() * topicRepos.length)];
-      }
-    }
-
-    // Default: prioritize AI repos 60% of the time
-    const aiRepos = available.filter(r => r.topic === "ai");
-    if (aiRepos.length > 0 && Math.random() < 0.6) {
-      return aiRepos[Math.floor(Math.random() * aiRepos.length)];
-    }
-    return available[Math.floor(Math.random() * available.length)];
+    // Fallback to top bankr clones if no fresh data yet
+    this.log.info("No fresh volume tokens cached. Falling back to top_clone.");
+    return this._pickTopCloneToken();
   }
 
-  _formatGitHubToken(repoInfo) {
-    const fullName = `${repoInfo.name} github.com/${repoInfo.repo}`;
-    return { name: fullName, symbol: repoInfo.name, strategy: "github", topic: repoInfo.topic };
+  // TOP CLONE: Duplicate exact names of top bankr tokens
+  _pickTopCloneToken() {
+    const usedSymbols = new Set(this.tokenData.tokens.map(t => t.symbol));
+    const available = TOP_BANKR_CLONES.filter(t => !usedSymbols.has(t.symbol));
+    if (available.length === 0) {
+      // Cycle through — add version suffix
+      const base = TOP_BANKR_CLONES[Math.floor(Math.random() * TOP_BANKR_CLONES.length)];
+      const v = Math.floor(Math.random() * 99) + 2;
+      return { name: base.name, symbol: base.symbol + v };
+    }
+    // Pick from top earners first (higher weight to higher volume tokens)
+    const pick = available[0]; // Already sorted by volume in the constant
+    return { name: pick.name, symbol: pick.symbol };
   }
 
-  _pickSniperToken() {
-    const usedNames = new Set(this.tokenData.tokens.map(t => t.symbol));
-    const available = SNIPER_KEYWORD_TOKENS.filter(t => !usedNames.has(t.symbol));
-
+  // AGENT META: Agent-themed tokens (99% of top bankr tokens)
+  _pickAgentMetaToken() {
+    const usedSymbols = new Set(this.tokenData.tokens.map(t => t.symbol));
+    const available = AGENT_META_TOKENS.filter(t => !usedSymbols.has(t.symbol));
     if (available.length === 0) {
-      const prefixes = ["Autonomous", "Neural", "GPT", "AI", "Robot", "DeepSeek", "Claude"];
-      const middles = ["Trading", "Protocol", "DeFi", "Agent", "Network", "Quant", "Market"];
-      const suffixes = ["Agent", "Bot", "Protocol", "AI", "Robot", "Engine", "System"];
+      const prefixes = ["Agent", "Neural", "Autonomous", "Sentient", "AI", "Based"];
+      const nouns = ["Protocol", "Bot", "Agent", "Network", "Coin", "Money"];
       const p = prefixes[Math.floor(Math.random() * prefixes.length)];
-      const m = middles[Math.floor(Math.random() * middles.length)];
-      const s = suffixes[Math.floor(Math.random() * suffixes.length)];
-      const name = `${p} ${m} ${s}`;
-      const symbol = (p.slice(0, 3) + m[0] + s[0] + Math.floor(Math.random() * 100)).toUpperCase();
-      return { name, symbol };
+      const n = nouns[Math.floor(Math.random() * nouns.length)];
+      return { name: `${p} ${n}`, symbol: (p.slice(0, 4) + n.slice(0, 4)).toUpperCase() };
     }
     return available[Math.floor(Math.random() * available.length)];
   }
 
-  _pickDuplicateToken() {
-    if (this.researchData.hotTokens.length > 0) {
-      const hot = this.researchData.hotTokens[Math.floor(Math.random() * this.researchData.hotTokens.length)];
-      return { name: hot.name, symbol: hot.symbol };
+  // TRENDING: Current event/keyword tokens
+  _pickTrendingToken() {
+    const usedSymbols = new Set(this.tokenData.tokens.map(t => t.symbol));
+    const available = TRENDING_KEYWORD_TOKENS.filter(t => !usedSymbols.has(t.symbol));
+    if (available.length > 0) {
+      return available[Math.floor(Math.random() * available.length)];
     }
-    return HOT_TOKEN_DUPLICATES[Math.floor(Math.random() * HOT_TOKEN_DUPLICATES.length)];
+    // Fallback: use trending repos
+    if (this.researchData.trendingRepos && this.researchData.trendingRepos.length > 0) {
+      const repo = this.researchData.trendingRepos.shift();
+      this._saveResearchData();
+      return { name: repo.name, symbol: (repo.name || "TOKEN").replace(/[^A-Z0-9]/gi, "").toUpperCase().slice(0, 8) };
+    }
+    return this._pickAgentMetaToken();
   }
 
   // ═══════════════════════════════════════════════════
@@ -543,39 +570,191 @@ class BankrLauncher {
     return fresh;
   }
 
-  async fetchHotBankrTokens() {
-    const data = await this._httpGet("https://api.dexscreener.com/latest/dex/search?q=github.com");
-    if (!data || !data.pairs) { this.log.warn("DexScreener fetch failed"); return []; }
+  // ═══════════════════════════════════════════════════
+  // REAL-TIME FRESH TOKEN SCANNER
+  // Monitors clanker.world + DexScreener for FRESH launches with volume
+  // This is the key differentiator — duplicate what's working RIGHT NOW
+  // ═══════════════════════════════════════════════════
 
-    const hot = data.pairs
-      .filter(p => p.chainId === "base" && p.volume?.h24 > 50000 && p.baseToken.address.toLowerCase().startsWith("0xadf"))
-      .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))
-      .slice(0, 15)
-      .map(p => ({
-        name: p.baseToken.name,
-        symbol: p.baseToken.symbol,
-        vol24: Math.round(p.volume?.h24 || 0),
-        mc: Math.round(p.marketCap || 0),
-      }));
+  async scanFreshLaunches() {
+    this.log.info("🔍 Scanning for fresh launches with volume...");
+    const found = [];
 
-    this.researchData.hotTokens = hot;
-    this._saveResearchData();
-    this.log.info(`Found ${hot.length} hot bankr tokens. Top: ${hot[0]?.symbol} ($${hot[0]?.vol24} vol)`);
-    return hot;
+    // 1. Scan clanker.world for newest tokens, check their volume
+    try {
+      const clankerData = await this._httpGet("https://www.clanker.world/api/tokens?sort=desc&limit=20");
+      if (clankerData?.data && Array.isArray(clankerData.data)) {
+        for (const t of clankerData.data.slice(0, 15)) {
+          const addr = t.contract_address || t.address;
+          if (!addr) continue;
+          try {
+            const dx = await this._httpGet(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
+            const vol = dx?.pairs?.[0]?.volume?.h24 || 0;
+            if (vol > 50) {
+              found.push({
+                name: t.name,
+                symbol: t.symbol,
+                vol24: Math.round(vol),
+                source: "clanker",
+                addr,
+                discoveredAt: new Date().toISOString(),
+              });
+              this.log.info(`  🎯 Fresh clanker: ${t.symbol} vol24=$${Math.round(vol)}`);
+            }
+            await new Promise(r => setTimeout(r, 300));
+          } catch (e) {}
+        }
+      }
+    } catch (e) { this.log.warn(`Clanker scan failed: ${e.message}`); }
+
+    // 2. Search DexScreener for fresh Base tokens with volume
+    // KEY INSIGHT: Use MANY specific searches. Each query only returns ~30 results,
+    // so breadth of search terms is critical to find fresh winners.
+    const searches = [
+      // Proven winners to duplicate
+      "gork", "BaseDOG", "BasePEPE", "defense agents", "DOTA base",
+      // Top bankr token names (cross-platform duplicates)
+      "CLAWD", "GITLAWB", "FELIX", "AGNT", "JUNO agent", "LITCOIN",
+      "BOTCOIN", "cyb3r", "KellyClaude", "robot money",
+      // Base + meme animal combos (BaseDOG got $47k)
+      "dog base", "cat base", "frog base", "pepe base", "shiba base",
+      // AI/Agent narrative (99% of top bankr tokens)
+      "agent base", "AI base token", "neural base", "GPT base",
+      "autonomous base", "sentient base", "bot base",
+      // Trending keywords that trigger sniper bots
+      "Grok base", "ChatGPT base", "Claude base", "Gemini base",
+      "trump base", "tariff base", "Elon base",
+      // Base culture tokens
+      "degen base", "higher base", "farcaster token", "based token",
+      // Fresh meme patterns
+      "meme base new", "fartcoin", "bonk base", "wojak base",
+      "moon base token", "pump base", "send base",
+      // Clanker ecosystem
+      "clanker", "bankr token",
+    ];
+
+    for (const q of searches) {
+      try {
+        const d = await this._httpGet(`https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(q)}`);
+        if (d?.pairs) {
+          d.pairs
+            .filter(p => {
+              if (p.chainId !== "base") return false;
+              const ageH = (Date.now() - (p.pairCreatedAt || 0)) / 3600000;
+              // Lower thresholds: any volume at all on a fresh token is signal
+              return ageH < 168 && (p.volume?.h24 || 0) > 100;
+            })
+            .slice(0, 5)
+            .forEach(p => {
+              if (!found.find(f => f.symbol === p.baseToken.symbol)) {
+                found.push({
+                  name: p.baseToken.name,
+                  symbol: p.baseToken.symbol,
+                  vol24: Math.round(p.volume?.h24 || 0),
+                  source: "dexscreener",
+                  addr: p.baseToken.address,
+                  discoveredAt: new Date().toISOString(),
+                });
+              }
+            });
+        }
+      } catch (e) {}
+    }
+
+    // 3. Deep search for ALL Base tokens with volume using broad queries
+    const broadSearches = ["base token new launch", "base meme coin", "base chain token"];
+    for (const q of broadSearches) {
+      try {
+        const d = await this._httpGet(`https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(q)}`);
+        if (d?.pairs) {
+          d.pairs
+            .filter(p => {
+              if (p.chainId !== "base") return false;
+              const ageH = (Date.now() - (p.pairCreatedAt || 0)) / 3600000;
+              return ageH < 168 && (p.volume?.h24 || 0) > 500;
+            })
+            .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))
+            .slice(0, 5)
+            .forEach(p => {
+              if (!found.find(f => f.symbol === p.baseToken.symbol)) {
+                found.push({
+                  name: p.baseToken.name,
+                  symbol: p.baseToken.symbol,
+                  vol24: Math.round(p.volume?.h24 || 0),
+                  source: "broad-search",
+                  addr: p.baseToken.address,
+                  discoveredAt: new Date().toISOString(),
+                });
+              }
+            });
+        }
+      } catch (e) {}
+    }
+
+    // 4. Search for the exact top bankr/clanker token names to cross-platform duplicate
+    const topTokenNames = ["CLAWD", "GITLAWB", "FELIX", "AGNT SOCIAL", "Juno Agent", "LITCOIN", "Defense of the Agents"];
+    for (const name of topTokenNames) {
+      try {
+        const d = await this._httpGet(`https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(name)}`);
+        if (d?.pairs) {
+          const best = d.pairs.filter(p => p.chainId === "base" && (p.volume?.h24 || 0) > 1000)
+            .sort((a, b) => (b.volume?.h24 || 0) - (a.volume?.h24 || 0))[0];
+          if (best && !found.find(f => f.symbol === best.baseToken.symbol)) {
+            found.push({
+              name: best.baseToken.name,
+              symbol: best.baseToken.symbol,
+              vol24: Math.round(best.volume?.h24 || 0),
+              source: "top-bankr-clone",
+              addr: best.baseToken.address,
+              discoveredAt: new Date().toISOString(),
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    // Sort by volume and cache
+    found.sort((a, b) => b.vol24 - a.vol24);
+    this.perfData.freshVolumeTokens = found.slice(0, 20);
+    this.perfData.lastFreshScan = new Date().toISOString();
+    this._savePerformanceData();
+
+    this.log.info(`Fresh scan complete: found ${found.length} tokens with volume. Top: ${found[0]?.symbol || "none"} ($${found[0]?.vol24 || 0})`);
+    if (found.length > 0) {
+      found.slice(0, 5).forEach(t => {
+        this.log.info(`  ${t.symbol.padEnd(14)} vol24=$${t.vol24} | ${t.name} | src=${t.source}`);
+      });
+    }
+    return found;
   }
 
-  // Also fetch new trending search terms to expand keyword coverage
-  async fetchTrendingKeywords() {
-    // Ask bankr's own AI for current insights
-    try {
-      const output = this._runBankr('agent "what tokens are trending on bankr right now? what keywords are generating the most volume this week?"', 60000);
-      this.researchData.latestBankrInsight = output.substring(0, 1000);
-      this.researchData.lastInsightFetch = new Date().toISOString();
-      this._saveResearchData();
-      this.log.info(`Bankr AI insight: ${output.substring(0, 200)}`);
-    } catch (e) {
-      this.log.warn(`Bankr insight fetch failed: ${e.message}`);
+  async fetchHotBankrTokens() {
+    // Search for high-volume tokens on Base that match bankr-style patterns
+    const searches = ["bankr", "agent base", "AI base token"];
+    const hot = [];
+
+    for (const q of searches) {
+      const data = await this._httpGet(`https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(q)}`);
+      if (!data?.pairs) continue;
+      data.pairs
+        .filter(p => p.chainId === "base" && (p.volume?.h24 || 0) > 10000)
+        .forEach(p => {
+          if (!hot.find(h => h.symbol === p.baseToken.symbol)) {
+            hot.push({
+              name: p.baseToken.name,
+              symbol: p.baseToken.symbol,
+              vol24: Math.round(p.volume?.h24 || 0),
+              mc: Math.round(p.marketCap || 0),
+            });
+          }
+        });
     }
+
+    hot.sort((a, b) => b.vol24 - a.vol24);
+    this.researchData.hotTokens = hot.slice(0, 15);
+    this._saveResearchData();
+    this.log.info(`Found ${hot.length} hot base tokens. Top: ${hot[0]?.symbol} ($${hot[0]?.vol24} vol)`);
+    return hot;
   }
 
   // ═══════════════════════════════════════════════════
@@ -628,32 +807,24 @@ class BankrLauncher {
       this.log.info(`Strategy: ${strategy} (launch ${this.tokenData.launchesToday + 1}/${this.config.maxLaunchesPerDay}) | Mix: ${JSON.stringify(this._getAdaptiveMix())}`);
 
       switch (strategy) {
-        case "github": {
-          const repo = this._pickGitHubRepoToken();
-          tokenInfo = this._formatGitHubToken(repo);
+        case "live_duplicate": {
+          const dup = this._pickLiveDuplicateToken();
+          tokenInfo = { ...dup, strategy: "live_duplicate" };
           break;
         }
-        case "sniper": {
-          const sniper = this._pickSniperToken();
-          tokenInfo = { ...sniper, strategy: "sniper" };
+        case "top_clone": {
+          const clone = this._pickTopCloneToken();
+          tokenInfo = { ...clone, strategy: "top_clone" };
           break;
         }
-        case "duplicate": {
-          const dup = this._pickDuplicateToken();
-          tokenInfo = { ...dup, strategy: "duplicate" };
+        case "agent_meta": {
+          const agent = this._pickAgentMetaToken();
+          tokenInfo = { ...agent, strategy: "agent_meta" };
           break;
         }
         case "trending": {
-          if (this.researchData.trendingRepos.length > 0) {
-            const repo = this.researchData.trendingRepos.shift();
-            this._saveResearchData();
-            tokenInfo = this._formatGitHubToken(repo);
-            tokenInfo.strategy = "trending";
-          } else {
-            const repo = this._pickGitHubRepoToken();
-            tokenInfo = this._formatGitHubToken(repo);
-            tokenInfo.strategy = "trending-fallback";
-          }
+          const trend = this._pickTrendingToken();
+          tokenInfo = { ...trend, strategy: "trending" };
           break;
         }
       }
@@ -661,20 +832,48 @@ class BankrLauncher {
 
     this.log.info(`Launching [${tokenInfo.strategy}]: ${tokenInfo.name} ($${tokenInfo.symbol})`);
 
+    // Generate and upload token image to IPFS
+    let imageUrl = null;
+    const imageCat = tokenInfo.strategy === "agent_meta" ? "ai" : tokenInfo.strategy === "top_clone" ? "crypto" : "meme";
     try {
-      const safeName = tokenInfo.name.replace(/"/g, '\\"');
-      const safeSymbol = tokenInfo.symbol.replace(/"/g, '\\"');
+      imageUrl = await getTokenImageUrl(tokenInfo.name, tokenInfo.symbol, imageCat);
+      this.log.info(`Image: ${imageUrl}`);
+    } catch (e) {
+      this.log.warn(`Image generation failed: ${e.message}. Launching without image.`);
+    }
 
-      const prompt = `launch a token called "${safeName}" with ticker ${safeSymbol}. direct all fees to my wallet.`;
-      const output = this._runBankr(`agent "${prompt}"`, 180000);
+    const MAX_RETRIES = 2;
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      // Use direct CLI flags to avoid interactive wizard hanging
+      const output = this._runBankrLaunch(tokenInfo.name, tokenInfo.symbol, imageUrl, 180000);
 
-      this.log.info(`Launch output: ${output.substring(0, 500)}`);
+      this.log.info(`Launch output (attempt ${attempt}): ${output.substring(0, 500)}`);
 
       const addressMatch = output.match(/0x[a-fA-F0-9]{40}/);
       const contractAddress = addressMatch ? addressMatch[0] : null;
 
       const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
       const bankrUrl = urlMatch ? urlMatch[0] : null;
+
+      // Validate: only count as success if we got a contract address
+      if (!contractAddress) {
+        this.log.warn(`Launch produced no contract address (attempt ${attempt}/${MAX_RETRIES}). Output: ${output.substring(0, 300)}`);
+        if (attempt < MAX_RETRIES) {
+          this.log.info(`Retrying in 15s...`);
+          await new Promise(r => setTimeout(r, 15000));
+          continue;
+        }
+        // Final attempt still no address — record but don't count toward daily limit
+        this.log.warn(`All ${MAX_RETRIES} attempts failed to get contract address. Not counting toward daily limit.`);
+        this.tokenData.tokens.push({
+          name: tokenInfo.name, symbol: tokenInfo.symbol, strategy: tokenInfo.strategy,
+          contractAddress: null, launchedAt: new Date().toISOString(),
+          launchOutput: output.substring(0, 500), feesEarned: 0, feesClaimed: 0, failed: true,
+        });
+        this._saveTokenData();
+        return null;
+      }
 
       const tokenRecord = {
         name: tokenInfo.name,
@@ -708,10 +907,16 @@ class BankrLauncher {
 
       return tokenRecord;
     } catch (e) {
-      this.log.error(`Token launch failed: ${e.message}`);
+      this.log.error(`Token launch failed (attempt ${attempt}/${MAX_RETRIES}): ${e.message}`);
+      if (attempt < MAX_RETRIES) {
+        this.log.info(`Retrying in 15s...`);
+        await new Promise(r => setTimeout(r, 15000));
+        continue;
+      }
       await this.notify(`❌ Launch failed [${tokenInfo.strategy}]: ${tokenInfo.name} — ${e.message.substring(0, 200)}`);
       return null;
     }
+    } // end retry loop
   }
 
   // ═══════════════════════════════════════════════════
@@ -815,13 +1020,12 @@ class BankrLauncher {
         this.fetchTrendingGitHubRepos(),
         this.fetchHotBankrTokens(),
       ]);
-      // Fetch bankr AI insights less frequently
-      if (hoursSinceFetch >= 12) {
-        await this.fetchTrendingKeywords();
-      }
     } else {
-      this.log.info(`Research data fresh (${hoursSinceFetch.toFixed(1)}h old). Skipping.`);
+      this.log.info(`Research data fresh (${hoursSinceFetch.toFixed(1)}h old). Skipping full refresh.`);
     }
+
+    // ALWAYS scan for fresh launches (this is the key real-time feature)
+    await this.scanFreshLaunches();
   }
 
   async runVolumeAndPerformanceCycle() {
@@ -900,10 +1104,19 @@ if (require.main === module) {
     catch (e) { log.error("Fee cycle error:", e.message); }
   });
 
-  // Research refresh: Every 4 hours
+  // Research refresh: Every 4 hours (GitHub repos, hot tokens)
   cron.schedule("0 */4 * * *", async () => {
     try { await launcher.runResearchCycle(); }
     catch (e) { log.error("Research cycle error:", e.message); }
+  });
+
+  // Fresh token scanner: Every 30 min (the KEY real-time feature)
+  // This is what finds tokens with volume to duplicate RIGHT NOW
+  cron.schedule("*/30 * * * *", async () => {
+    try {
+      log.info("─── Fresh token scan (30min) ───");
+      await launcher.scanFreshLaunches();
+    } catch (e) { log.error("Fresh scan error:", e.message); }
   });
 
   // Volume checks & performance: Every hour
@@ -912,9 +1125,12 @@ if (require.main === module) {
     catch (e) { log.error("Volume check error:", e.message); }
   });
 
-  // Initial: Research → Launch → Fees
+  // Initial: Research → Launch → Fees (with forced research refresh on startup)
   (async () => {
     try {
+      // Force-refresh research on startup to get latest hot tokens
+      launcher.researchData.lastFetch = null;
+      log.info("Forcing research refresh on startup...");
       await launcher.runResearchCycle();
       await launcher.runLaunchCycle();
       await launcher.runFeeCycle();

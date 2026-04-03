@@ -1,0 +1,286 @@
+{
+  "tokens": [
+    {
+      "name": "Neural Trading Agent",
+      "symbol": "NEURAL",
+      "strategy": "ai_agent",
+      "description": "Autonomous neural network trading agent on Base. 100% LP burned • No dev tokens • 0% team allocation. AI Agent • Autonomous Protocol",
+      "contractAddress": "0x2a84C6d9341f52a13923935042b94338a097aB07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T09:22:42.748Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T10:45:00.661Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:45:01.587Z"
+        }
+      }
+    },
+    {
+      "name": "Robot Trading Protocol",
+      "symbol": "ROBTRADE",
+      "strategy": "ai_agent",
+      "description": "Autonomous robot trading protocol on Base. Contract verified • Deployed via Clanker. AI Agent • Autonomous Protocol",
+      "contractAddress": "0xA5783d3215665976867C51cec5433b6f24dccb07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T10:00:14.231Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T11:45:01.742Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T18:45:01.233Z"
+        }
+      }
+    },
+    {
+      "name": "Claude Bot Protocol",
+      "symbol": "CLAUDE",
+      "strategy": "ai_agent",
+      "description": "Claude AI agent — autonomous protocol bot. Ownership renounced • Deployed via Clanker. AI Agent • Autonomous Protocol",
+      "contractAddress": "0x740D9f41DEE9D67Ed95B3E79071B6b63491b2B07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T11:00:11.354Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T12:45:03.145Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T18:45:02.038Z"
+        }
+      }
+    },
+    {
+      "name": "ComfyUI",
+      "symbol": "COMFYUI",
+      "strategy": "github",
+      "description": "ComfyUI — modular AI image generation. Contract verified • Deployed via Clanker • Ownership renounced. Open Source • Developer Tools",
+      "contractAddress": "0x6165922C35DD0a0C9BaEDad63569F1FBcE53dB07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T13:00:15.462Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:45:02.418Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:45:01.048Z"
+        }
+      }
+    },
+    {
+      "name": "Llama.cpp",
+      "symbol": "LLAMACPP",
+      "strategy": "github",
+      "description": "llama.cpp — local LLM inference in C++. Deployed via Clanker • 100% LP burned • No dev tokens. Open Source • Developer Tools",
+      "contractAddress": "0xB9Bb66b5Fb8c27da75FcaF1AC12410E5Af56Eb07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T14:00:17.468Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T15:45:04.014Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T21:45:01.455Z"
+        }
+      }
+    },
+    {
+      "name": "Neovim",
+      "symbol": "NVIM",
+      "strategy": "github",
+      "description": "Neovim — hyperextensible text editor. Contract verified • Ownership renounced. Open Source • Developer Tools",
+      "contractAddress": "0xdDBB1A6262c7657A49718586aa18468e6aC24b07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T15:00:12.168Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T18:45:02.840Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T21:45:02.305Z"
+        }
+      }
+    },
+    {
+      "name": "tokenbot",
+      "symbol": "CLANKER",
+      "strategy": "duplicate",
+      "description": "tokenbot — high volume token on Base. Deployed via Clanker • Contract verified • Ownership renounced. High Volume • Trending Token",
+      "contractAddress": "0x61127Ff19d83e6Dcef55eB3d239016D1BC10CB07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T16:00:12.785Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T18:45:03.645Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T23:45:00.681Z"
+        }
+      }
+    },
+    {
+      "name": "Based Frog",
+      "symbol": "BFROG",
+      "strategy": "viral",
+      "description": "Based Frog — the most based frog on Base. Deployed via Clanker",
+      "contractAddress": "0x147ee50a773Ff11cD208670282CFaA876fF79b07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T18:30:02.379Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T19:45:01.843Z"
+        }
+      }
+    },
+    {
+      "name": "BonkInu",
+      "symbol": "BONK",
+      "strategy": "viral",
+      "description": "BonkInu — bonk the charts. Contract verified",
+      "contractAddress": "0x1652f8BdB4A1412576c4C6239015cF2E2FeD4B07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T19:00:11.124Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T21:45:03.121Z"
+        }
+      }
+    },
+    {
+      "name": "Seethe",
+      "symbol": "SEETHE",
+      "strategy": "viral",
+      "description": "Seethe — they're all seething. Contract verified",
+      "contractAddress": "0x9a8FF775959299F1fb25afc081a566A4842deb07",
+      "chain": "base",
+      "launchedAt": "2026-04-02T20:00:12.248Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-02T21:45:03.909Z"
+        }
+      }
+    },
+    {
+      "name": " gitlawb",
+      "symbol": "GITLAWB",
+      "strategy": "live_duplicate",
+      "description": " gitlawb — trending on Base. Contract verified",
+      "contractAddress": "0x70519B13715b909b5E1d696eD069dfcC0c774b07",
+      "chain": "base",
+      "launchedAt": "2026-04-03T08:00:12.158Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T09:45:01.073Z"
+        }
+      }
+    },
+    {
+      "name": "BOTCOIN",
+      "symbol": "BOTCOIN",
+      "strategy": "live_duplicate",
+      "description": "BOTCOIN — trending on Base. Deployed via Clanker",
+      "contractAddress": "0x4d11fD06816cbAfc7676f548cBc0E6eA19B4eB07",
+      "chain": "base",
+      "launchedAt": "2026-04-03T11:00:11.720Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T12:45:01.048Z"
+        }
+      }
+    },
+    {
+      "name": "Defense of the Agents",
+      "symbol": "DOTA",
+      "strategy": "live_duplicate",
+      "description": "Defense of the Agents — trending on Base. Deployed via Clanker",
+      "contractAddress": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
+      "chain": "base",
+      "launchedAt": "2026-04-03T13:00:12.821Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "DOG",
+      "symbol": "BaseDOG",
+      "strategy": "live_duplicate",
+      "description": "DOG — trending on Base. Deployed via Clanker",
+      "contractAddress": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+      "chain": "base",
+      "launchedAt": "2026-04-03T14:00:10.020Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
+    }
+  ],
+  "stats": {
+    "totalLaunched": 14,
+    "totalFeesEarned": 0
+  },
+  "lastLaunchDate": "2026-04-03",
+  "launchesToday": 4,
+  "dailyHistory": []
+}
