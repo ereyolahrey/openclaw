@@ -32,7 +32,7 @@ const PERFORMANCE_FILE = path.join(DATA_DIR, "bankr-performance.json");
 const FEE_WALLET = process.env.BANKR_FEE_WALLET || "0x162ee01a2eab184f6698ec8663ad84c4ee506733";
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
 const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Only duplicate tokens < 10 minutes old
-const MIN_VOLUME_TRIGGER = 50;                // $50 volume = sniper activity detected
+const MIN_VOLUME_TRIGGER = 10;                // $10 volume = any activity detected (club = free launches)
 const SEEN_TOKEN_TTL_MS = 60 * 60 * 1000;    // Forget tokens seen > 1 hour ago
 
 class BankrLauncher {

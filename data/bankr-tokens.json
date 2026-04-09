@@ -542,16 +542,186 @@
       "launchedAt": "2026-04-09T17:26:44.081Z",
       "feesEarned": 0,
       "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T18:30:01.620Z"
+        }
+      }
+    },
+    {
+      "name": "Engramme",
+      "symbol": "Engramme",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x335d0f332DA4f3a99C44F44eFCAE9247424C1ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x335d0f332DA4f3a99C44F44eFCAE9247424C1ba3",
+      "sourceAddress": "0xb267c6f1d28118064ff5036088989d999f85bba3",
+      "sourceVolume": 1355,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-09T17:42:44.451Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T19:30:01.259Z"
+        }
+      }
+    },
+    {
+      "name": "The Flag of Earth",
+      "symbol": "SOLARECLIP",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x1bF3787410f198D60b1cF519b81B2f8562767BA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x1bF3787410f198D60b1cF519b81B2f8562767BA3",
+      "sourceAddress": "0x61b6d7bc1ed84f575152a2125b3d2ccfab0d5ba3",
+      "sourceVolume": 221,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-09T17:44:42.729Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T19:30:02.067Z"
+        }
+      }
+    },
+    {
+      "name": "TheLittleGuys",
+      "symbol": "TLG",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "bankrUrl": null,
+      "sourceAddress": "0x1a4fb276e38f33e1e6a91287ca70e261359c6ba3",
+      "sourceVolume": 9378,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-09T18:12:30.574Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T19:30:02.877Z"
+        }
+      }
+    },
+    {
+      "name": "GeoMarket",
+      "symbol": "GEO",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xCdc65f50a60Dc5d3B50b46fb164608abcD697BA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xCdc65f50a60Dc5d3B50b46fb164608abcD697BA3",
+      "sourceAddress": "0x04fa6ed1a6a6bedf37e80d9685915038251b1ba3",
+      "sourceVolume": 1120,
+      "sourceAge": 1,
+      "launchedAt": "2026-04-09T18:14:41.817Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 6597.95,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T19:30:03.748Z"
+        }
+      }
+    },
+    {
+      "name": "KarpathyTalk",
+      "symbol": "KARPATHYTA",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xB92b6b37BA1efE994a1A5b70664F12fA80bF8ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xB92b6b37BA1efE994a1A5b70664F12fA80bF8ba3",
+      "sourceAddress": "0xe0eaa39aa5d08ae2ffc49852f61cc91588927ba3",
+      "sourceVolume": 220,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-09T18:32:40.368Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "PARALLEL",
+      "symbol": "PRLL",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "bankrUrl": null,
+      "sourceAddress": "0x6a49e96c472ef180871e24a32e1f84d9c9fa4ba3",
+      "sourceVolume": 2738,
+      "sourceAge": 4,
+      "launchedAt": "2026-04-09T18:36:37.394Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "gooy",
+      "symbol": "gooy",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xaA91BeFB442d582E6B1E18e2160c2245c6C95ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xaA91BeFB442d582E6B1E18e2160c2245c6C95ba3",
+      "sourceAddress": "0x5df8cc751097cbeb0f0b3b27d1d267bc39b56ba3",
+      "sourceVolume": 1099,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-09T18:38:44.200Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "CAFEIN",
+      "symbol": "CAFEIN",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xB0F3d00c90D618cC37DC524C04882d58318A7ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xB0F3d00c90D618cC37DC524C04882d58318A7ba3",
+      "sourceAddress": "0x8f921c63bade4609019eba28c329b2ee03c7cba3",
+      "sourceVolume": 5402,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-09T18:44:42.433Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Vote for Joe",
+      "symbol": "JOE",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x5f4745997681E8267D1b8c19744098208250fBA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x5f4745997681E8267D1b8c19744098208250fBA3",
+      "sourceAddress": "0x7f689bd88514def6de8813949d54fb4eafb96ba3",
+      "sourceVolume": 6528,
+      "sourceAge": 1,
+      "launchedAt": "2026-04-09T19:07:04.564Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Vote for Joe",
+      "symbol": "Joe",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x7f8283D826c769d45602c8C4a787ac127fBEFbA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x7f8283D826c769d45602c8C4a787ac127fBEFbA3",
+      "sourceAddress": "0xfd3da791842c71cb2186fdf087a23d61cc210ba3",
+      "sourceVolume": 1323,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-09T19:21:33.194Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
       "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 20,
+    "totalLaunched": 30,
     "totalFeesEarned": 0,
     "totalFeesClaimed": 0
   },
   "lastLaunchDate": "2026-04-09",
-  "launchesToday": 1,
+  "launchesToday": 11,
   "dailyHistory": [
     {
       "date": "2026-03-31",
