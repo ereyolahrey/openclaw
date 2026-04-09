@@ -1,15 +1,16 @@
-// 0xWork Autonomous Worker V2 — Groq LLM-powered
+// 0xWork Autonomous Worker V3 — Groq LLM-powered + Telegram alerts
 require('dotenv').config();
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const { Telegraf } = require('telegraf');
 
 // --- Configuration ---
 const POLL_INTERVAL_MS = 5 * 60 * 1000; // Check every 5 minutes
 const CAPABILITIES = ['Writing', 'Research', 'Code', 'Data', 'Social'];
 const MAX_BOUNTY_CLAIM = 500; // Max bounty to auto-claim
-const MIN_BOUNTY_CLAIM = 1;   // Min bounty to bother with
+const MIN_BOUNTY_CLAIM = 0.5; // Lowered — take almost anything to build rep
 const STATE_FILE = path.join(__dirname, '..', 'memory', '0xwork-tasks.json');
 const WORK_DIR = path.join(process.env.TEMP || '/tmp', '0xwork');
 const LOG_FILE = path.join(__dirname, '..', 'logs', '0xwork-worker.log');
@@ -19,15 +20,37 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-// Impossible-task filters — skip tasks requiring real-world influence/identity
+// Hard-skip filters — only truly impossible tasks (physical, KYC)
 const IMPOSSIBLE_PATTERNS = [
-  /\d{2,}k\+?\s*followers/i,           // "100K+ followers"
-  /get\s+@?\w+.*to\s+(follow|retweet|rt|quote)/i, // "get X to follow/RT"
-  /must\s+have\s+\d+.*followers/i,
-  /verified\s+(account|badge)/i,
   /kyc|identity\s+verification/i,
   /physical\s+(delivery|meeting|location)/i,
 ];
+
+// Human-required flags — agent CAN'T do these but user might want to
+const HUMAN_REQUIRED_PATTERNS = [
+  { pattern: /\d{2,}k\+?\s*followers/i, reason: 'requires large follower count' },
+  { pattern: /get\s+@?\w+.*to\s+(follow|retweet|rt|quote)/i, reason: 'requires influencer engagement' },
+  { pattern: /must\s+have\s+\d+.*followers/i, reason: 'follower requirement' },
+  { pattern: /verified\s+(account|badge)/i, reason: 'requires verified account' },
+  { pattern: /screenshot|proof.*post|post.*proof/i, reason: 'requires posting proof/screenshot' },
+  { pattern: /join.*discord|join.*telegram/i, reason: 'requires joining community' },
+];
+
+// --- Telegram notification ---
+const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TG_CHAT_IDS = (process.env.TELEGRAM_ALLOWED_CHAT_IDS || '').split(',').filter(Boolean);
+const tgBot = TG_TOKEN ? new Telegraf(TG_TOKEN) : null;
+
+async function notify(msg) {
+  if (!tgBot || TG_CHAT_IDS.length === 0) return;
+  for (const chatId of TG_CHAT_IDS) {
+    try {
+      await tgBot.telegram.sendMessage(chatId, msg, { parse_mode: 'Markdown' });
+    } catch (e) {
+      try { await tgBot.telegram.sendMessage(chatId, msg); } catch {}
+    }
+  }
+}
 
 // --- Logging ---
 function log(level, msg, data) {
@@ -141,10 +164,19 @@ function evaluateTask(task, state) {
   const ourCaps = CAPABILITIES.map(c => c.toLowerCase());
   if (!ourCaps.includes(category)) return { claim: false, reason: `category ${task.category} not in our capabilities` };
 
-  // Impossible task detection — real-world actions an AI agent can't do
+  // Hard-skip: truly impossible tasks
   const desc = task.description || '';
   for (const pattern of IMPOSSIBLE_PATTERNS) {
-    if (pattern.test(desc)) return { claim: false, reason: `impossible requirement: ${pattern.source.slice(0, 40)}` };
+    if (pattern.test(desc)) return { claim: false, reason: `impossible: ${pattern.source.slice(0, 40)}` };
+  }
+
+  // Soft-flag: tasks that need human input (don't skip, flag them)
+  let humanRequired = null;
+  for (const { pattern, reason } of HUMAN_REQUIRED_PATTERNS) {
+    if (pattern.test(desc)) {
+      humanRequired = reason;
+      break;
+    }
   }
 
   // Bounty range check
@@ -173,9 +205,15 @@ function evaluateTask(task, state) {
   
   let avgScore = (capScore + clarityScore + valueScore + riskScore) / 4 + llmBoost;
 
-  if (avgScore < 3) return { claim: false, reason: `score ${avgScore.toFixed(1)} too low` };
+  if (avgScore < 2.5) return { claim: false, reason: `score ${avgScore.toFixed(1)} too low` };
 
-  return { claim: true, score: avgScore, reason: `score ${avgScore.toFixed(1)}, bounty $${bounty}, cat=${task.category}` };
+  return {
+    claim: !humanRequired,  // Don't auto-claim human-required tasks
+    score: avgScore,
+    reason: `score ${avgScore.toFixed(1)}, bounty $${bounty}, cat=${task.category}`,
+    humanRequired,  // null if agent can handle, string if user should look
+    notify: true,   // Flag for Telegram notification
+  };
 }
 
 // --- Task execution V2 (LLM-powered) ---
@@ -347,6 +385,7 @@ async function pollForTasks() {
         state.completed.push({ chainTaskId: cid, completedAt: new Date().toISOString(), bounty: comp.bounty });
         state.stats.totalEarned = (state.stats.totalEarned || 0) + parseFloat(comp.bounty || 0);
         delete state.active[cid];
+        await notify(`💰 *Task #${cid} APPROVED!*\nEarned: $${comp.bounty} USDC\nTotal earned: $${state.stats.totalEarned.toFixed(2)}`);
       }
     }
   }
@@ -368,30 +407,73 @@ async function pollForTasks() {
   // Step 3: Evaluate each task
   let bestTask = null;
   let bestScore = 0;
+  const agentTasks = [];    // Tasks the agent will auto-handle
+  const humanTasks = [];    // Tasks that need human input
+  const skippedTasks = [];  // Tasks we're skipping entirely
 
   for (const task of discover.tasks) {
     const evaluation = evaluateTask(task, state);
     const id = String(task.chainTaskId);
+    const desc = (task.description || '').substring(0, 120);
 
     state.seen[id] = {
       evaluatedAt: new Date().toISOString(),
-      decision: evaluation.claim ? 'claim-candidate' : 'skip',
+      decision: evaluation.claim ? 'claim-candidate' : (evaluation.humanRequired ? 'human-required' : 'skip'),
       reason: evaluation.reason,
       bounty: task.bounty,
-      category: task.category
+      category: task.category,
+      humanRequired: evaluation.humanRequired || null,
     };
 
-    log('INFO', `Task #${id}: ${evaluation.claim ? 'CANDIDATE' : 'SKIP'} — ${evaluation.reason}`);
-
-    if (evaluation.claim && (evaluation.score || 0) > bestScore) {
-      bestTask = task;
-      bestScore = evaluation.score || 0;
+    if (evaluation.humanRequired) {
+      humanTasks.push({ id, bounty: task.bounty, category: task.category, desc, reason: evaluation.humanRequired });
+      log('INFO', `Task #${id}: HUMAN REQUIRED — ${evaluation.humanRequired}`);
+    } else if (evaluation.claim) {
+      agentTasks.push({ id, bounty: task.bounty, category: task.category, desc, score: evaluation.score });
+      log('INFO', `Task #${id}: CANDIDATE — ${evaluation.reason}`);
+      if ((evaluation.score || 0) > bestScore) {
+        bestTask = task;
+        bestScore = evaluation.score || 0;
+      }
+    } else {
+      skippedTasks.push({ id, bounty: task.bounty, reason: evaluation.reason });
+      log('INFO', `Task #${id}: SKIP — ${evaluation.reason}`);
     }
+  }
+
+  // Send Telegram digest of discovered tasks
+  if (agentTasks.length > 0 || humanTasks.length > 0) {
+    let tgMsg = `📋 *0xWork Task Scan* (${discover.tasks.length} found)\n\n`;
+
+    if (agentTasks.length > 0) {
+      tgMsg += `🤖 *Agent will handle (${agentTasks.length}):*\n`;
+      for (const t of agentTasks.slice(0, 5)) {
+        tgMsg += `  • #${t.id} [${t.category}] $${t.bounty} — ${t.desc.substring(0, 60)}...\n`;
+      }
+      if (agentTasks.length > 5) tgMsg += `  ...and ${agentTasks.length - 5} more\n`;
+      tgMsg += '\n';
+    }
+
+    if (humanTasks.length > 0) {
+      tgMsg += `👤 *Needs YOUR input (${humanTasks.length}):*\n`;
+      for (const t of humanTasks.slice(0, 8)) {
+        tgMsg += `  • #${t.id} [${t.category}] $${t.bounty} — ${t.reason}\n    ${t.desc.substring(0, 80)}...\n`;
+      }
+      if (humanTasks.length > 8) tgMsg += `  ...and ${humanTasks.length - 8} more\n`;
+      tgMsg += '\n';
+    }
+
+    if (skippedTasks.length > 0) {
+      tgMsg += `⏭ Skipped: ${skippedTasks.length} (impossible/low-value)\n`;
+    }
+
+    tgMsg += `\n📊 Stats: ${state.stats.totalSubmitted} submitted | $${state.stats.totalEarned.toFixed(2)} earned`;
+    await notify(tgMsg);
   }
 
   if (!bestTask) {
     log('INFO', 'No suitable tasks to claim this cycle');
-    state.stats.totalSkipped = (state.stats.totalSkipped || 0) + discover.tasks.length;
+    state.stats.totalSkipped = (state.stats.totalSkipped || 0) + skippedTasks.length;
     saveState(state);
     return;
   }
@@ -424,6 +506,7 @@ async function pollForTasks() {
   }
 
   log('INFO', `Claimed task #${taskId}!`, { txHash: claim.txHash });
+  await notify(`✅ *Claimed task #${taskId}*\n[${bestTask.category}] $${bestTask.bounty} bounty\nWorking on it now...`);
   state.active[String(taskId)] = {
     claimedAt: new Date().toISOString(),
     status: 'claimed',
@@ -447,11 +530,13 @@ async function pollForTasks() {
     if (!submit.ok) {
       log('ERROR', `Failed to submit task #${taskId}`, submit);
       state.active[String(taskId)].status = 'submit-failed';
+      await notify(`❌ Submit failed for task #${taskId}: ${(submit.error || 'unknown').substring(0, 100)}`);
       saveState(state);
       return;
     }
 
     log('INFO', `Submitted task #${taskId}!`, { txHash: submit.txHash });
+    await notify(`📨 *Submitted task #${taskId}!*\n[${bestTask.category}] $${bestTask.bounty} bounty\nAwaiting review.`);
     state.active[String(taskId)].status = 'submitted';
     state.active[String(taskId)].submittedAt = new Date().toISOString();
     state.daily.submitted++;
@@ -465,8 +550,8 @@ async function pollForTasks() {
   }
 }
 
-// --- Startup V2 ---
-log('INFO', '0xWork autonomous worker V2 starting...');
+// --- Startup V3 ---
+log('INFO', '0xWork autonomous worker V3 starting (Telegram alerts active)...');
 log('INFO', `Capabilities: ${CAPABILITIES.join(', ')}`);
 log('INFO', `Poll interval: ${POLL_INTERVAL_MS / 1000}s`);
 log('INFO', `Bounty range: $${MIN_BOUNTY_CLAIM} - $${MAX_BOUNTY_CLAIM}`);

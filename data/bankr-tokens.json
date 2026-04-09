@@ -316,6 +316,11 @@
           "vol24": 3.33,
           "vol1h": 0.4,
           "checkedAt": "2026-04-03T14:30:01.232Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:01.676Z"
         }
       }
     },
@@ -340,6 +345,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T15:30:01.313Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:02.484Z"
         }
       }
     },
@@ -364,6 +374,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T21:30:01.222Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:03.444Z"
         }
       }
     },
@@ -388,6 +403,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T21:30:02.028Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:05.224Z"
         }
       }
     },
@@ -412,6 +432,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T21:30:02.889Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:06.026Z"
         }
       }
     },
@@ -432,6 +457,16 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T21:30:03.686Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:06.838Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:07.523Z"
         }
       }
     },
@@ -452,6 +487,16 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T22:30:00.994Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:08.419Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:09.091Z"
         }
       }
     },
@@ -467,16 +512,46 @@
       "launchedAt": "2026-04-03T21:32:44.482Z",
       "feesEarned": 0,
       "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:09.923Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:10.580Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T17:30:11.241Z"
+        }
+      }
+    },
+    {
+      "name": "RUNCLAWBOT",
+      "symbol": "Runclaw",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x850BF0e9c96c01227833c756Ee05Ff1C2428DBa3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x850BF0e9c96c01227833c756Ee05Ff1C2428DBa3",
+      "sourceAddress": "0x9a0c0ee1cc4deabb498ec51f18117bd83208dba3",
+      "sourceVolume": 435,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-09T17:26:44.081Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
       "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 19,
+    "totalLaunched": 20,
     "totalFeesEarned": 0,
     "totalFeesClaimed": 0
   },
-  "lastLaunchDate": "2026-04-04",
-  "launchesToday": 0,
+  "lastLaunchDate": "2026-04-09",
+  "launchesToday": 1,
   "dailyHistory": [
     {
       "date": "2026-03-31",
@@ -485,6 +560,10 @@
     {
       "date": "2026-04-03",
       "launched": 8
+    },
+    {
+      "date": "2026-04-04",
+      "launched": 0
     }
   ],
   "clubGoal": {

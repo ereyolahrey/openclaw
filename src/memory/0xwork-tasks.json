@@ -1,37 +1,40 @@
 {
   "seen": {
     "35": {
-      "evaluatedAt": "2026-04-04T03:36:17.328Z",
+      "evaluatedAt": "2026-04-09T17:30:11.534Z",
       "decision": "skip",
       "reason": "deadline passed",
       "bounty": "500.0",
-      "category": "Social"
+      "category": "Social",
+      "humanRequired": null
     },
     "390": {
-      "evaluatedAt": "2026-04-04T03:36:17.330Z",
-      "decision": "skip",
-      "reason": "impossible requirement: get\\s+@?\\w+.*to\\s+(follow|retweet|rt|quo",
+      "evaluatedAt": "2026-04-09T17:30:11.537Z",
+      "decision": "human-required",
+      "reason": "score 5.3, bounty $50, cat=Social",
       "bounty": "50",
-      "category": "Social"
+      "category": "Social",
+      "humanRequired": "requires influencer engagement"
     },
     "391": {
-      "evaluatedAt": "2026-04-04T03:36:17.329Z",
-      "decision": "skip",
-      "reason": "impossible requirement: get\\s+@?\\w+.*to\\s+(follow|retweet|rt|quo",
+      "evaluatedAt": "2026-04-09T17:30:11.536Z",
+      "decision": "human-required",
+      "reason": "score 5.3, bounty $50, cat=Social",
       "bounty": "50",
-      "category": "Social"
+      "category": "Social",
+      "humanRequired": "requires influencer engagement"
     }
   },
   "active": {},
   "completed": [],
   "daily": {
-    "date": "2026-04-04",
+    "date": "2026-04-09",
     "claimed": 0,
     "submitted": 0
   },
   "stats": {
     "totalEarned": 0,
     "totalSubmitted": 0,
-    "totalSkipped": 144
+    "totalSkipped": 1
   }
 }
