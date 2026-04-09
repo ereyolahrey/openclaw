@@ -620,8 +620,8 @@
       "sourceVolume": 1120,
       "sourceAge": 1,
       "launchedAt": "2026-04-09T18:14:41.817Z",
-      "feesEarned": 0,
-      "feesClaimed": 0,
+      "feesEarned": 0.010006,
+      "feesClaimed": 0.010006,
       "volumeData": {
         "1h": {
           "vol24": 6597.95,
@@ -717,8 +717,8 @@
   ],
   "stats": {
     "totalLaunched": 30,
-    "totalFeesEarned": 0,
-    "totalFeesClaimed": 0
+    "totalFeesEarned": 0.010007,
+    "totalFeesClaimed": 0.010006
   },
   "lastLaunchDate": "2026-04-09",
   "launchesToday": 11,

@@ -1,7 +1,7 @@
 {
   "seen": {
     "35": {
-      "evaluatedAt": "2026-04-09T19:55:17.735Z",
+      "evaluatedAt": "2026-04-09T20:00:17.722Z",
       "decision": "skip",
       "reason": "deadline passed",
       "bounty": "500.0",
@@ -9,7 +9,7 @@
       "humanRequired": null
     },
     "390": {
-      "evaluatedAt": "2026-04-09T19:55:17.736Z",
+      "evaluatedAt": "2026-04-09T20:00:17.723Z",
       "decision": "human-required",
       "reason": "score 5.3, bounty $50, cat=Social",
       "bounty": "50",
@@ -17,7 +17,7 @@
       "humanRequired": "requires influencer engagement"
     },
     "391": {
-      "evaluatedAt": "2026-04-09T19:55:17.736Z",
+      "evaluatedAt": "2026-04-09T20:00:17.722Z",
       "decision": "human-required",
       "reason": "score 5.3, bounty $50, cat=Social",
       "bounty": "50",
@@ -35,6 +35,6 @@
   "stats": {
     "totalEarned": 0,
     "totalSubmitted": 0,
-    "totalSkipped": 28
+    "totalSkipped": 29
   }
 }
