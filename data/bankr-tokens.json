@@ -359,6 +359,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T13:30:01.401Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:30:01.222Z"
         }
       }
     },
@@ -378,6 +383,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T14:30:01.999Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:30:02.028Z"
         }
       }
     },
@@ -397,25 +407,90 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T15:30:02.203Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:30:02.889Z"
         }
       }
+    },
+    {
+      "name": "Icarus Hermes",
+      "symbol": "ICARUS",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x519a87c14ec858C7c57791d1889DFb20dEFc8bA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x519a87c14ec858C7c57791d1889DFb20dEFc8bA3",
+      "sourceAddress": "0x923e4c7b90ea9f7db5f8bc9a9732360c53b0fba3",
+      "sourceVolume": 1022,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-03T16:36:51.854Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:30:03.686Z"
+        }
+      }
+    },
+    {
+      "name": "Clawdium",
+      "symbol": "Clawdium",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x7C67E194b9CaAffc117646059044349ed0B80bA3",
+      "bankrUrl": "https://www.bankr.bot/launches/0x7C67E194b9CaAffc117646059044349ed0B80bA3",
+      "sourceAddress": "0x6201b548c89da697370f250f1107f11f9deb6ba3",
+      "sourceVolume": 718,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-03T21:28:36.701Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T22:30:00.994Z"
+        }
+      }
+    },
+    {
+      "name": "Regent",
+      "symbol": "REGENT",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xd5E2bD9Db96eff6A8770eCD136cAB81E88Ce4ba3",
+      "bankrUrl": "https://www.bankr.bot/launches/0xd5E2bD9Db96eff6A8770eCD136cAB81E88Ce4ba3",
+      "sourceAddress": "0x54b2a57fd01d15bc3bb1f408d1824a6dca005ba3",
+      "sourceVolume": 1417,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-03T21:32:44.482Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 16,
+    "totalLaunched": 19,
     "totalFeesEarned": 0,
     "totalFeesClaimed": 0
   },
-  "lastLaunchDate": "2026-04-03",
-  "launchesToday": 5,
+  "lastLaunchDate": "2026-04-04",
+  "launchesToday": 0,
   "dailyHistory": [
     {
       "date": "2026-03-31",
       "launched": 0
+    },
+    {
+      "date": "2026-04-03",
+      "launched": 8
     }
   ],
   "clubGoal": {
     "target": 0.01,
-    "subscribed": false
+    "subscribed": true,
+    "subscribedAt": "2026-04-09T00:00:00.000Z",
+    "plan": "unlimited"
   }
 }

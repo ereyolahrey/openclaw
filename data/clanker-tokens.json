@@ -253,6 +253,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T12:45:01.048Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:45:01.514Z"
         }
       }
     },
@@ -271,6 +276,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-03T14:45:02.392Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:45:02.343Z"
         }
       }
     },
@@ -284,14 +294,44 @@
       "launchedAt": "2026-04-03T14:00:10.020Z",
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T22:45:00.945Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-03T21:45:03.144Z"
+        }
+      }
+    },
+    {
+      "name": "Clank Train",
+      "symbol": "CT",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
+      "chain": "base",
+      "sourceAddress": "0xe98bc3916a1bd7651e48ca98b8d8d4987e60fb07",
+      "sourceVolume": 80,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-03T21:40:16.660Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
       "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 14,
+    "totalLaunched": 15,
     "totalFeesEarned": 0
   },
-  "lastLaunchDate": "2026-04-03",
-  "launchesToday": 4,
-  "dailyHistory": []
+  "lastLaunchDate": "2026-04-04",
+  "launchesToday": 0,
+  "dailyHistory": [
+    {
+      "date": "2026-04-03",
+      "launched": 5
+    }
+  ]
 }

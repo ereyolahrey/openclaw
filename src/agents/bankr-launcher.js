@@ -30,7 +30,7 @@ const PERFORMANCE_FILE = path.join(DATA_DIR, "bankr-performance.json");
 
 // ── INSTANT SNIPER CONFIG ──
 const FEE_WALLET = process.env.BANKR_FEE_WALLET || "0x162ee01a2eab184f6698ec8663ad84c4ee506733";
-const CLUB_COST_WETH = 0.02;
+const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
 const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Only duplicate tokens < 10 minutes old
 const MIN_VOLUME_TRIGGER = 50;                // $50 volume = sniper activity detected
 const SEEN_TOKEN_TTL_MS = 60 * 60 * 1000;    // Forget tokens seen > 1 hour ago
@@ -39,7 +39,7 @@ class BankrLauncher {
   constructor({ notifiers = [], config = {} }) {
     this.notifiers = notifiers;
     this.config = {
-      maxLaunchesPerDay: config.maxLaunchesPerDay || 10,
+      maxLaunchesPerDay: config.maxLaunchesPerDay || 50,  // Club = unlimited, but cap at 50 for safety
       feeClaimThreshold: config.feeClaimThreshold || 0.001,
       ...config,
     };
@@ -89,7 +89,7 @@ class BankrLauncher {
       lastLaunchDate: null,
       launchesToday: 0,
       dailyHistory: [],
-      clubGoal: { target: CLUB_COST_WETH, subscribed: false },
+      clubGoal: { target: 0, subscribed: true, plan: "unlimited" },
     };
   }
 
@@ -574,19 +574,11 @@ class BankrLauncher {
   }
 
   async checkClubGoal() {
-    if (this.tokenData.clubGoal?.subscribed) return;
-    const earned = this.tokenData.stats.totalFeesClaimed;
-    if (earned >= CLUB_COST_WETH) {
-      this.log.info("Club goal reached! Subscribing...");
-      try {
-        this._runBankr('agent "subscribe to bankr club monthly plan"', 120000);
-        this.tokenData.clubGoal.subscribed = true;
-        this.tokenData.clubGoal.subscribedAt = new Date().toISOString();
-        this._saveTokenData();
-        await this.notify(`🎉 BANKR CLUB SUBSCRIBED! Fee share: 57% → 95%`);
-      } catch (e) {
-        this.log.error(`Club subscription failed: ${e.message}`);
-      }
+    // Club already active — unlimited launches, 95% fee share
+    if (!this.tokenData.clubGoal?.subscribed) {
+      this.tokenData.clubGoal = { subscribed: true, subscribedAt: new Date().toISOString(), plan: "unlimited" };
+      this._saveTokenData();
+      this.log.info("Club status synced — unlimited launches active.");
     }
   }
 
@@ -621,12 +613,12 @@ if (require.main === module) {
 
   const launcher = new BankrLauncher({
     config: {
-      maxLaunchesPerDay: parseInt(process.env.BANKR_MAX_LAUNCHES_PER_DAY || "10"),
+      maxLaunchesPerDay: parseInt(process.env.BANKR_MAX_LAUNCHES_PER_DAY || "50"),
     },
   });
 
   log.info("=== BANKR LAUNCHER v5 (INSTANT SNIPER DUPLICATE) STARTING ===");
-  log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay}`);
+  log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
   log.info(`Monitor: every 2 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER}`);
 
   // CORE: Monitor every 2 minutes for hot new tokens to duplicate

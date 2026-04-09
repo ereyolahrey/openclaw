@@ -33,20 +33,8 @@
     {
       "addr": "0x4d11fD06816cbAfc7676f548cBc0E6eA19B4eB07",
       "strategy": "live_duplicate",
-      "checkAt": 1775235611721,
-      "type": "6h"
-    },
-    {
-      "addr": "0x4d11fD06816cbAfc7676f548cBc0E6eA19B4eB07",
-      "strategy": "live_duplicate",
       "checkAt": 1775300411721,
       "type": "24h"
-    },
-    {
-      "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
-      "strategy": "live_duplicate",
-      "checkAt": 1775242812822,
-      "type": "6h"
     },
     {
       "addr": "0x0B6CFc3fc1F3AE1a8a870D6D0A0e01c87D7e5B07",
@@ -57,19 +45,17 @@
     {
       "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
       "strategy": "live_duplicate",
-      "checkAt": 1775228410021,
-      "type": "1h"
+      "checkAt": 1775311210021,
+      "type": "24h"
     },
     {
       "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "strategy": "live_duplicate",
-      "checkAt": 1775246410021,
+      "checkAt": 1775274016662,
       "type": "6h"
     },
     {
       "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "strategy": "live_duplicate",
-      "checkAt": 1775311210021,
+      "checkAt": 1775338816662,
       "type": "24h"
     }
   ],
@@ -133,5 +119,9 @@
       "discoveredAt": "2026-04-03T14:30:01.232Z"
     }
   ],
-  "lastFreshScan": "2026-04-03T14:30:23.549Z"
+  "lastFreshScan": "2026-04-03T14:30:23.549Z",
+  "duplications": {
+    "total": 1,
+    "successful": 0
+  }
 }

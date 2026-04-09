@@ -43,22 +43,8 @@
       "addr": "0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3",
       "strategy": "live_duplicate",
       "topic": null,
-      "checkAt": 1775235632756,
-      "type": "6h"
-    },
-    {
-      "addr": "0x05816F703df50Cf57eCA4fCC9210D5529eE5DBa3",
-      "strategy": "live_duplicate",
-      "topic": null,
       "checkAt": 1775300432756,
       "type": "24h"
-    },
-    {
-      "addr": "0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
-      "strategy": "live_duplicate",
-      "topic": null,
-      "checkAt": 1775242837472,
-      "type": "6h"
     },
     {
       "addr": "0x4E7C4235bd24b6061925194f184D3B0Fa5523ba3",
@@ -71,14 +57,42 @@
       "addr": "0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
       "strategy": "live_duplicate",
       "topic": null,
-      "checkAt": 1775246435662,
+      "checkAt": 1775311235662,
+      "type": "24h"
+    },
+    {
+      "addr": "0x519a87c14ec858C7c57791d1889DFb20dEFc8bA3",
+      "checkAt": 1775255811855,
       "type": "6h"
     },
     {
-      "addr": "0x9a05A85ee4b7785Fb576bB55c30AF386841b7Ba3",
-      "strategy": "live_duplicate",
-      "topic": null,
-      "checkAt": 1775311235662,
+      "addr": "0x519a87c14ec858C7c57791d1889DFb20dEFc8bA3",
+      "checkAt": 1775320611855,
+      "type": "24h"
+    },
+    {
+      "addr": "0x7C67E194b9CaAffc117646059044349ed0B80bA3",
+      "checkAt": 1775273316702,
+      "type": "6h"
+    },
+    {
+      "addr": "0x7C67E194b9CaAffc117646059044349ed0B80bA3",
+      "checkAt": 1775338116702,
+      "type": "24h"
+    },
+    {
+      "addr": "0xd5E2bD9Db96eff6A8770eCD136cAB81E88Ce4ba3",
+      "checkAt": 1775255564483,
+      "type": "1h"
+    },
+    {
+      "addr": "0xd5E2bD9Db96eff6A8770eCD136cAB81E88Ce4ba3",
+      "checkAt": 1775273564483,
+      "type": "6h"
+    },
+    {
+      "addr": "0xd5E2bD9Db96eff6A8770eCD136cAB81E88Ce4ba3",
+      "checkAt": 1775338364483,
       "type": "24h"
     }
   ],
@@ -208,7 +222,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:25.519Z",
   "duplications": {
-    "total": 0,
+    "total": 3,
     "successful": 0
   }
 }
