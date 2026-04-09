@@ -29,7 +29,11 @@ const TOKENS_FILE = path.join(DATA_DIR, "bankr-tokens.json");
 const PERFORMANCE_FILE = path.join(DATA_DIR, "bankr-performance.json");
 
 // ── INSTANT SNIPER CONFIG ──
-const FEE_WALLET = process.env.BANKR_FEE_WALLET || "0x162ee01a2eab184f6698ec8663ad84c4ee506733";
+const FEE_WALLET = process.env.BANKR_FEE_WALLET;
+if (!FEE_WALLET) {
+  console.error("FATAL: BANKR_FEE_WALLET not set in .env");
+  process.exit(1);
+}
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
 const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Only duplicate tokens < 10 minutes old
 const MIN_VOLUME_TRIGGER = 10;                // $10 volume = any activity detected (club = free launches)
@@ -148,20 +152,30 @@ class BankrLauncher {
     }
   }
 
+  // Sanitize external input — strip anything that could be shell metacharacters
+  _sanitizeName(str) {
+    return str.replace(/[^a-zA-Z0-9 _.\-()!@#&]/g, '').substring(0, 50).trim();
+  }
+
   // Fast deployment — direct CLI, no agent, no image, maximum speed
   _deployFast(name, symbol) {
-    const safeName = name.replace(/"/g, '\\"');
-    const safeSymbol = symbol.replace(/"/g, '\\"');
+    const safeName = this._sanitizeName(name);
+    const safeSymbol = this._sanitizeName(symbol);
 
-    const cmd = `bankr launch --name "${safeName}" --symbol "${safeSymbol}" --fee ${FEE_WALLET} --fee-type wallet --yes`;
-    this.log.info(`FAST DEPLOY: ${cmd}`);
+    if (!safeName || !safeSymbol) {
+      throw new Error(`Invalid token name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
+    }
 
-    const result = spawnSync(cmd, {
+    this.log.info(`FAST DEPLOY: bankr launch --name "${safeName}" --symbol "${safeSymbol}"`);
+
+    const result = spawnSync("bankr", [
+      "launch", "--name", safeName, "--symbol", safeSymbol,
+      "--fee", FEE_WALLET, "--fee-type", "wallet", "--yes"
+    ], {
       encoding: "utf8",
       timeout: 120000,
       stdio: ["pipe", "pipe", "pipe"],
       input: "\n\n\n\n\n\n\n\n\n\n",
-      shell: true,
     });
     const output = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
     this.log.info(`Deploy output (exit ${result.status}): ${output.substring(0, 500)}`);
@@ -180,7 +194,6 @@ class BankrLauncher {
       timeout: 180000,
       stdio: ["pipe", "pipe", "pipe"],
       input: "\n\n\n\n\n\n\n\n\n\n",
-      shell: true,
     });
     const agentOutput = `${agentResult.stdout || ""}\n${agentResult.stderr || ""}`.trim();
     this.log.info(`Agent output (exit ${agentResult.status}): ${agentOutput.substring(0, 500)}`);

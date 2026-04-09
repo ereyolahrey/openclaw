@@ -92,16 +92,19 @@ async function llm(system, prompt, maxTokens = 2000) {
   }
 }
 
-// --- CLI wrapper ---
+// --- CLI wrapper (safe — no shell interpolation) ---
 function cli(cmd) {
   try {
-    const result = execSync(`0xwork ${cmd} --json`, {
+    const args = cmd.split(/\s+/).filter(Boolean);
+    args.push('--json');
+    const result = require('child_process').spawnSync('0xwork', args, {
       encoding: 'utf8',
       timeout: 60000,
       cwd: path.join(__dirname, '..'),
       env: { ...process.env, PATH: process.env.PATH }
     });
-    return JSON.parse(result.trim());
+    const out = (result.stdout || '').trim();
+    return JSON.parse(out);
   } catch (e) {
     try {
       return JSON.parse(e.stdout?.trim() || '{}');
