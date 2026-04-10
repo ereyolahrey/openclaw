@@ -606,7 +606,7 @@
         "1h": {
           "vol24": 0,
           "vol1h": 0,
-          "checkedAt": "2026-04-09T19:30:02.877Z"
+          "checkedAt": "2026-04-09T20:30:01.608Z"
         }
       }
     },
@@ -642,7 +642,13 @@
       "launchedAt": "2026-04-09T18:32:40.368Z",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T20:30:00.835Z"
+        }
+      }
     },
     {
       "name": "PARALLEL",
@@ -670,7 +676,13 @@
       "launchedAt": "2026-04-09T18:38:44.200Z",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T20:30:02.463Z"
+        }
+      }
     },
     {
       "name": "CAFEIN",
@@ -684,7 +696,13 @@
       "launchedAt": "2026-04-09T18:44:42.433Z",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T20:30:03.273Z"
+        }
+      }
     },
     {
       "name": "Vote for Joe",
@@ -698,7 +716,13 @@
       "launchedAt": "2026-04-09T19:07:04.564Z",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T20:30:04.078Z"
+        }
+      }
     },
     {
       "name": "Vote for Joe",
@@ -712,7 +736,13 @@
       "launchedAt": "2026-04-09T19:21:33.194Z",
       "feesEarned": 0,
       "feesClaimed": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-09T20:30:04.877Z"
+        }
+      }
     }
   ],
   "stats": {
@@ -720,8 +750,8 @@
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
-  "lastLaunchDate": "2026-04-09",
-  "launchesToday": 11,
+  "lastLaunchDate": "2026-04-10",
+  "launchesToday": 0,
   "dailyHistory": [
     {
       "date": "2026-03-31",
@@ -734,6 +764,10 @@
     {
       "date": "2026-04-04",
       "launched": 0
+    },
+    {
+      "date": "2026-04-09",
+      "launched": 11
     }
   ],
   "clubGoal": {

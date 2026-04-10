@@ -17,7 +17,7 @@
  */
 
 require("dotenv").config();
-const { execSync, spawnSync } = require("child_process");
+const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
@@ -35,9 +35,20 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Only duplicate tokens < 10 minutes old
+const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Only duplicate tokens < 30 minutes old
 const MIN_VOLUME_TRIGGER = 10;                // $10 volume = any activity detected (club = free launches)
-const SEEN_TOKEN_TTL_MS = 60 * 60 * 1000;    // Forget tokens seen > 1 hour ago
+const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
+
+// ── BANKR API CONFIG ──
+const BANKR_API_URL = "https://api.bankr.bot";
+const BANKR_CONFIG_FILE = path.join(require("os").homedir(), ".bankr", "config.json");
+function getBankrApiKey() {
+  if (process.env.BANKR_API_KEY) return process.env.BANKR_API_KEY;
+  try {
+    const cfg = JSON.parse(fs.readFileSync(BANKR_CONFIG_FILE, "utf8"));
+    return cfg.apiKey;
+  } catch { return null; }
+}
 
 class BankrLauncher {
   constructor({ notifiers = [], config = {} }) {
@@ -152,13 +163,49 @@ class BankrLauncher {
     }
   }
 
-  // Sanitize external input — strip anything that could be shell metacharacters
+  // Sanitize external input — strip anything dangerous
   _sanitizeName(str) {
     return str.replace(/[^a-zA-Z0-9 _.\-()!@#&]/g, '').substring(0, 50).trim();
   }
 
-  // Fast deployment — direct CLI, no agent, no image, maximum speed
-  _deployFast(name, symbol) {
+  // HTTP POST helper for bankr API
+  _httpPost(url, body) {
+    return new Promise((resolve, reject) => {
+      const apiKey = getBankrApiKey();
+      if (!apiKey) return reject(new Error("No bankr API key found in ~/.bankr/config.json or BANKR_API_KEY env"));
+      const payload = JSON.stringify(body);
+      const parsed = new URL(url);
+      const req = https.request({
+        hostname: parsed.hostname,
+        port: parsed.port || 443,
+        path: parsed.pathname + parsed.search,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": apiKey,
+          "User-Agent": "BankrSniper/5.0",
+          "Content-Length": Buffer.byteLength(payload),
+        },
+      }, (r) => {
+        let d = "";
+        r.on("data", (c) => (d += c));
+        r.on("end", () => {
+          try {
+            const json = JSON.parse(d);
+            if (r.statusCode >= 400) return reject(new Error(`API ${r.statusCode}: ${json.message || json.error || d.substring(0, 200)}`));
+            resolve(json);
+          } catch { reject(new Error(`API response parse error (${r.statusCode}): ${d.substring(0, 200)}`)); }
+        });
+      });
+      req.on("error", (e) => reject(e));
+      req.setTimeout(120000, () => { req.destroy(); reject(new Error("API request timeout")); });
+      req.write(payload);
+      req.end();
+    });
+  }
+
+  // Deploy via bankr REST API directly (bypasses CLI interactive prompts)
+  async _deployFast(name, symbol) {
     const safeName = this._sanitizeName(name);
     const safeSymbol = this._sanitizeName(symbol);
 
@@ -166,43 +213,22 @@ class BankrLauncher {
       throw new Error(`Invalid token name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
     }
 
-    this.log.info(`FAST DEPLOY: bankr launch --name "${safeName}" --symbol "${safeSymbol}"`);
+    this.log.info(`API DEPLOY: ${safeName} ($${safeSymbol}) fee→${FEE_WALLET.slice(0, 10)}...`);
 
-    const result = spawnSync("bankr", [
-      "launch", "--name", safeName, "--symbol", safeSymbol,
-      "--fee", FEE_WALLET, "--fee-type", "wallet", "--yes"
-    ], {
-      encoding: "utf8",
-      timeout: 120000,
-      stdio: ["pipe", "pipe", "pipe"],
-      input: "\n\n\n\n\n\n\n\n\n\n",
+    const result = await this._httpPost(`${BANKR_API_URL}/token-launches/deploy`, {
+      tokenName: safeName,
+      tokenSymbol: safeSymbol,
+      feeRecipient: { type: "wallet", value: FEE_WALLET },
     });
-    const output = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
-    this.log.info(`Deploy output (exit ${result.status}): ${output.substring(0, 500)}`);
 
-    // If direct launch didn't return address, try agent as fallback
-    let addressMatch = output.match(/0x[a-fA-F0-9]{40}/);
-    if (addressMatch) {
-      return { output, contractAddress: addressMatch[0] };
+    const contractAddress = result.tokenAddress;
+    if (!contractAddress) {
+      throw new Error(`API returned no tokenAddress: ${JSON.stringify(result).substring(0, 300)}`);
     }
 
-    // Fallback: bankr agent (handles image + deploy, slower but more reliable)
-    this.log.info("Direct launch gave no address. Trying bankr agent...");
-    const agentPrompt = `launch a token with name "${safeName}" and symbol "${safeSymbol}". set fee recipient to wallet address ${FEE_WALLET}. generate an image for the token.`;
-    const agentResult = spawnSync("bankr", ["agent", agentPrompt], {
-      encoding: "utf8",
-      timeout: 180000,
-      stdio: ["pipe", "pipe", "pipe"],
-      input: "\n\n\n\n\n\n\n\n\n\n",
-    });
-    const agentOutput = `${agentResult.stdout || ""}\n${agentResult.stderr || ""}`.trim();
-    this.log.info(`Agent output (exit ${agentResult.status}): ${agentOutput.substring(0, 500)}`);
-
-    addressMatch = agentOutput.match(/0x[a-fA-F0-9]{40}/);
-    if (!addressMatch) {
-      throw new Error(`No contract address from either method: ${output.substring(0, 200)}`);
-    }
-    return { output: agentOutput, contractAddress: addressMatch[0] };
+    const output = JSON.stringify(result);
+    this.log.info(`Deploy success: ${contractAddress} (pool=${result.poolId || "?"}, tx=${result.txHash || "?"})`);
+    return { output, contractAddress };
   }
 
   // ── DAILY LIMITS ──
@@ -276,7 +302,7 @@ class BankrLauncher {
     const hotTokens = await this._findHotTokens(toCheck);
 
     if (hotTokens.length === 0) {
-      this.log.info("No hot tokens found (none with volume in first 10 min).");
+      this.log.info("No hot tokens found (none with volume in first 30 min).");
       return;
     }
 
@@ -425,7 +451,7 @@ class BankrLauncher {
     this.log.info(`  Source: age=${sourceToken.ageMinutes}min vol=$${sourceToken.volume} txns=${sourceToken.txns}`);
 
     try {
-      const { output, contractAddress } = this._deployFast(sourceToken.name, sourceToken.symbol);
+      const { output, contractAddress } = await this._deployFast(sourceToken.name, sourceToken.symbol);
 
       const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
 
@@ -632,7 +658,7 @@ if (require.main === module) {
 
   log.info("=== BANKR LAUNCHER v5 (INSTANT SNIPER DUPLICATE) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
-  log.info(`Monitor: every 2 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER}`);
+  log.info(`Monitor: every 2 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | API: direct`);
 
   // CORE: Monitor every 2 minutes for hot new tokens to duplicate
   cron.schedule("*/2 * * * *", async () => {
