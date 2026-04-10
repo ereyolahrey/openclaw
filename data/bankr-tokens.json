@@ -547,6 +547,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T18:30:01.620Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T00:30:01.474Z"
         }
       }
     },
@@ -567,6 +572,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T19:30:01.259Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T00:30:03.460Z"
         }
       }
     },
@@ -587,6 +597,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T19:30:02.067Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T00:30:04.270Z"
         }
       }
     },
@@ -607,6 +622,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:01.608Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:01.699Z"
         }
       }
     },
@@ -627,6 +647,11 @@
           "vol24": 6597.95,
           "vol1h": 0,
           "checkedAt": "2026-04-09T19:30:03.748Z"
+        },
+        "6h": {
+          "vol24": 6616.76,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T00:30:05.973Z"
         }
       }
     },
@@ -647,6 +672,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:00.835Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:00.936Z"
         }
       }
     },
@@ -681,6 +711,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:02.463Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:02.479Z"
         }
       }
     },
@@ -701,6 +736,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:03.273Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:03.590Z"
         }
       }
     },
@@ -721,6 +761,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:04.078Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:07.044Z"
         }
       }
     },
@@ -741,17 +786,47 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-09T20:30:04.877Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T01:30:07.853Z"
+        }
+      }
+    },
+    {
+      "name": "ZHC Institute",
+      "symbol": "zhc",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x54C1872275076fE14E5DBeDD048C3d09de6F1Ba3",
+      "bankrUrl": null,
+      "sourceAddress": "0x412546e92b06af5c3af3adc537b154cddf276ba3",
+      "sourceVolume": 546,
+      "sourceAge": 3,
+      "launchedAt": "2026-04-10T00:36:10.107Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T02:30:00.467Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-10T10:30:05.829Z"
         }
       }
     }
   ],
   "stats": {
-    "totalLaunched": 30,
+    "totalLaunched": 31,
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
   "lastLaunchDate": "2026-04-10",
-  "launchesToday": 0,
+  "launchesToday": 1,
   "dailyHistory": [
     {
       "date": "2026-03-31",
