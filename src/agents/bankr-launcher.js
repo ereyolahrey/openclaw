@@ -35,9 +35,9 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Only duplicate tokens < 30 minutes old
+const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Only duplicate tokens < 10 minutes old (HOT launches only)
 const MIN_VOLUME_TRIGGER = 10;                // $10 volume = any activity detected (club = free launches)
-const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
+const SEEN_TOKEN_TTL_MS = 60 * 60 * 1000;    // Forget tokens seen > 1 hour ago
 
 // ── BANKR API CONFIG ──
 const BANKR_API_URL = "https://api.bankr.bot";
@@ -54,7 +54,7 @@ class BankrLauncher {
   constructor({ notifiers = [], config = {} }) {
     this.notifiers = notifiers;
     this.config = {
-      maxLaunchesPerDay: config.maxLaunchesPerDay || 50,  // Club = unlimited, but cap at 50 for safety
+      maxLaunchesPerDay: config.maxLaunchesPerDay || 200,  // Club = unlimited launches
       feeClaimThreshold: config.feeClaimThreshold || 0.001,
       ...config,
     };
@@ -302,7 +302,7 @@ class BankrLauncher {
     const hotTokens = await this._findHotTokens(toCheck);
 
     if (hotTokens.length === 0) {
-      this.log.info("No hot tokens found (none with volume in first 30 min).");
+      this.log.info("No hot tokens found (none with volume in first 10 min).");
       return;
     }
 
@@ -652,7 +652,7 @@ if (require.main === module) {
 
   const launcher = new BankrLauncher({
     config: {
-      maxLaunchesPerDay: parseInt(process.env.BANKR_MAX_LAUNCHES_PER_DAY || "50"),
+      maxLaunchesPerDay: parseInt(process.env.BANKR_MAX_LAUNCHES_PER_DAY || "200"),
     },
   });
 
