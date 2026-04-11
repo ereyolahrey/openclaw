@@ -1,24 +1,31 @@
 /**
- * Clanker Token Launcher Agent v3 — Instant Sniper Duplicate Engine
+ * Clanker Token Launcher Agent v4 — SDK-Powered Sniper Engine
  *
- * STRATEGY: Monitor for brand-new token launches every 2 minutes.
- * When a fresh token (<10 min old) shows ANY volume on DexScreener,
- * IMMEDIATELY deploy a duplicate via Clanker SDK to catch sniper bots.
+ * STRATEGY: Monitor for brand-new token launches every 1 minute.
+ * When a fresh token (<30 min old) shows real traction ($500+ vol, 5+ txns),
+ * IMMEDIATELY deploy a duplicate via Clanker SDK (direct JS API).
  *
- * Same approach as bankr v5 but deploys on Clanker (clanker-sdk CLI).
+ * Uses clanker-sdk/v4 for reliable deployments (no CLI shell-outs).
  *
  * Sources monitored:
  *   1. clanker.world API — newest clanker token launches
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
+ *   4. DexScreener new pairs — freshly created Base pairs
  */
 
 require("dotenv").config();
-const { spawnSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
 const { Logger } = require("../utils/logger");
+
+// ── Clanker SDK + viem ──
+const { Clanker } = require("clanker-sdk/v4");
+const { FEE_CONFIGS, POOL_POSITIONS } = require("clanker-sdk");
+const { createPublicClient, createWalletClient, http } = require("viem");
+const { privateKeyToAccount } = require("viem/accounts");
+const { base } = require("viem/chains");
 
 // ── FILE PATHS ──
 const DATA_DIR = path.join(__dirname, "..", "..", "data");
@@ -31,7 +38,6 @@ const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 minutes old
 const MIN_VOLUME_TRIGGER = 500;               // $500 volume = real traction (filters noise)
 const MIN_TXN_COUNT = 5;                      // At least 5 txns = real interest, not bot wash
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
-const INITIAL_MARKET_CAP = "5";               // 5 ETH initial mcap
 
 class ClankerLauncher {
   constructor({ notifiers = [], config = {} }) {
@@ -57,7 +63,7 @@ class ClankerLauncher {
     );
 
     this.log.info(
-      `Clanker Launcher v3 (instant sniper) initialized. ` +
+      `Clanker Launcher v4 (SDK-powered) initialized. ` +
       `${this.tokenData.tokens.length} tracked, ${this.tokenData.stats.totalLaunched} launched, ` +
       `${this.duplicatedSources.size} sources already duplicated.`
     );
@@ -125,60 +131,68 @@ class ClankerLauncher {
     });
   }
 
-  // Fast deployment via clanker-sdk CLI
-  _deployFast(name, symbol) {
-    const safeName = name.replace(/"/g, '\\"');
-    const safeSymbol = symbol.replace(/"/g, '\\"');
-    const desc = `${name} — deployed via Clanker. Contract verified`;
+  // ── SDK INITIALIZATION (lazy) ──
 
-    const rewardRecipients = JSON.stringify([{
-      admin: WALLET_ADDR,
-      recipient: WALLET_ADDR,
-      bps: 10000,
-      token: "Paired",
-    }]).replace(/"/g, '\\"');
+  _initSdk() {
+    if (this._clanker) return this._clanker;
 
-    const cmd = `npx clanker-sdk deploy --chain base --name "${safeName}" --symbol "${safeSymbol}" --description "${desc}" --starting-market-cap ${INITIAL_MARKET_CAP} --reward-recipients "${rewardRecipients}" --dev-buy-eth 0 --json`;
+    const privateKey = process.env.PRIVATE_KEY;
+    if (!privateKey) throw new Error("PRIVATE_KEY not set — cannot deploy");
 
-    this.log.info(`FAST DEPLOY: ${cmd.substring(0, 300)}`);
+    const account = privateKeyToAccount(privateKey.startsWith("0x") ? privateKey : `0x${privateKey}`);
+    const publicClient = createPublicClient({ chain: base, transport: http(process.env.RPC_URL) });
+    const wallet = createWalletClient({ account, chain: base, transport: http(process.env.RPC_URL) });
 
-    const result = spawnSync(cmd, {
-      encoding: "utf8",
-      timeout: 180000,
-      stdio: ["pipe", "pipe", "pipe"],
-      shell: true,
-      env: { ...process.env },
+    this._clanker = new Clanker({ wallet, publicClient });
+    this._account = account;
+    this.log.info(`SDK initialized. Deployer: ${account.address}`);
+    return this._clanker;
+  }
+
+  // Deploy via Clanker SDK (direct JS API — no CLI)
+  async _deployFast(name, symbol) {
+    const safeName = this._sanitizeName(name);
+    const safeSymbol = this._sanitizeName(symbol);
+    if (!safeName || !safeSymbol) throw new Error(`Invalid name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
+
+    const clanker = this._initSdk();
+
+    this.log.info(`SDK DEPLOY: ${safeName} ($${safeSymbol}) → Base | rewards→${WALLET_ADDR.slice(0, 10)}...`);
+
+    const { txHash, waitForTransaction, error } = await clanker.deploy({
+      name: safeName,
+      symbol: safeSymbol,
+      tokenAdmin: this._account.address,
+      chainId: base.id,
+      vanity: true,
+      pool: {
+        pairedToken: "WETH",
+        positions: POOL_POSITIONS.Standard,
+      },
+      fees: FEE_CONFIGS.DynamicBasic,  // 1-5% volatility-based fees (more revenue)
+      rewards: {
+        recipients: [{
+          admin: WALLET_ADDR,
+          recipient: WALLET_ADDR,
+          bps: 10000,
+          token: "Both",  // Collect fees from both token sides
+        }],
+      },
     });
 
-    const output = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
-    this.log.info(`Deploy output (exit ${result.status}): ${output.substring(0, 600)}`);
+    if (error) throw new Error(`Deploy error: ${error.message}`);
 
-    // Extract contract address — try JSON first
-    let tokenAddress = null;
-    try {
-      const lines = output.split("\n");
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.startsWith("{")) {
-          const json = JSON.parse(trimmed);
-          tokenAddress = json.tokenAddress || json.address || json.token;
-          break;
-        }
-      }
-    } catch {}
+    const { address, error: txError } = await waitForTransaction();
+    if (txError) throw new Error(`Transaction error: ${txError.message}`);
+    if (!address) throw new Error("Deploy succeeded but no token address returned");
 
-    // Fallback: regex
-    if (!tokenAddress) {
-      const addrMatch = output.match(/(?:token\s*(?:address|at|deployed)[:\s]*)(0x[a-fA-F0-9]{40})/i)
-        || output.match(/0x[a-fA-F0-9]{40}/);
-      tokenAddress = addrMatch ? addrMatch[1] || addrMatch[0] : null;
-    }
+    this.log.info(`Deploy success: ${address} (tx: ${txHash})`);
+    return { output: JSON.stringify({ txHash, address }), contractAddress: address };
+  }
 
-    if (!tokenAddress) {
-      throw new Error(`No contract address: ${output.substring(0, 300)}`);
-    }
-
-    return { output, contractAddress: tokenAddress };
+  // Sanitize external input
+  _sanitizeName(str) {
+    return str.replace(/[^a-zA-Z0-9 _.\-()!@#&]/g, '').substring(0, 50).trim();
   }
 
   // ── DAILY LIMITS ──
@@ -425,14 +439,8 @@ class ClankerLauncher {
     this.log.info(`\nDEPLOYING DUPLICATE: ${sourceToken.name} ($${sourceToken.symbol})`);
     this.log.info(`  Source: age=${sourceToken.ageMinutes}min vol=$${sourceToken.volume} txns=${sourceToken.txns}`);
 
-    const privateKey = process.env.PRIVATE_KEY;
-    if (!privateKey) {
-      this.log.error("PRIVATE_KEY not set — cannot deploy.");
-      return null;
-    }
-
     try {
-      const { output, contractAddress } = this._deployFast(sourceToken.name, sourceToken.symbol);
+      const { output, contractAddress } = await this._deployFast(sourceToken.name, sourceToken.symbol);
 
       const tokenRecord = {
         name: sourceToken.name,
@@ -545,7 +553,7 @@ class ClankerLauncher {
     this._savePerformanceData();
   }
 
-  // ── REWARD CLAIMING ──
+  // ── REWARD CLAIMING (SDK) ──
 
   async claimRewards() {
     this.log.info("Checking creator rewards...");
@@ -555,27 +563,49 @@ class ClankerLauncher {
       return;
     }
 
-    for (const token of tokensWithAddr.slice(-10)) {
+    let clanker;
+    try { clanker = this._initSdk(); } catch (e) {
+      this.log.warn(`SDK init failed for reward claim: ${e.message}`);
+      return;
+    }
+
+    let totalClaimed = 0;
+    for (const token of tokensWithAddr.slice(-20)) {
       try {
-        const result = spawnSync("npx", [
-          "clanker-sdk", "rewards", "claim",
-          "--chain", "base",
-          "--token", token.contractAddress,
-          "--json",
-        ], {
-          encoding: "utf8",
-          timeout: 60000,
-          stdio: ["pipe", "pipe", "pipe"],
-          shell: true,
-          env: { ...process.env },
+        // Check available rewards first
+        const rewards = await clanker.availableRewards({
+          token: token.contractAddress,
+          rewardRecipient: WALLET_ADDR,
         });
-        const output = `${result.stdout || ""}\n${result.stderr || ""}`.trim();
-        if (output && !output.includes("no rewards") && !output.includes("0.0")) {
-          this.log.info(`Reward claim ${token.symbol}: ${output.substring(0, 300)}`);
+
+        if (!rewards || rewards.length === 0) continue;
+
+        // Claim if there are rewards
+        const { txHash, error } = await clanker.claimRewards({
+          token: token.contractAddress,
+          rewardRecipient: WALLET_ADDR,
+        });
+
+        if (error) {
+          if (!error.message.includes("NoFeesToClaim")) {
+            this.log.warn(`Reward claim ${token.symbol}: ${error.message.substring(0, 200)}`);
+          }
+          continue;
         }
+
+        if (txHash) {
+          this.log.info(`Rewards claimed for ${token.symbol}: tx=${txHash}`);
+          totalClaimed++;
+          token.feesEarned = (token.feesEarned || 0) + 1; // Track that we claimed
+          this._saveTokenData();
+        }
+
         await new Promise(r => setTimeout(r, 2000));
       } catch (e) {
-        this.log.warn(`Reward claim failed for ${token.symbol}: ${e.message}`);
+        // Silently skip "no fees" errors
+        if (!e.message.includes("NoFeesToClaim") && !e.message.includes("reverted")) {
+          this.log.warn(`Reward claim failed for ${token.symbol}: ${e.message.substring(0, 200)}`);
+        }
       }
     }
   }
@@ -614,7 +644,7 @@ if (require.main === module) {
     },
   });
 
-  log.info("=== CLANKER LAUNCHER v3 (INSTANT SNIPER DUPLICATE) STARTING ===");
+  log.info("=== CLANKER LAUNCHER v4 (SDK-POWERED SNIPER) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay}`);
   log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT}`);
 
