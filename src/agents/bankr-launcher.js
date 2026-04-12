@@ -1,19 +1,21 @@
 /**
- * Bankr Token Launcher Agent v5 — Instant Sniper Duplicate Engine
+ * Bankr Token Launcher Agent v7 — Multi-Chain Sniper Engine
  *
- * STRATEGY: Monitor for brand-new token launches every 2 minutes.
- * When a fresh token (<10 min old) shows ANY volume on DexScreener,
- * IMMEDIATELY deploy a duplicate on bankr.bot to catch sniper bots.
+ * STRATEGY: Monitor for brand-new token launches every minute.
+ * When a fresh token (<15 min old) shows traction ($500+ vol, 5+ txns),
+ * deploy duplicates on BOTH Base (REST API) AND Solana (Agent API).
  *
- * Why this works:
- *   - Sniper bots buy tokens with certain names IMMEDIATELY on launch
- *   - If we deploy a duplicate within minutes, snipers may buy ours too
- *   - Speed > strategy — timing is everything
+ * Multi-chain deployment:
+ *   - Base: via REST API /token-launches/deploy (instant)
+ *   - Solana: via Agent API /agent/prompt (natural language, async polling)
  *
  * Sources monitored:
  *   1. api.bankr.bot/token-launches — bankr's own fresh token launches
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
+ *   4. DexScreener new pairs — freshly created Base pairs
+ *   5. DexScreener Solana pairs — hot Solana tokens to duplicate
+ *   6. Tracked wallets — tokens from top deployers
  */
 
 require("dotenv").config();
@@ -209,7 +211,7 @@ class BankrLauncher {
     });
   }
 
-  // Deploy via bankr REST API directly (bypasses CLI interactive prompts)
+  // Deploy via bankr REST API directly (bypasses CLI interactive prompts) — Base chain
   async _deployFast(name, symbol) {
     const safeName = this._sanitizeName(name);
     const safeSymbol = this._sanitizeName(symbol);
@@ -218,7 +220,7 @@ class BankrLauncher {
       throw new Error(`Invalid token name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
     }
 
-    this.log.info(`API DEPLOY: ${safeName} ($${safeSymbol}) fee→${FEE_WALLET.slice(0, 10)}...`);
+    this.log.info(`API DEPLOY: ${safeName} ($${safeSymbol}) fee→${FEE_WALLET.slice(0, 10)}... [Base]`);
 
     const result = await this._httpPost(`${BANKR_API_URL}/token-launches/deploy`, {
       tokenName: safeName,
@@ -233,7 +235,74 @@ class BankrLauncher {
 
     const output = JSON.stringify(result);
     this.log.info(`Deploy success: ${contractAddress} (pool=${result.poolId || "?"}, tx=${result.txHash || "?"})`);
-    return { output, contractAddress };
+    return { output, contractAddress, chain: "base" };
+  }
+
+  // Deploy via bankr Agent API (natural language) — supports Solana + other chains
+  async _deployViaAgent(name, symbol, chain = "solana") {
+    const safeName = this._sanitizeName(name);
+    const safeSymbol = this._sanitizeName(symbol);
+
+    if (!safeName || !safeSymbol) {
+      throw new Error(`Invalid token name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
+    }
+
+    this.log.info(`AGENT DEPLOY: ${safeName} ($${safeSymbol}) → ${chain} | fee→${FEE_WALLET.slice(0, 10)}...`);
+
+    // Submit prompt to bankr agent
+    const prompt = `deploy a token called ${safeName} with symbol ${safeSymbol} on ${chain}`;
+    const submitResult = await this._httpPost(`${BANKR_API_URL}/agent/prompt`, { prompt });
+
+    if (!submitResult.jobId) {
+      throw new Error(`Agent API returned no jobId: ${JSON.stringify(submitResult).substring(0, 300)}`);
+    }
+
+    const jobId = submitResult.jobId;
+    this.log.info(`Agent job submitted: ${jobId} — polling for result...`);
+
+    // Poll for result (max 2 min, check every 5 sec)
+    const maxAttempts = 24;
+    for (let i = 0; i < maxAttempts; i++) {
+      await new Promise(r => setTimeout(r, 5000));
+
+      try {
+        const apiKey = getBankrApiKey();
+        const jobResult = await new Promise((resolve, reject) => {
+          const req = https.get(`${BANKR_API_URL}/agent/job/${jobId}`, {
+            headers: { "X-API-Key": apiKey, "User-Agent": "BankrSniper/6.0" },
+          }, (r) => {
+            let d = "";
+            r.on("data", (c) => (d += c));
+            r.on("end", () => { try { resolve(JSON.parse(d)); } catch { reject(new Error(`Parse error: ${d.substring(0, 200)}`)); } });
+          });
+          req.on("error", reject);
+          req.setTimeout(15000, () => { req.destroy(); reject(new Error("Job poll timeout")); });
+        });
+
+        if (jobResult.status === "completed") {
+          const response = jobResult.response || "";
+          this.log.info(`Agent deploy completed: ${response.substring(0, 300)}`);
+
+          // Try to extract contract address from response
+          const addrMatch = response.match(/0x[a-fA-F0-9]{40}/);
+          const contractAddress = addrMatch ? addrMatch[0] : null;
+
+          if (!contractAddress) {
+            throw new Error(`Agent completed but no contract address found in response: ${response.substring(0, 300)}`);
+          }
+
+          return { output: response, contractAddress, chain };
+        } else if (jobResult.status === "failed") {
+          throw new Error(`Agent job failed: ${jobResult.response || jobResult.error || "unknown error"}`);
+        }
+        // Still pending/processing — keep polling
+      } catch (e) {
+        if (e.message.includes("Agent job failed") || e.message.includes("no contract address")) throw e;
+        this.log.warn(`Job poll attempt ${i + 1} error: ${e.message}`);
+      }
+    }
+
+    throw new Error(`Agent job ${jobId} timed out after ${maxAttempts * 5}s`);
   }
 
   // ── DAILY LIMITS ──
@@ -559,6 +628,7 @@ class BankrLauncher {
         symbol: sourceToken.symbol,
         strategy: "instant_duplicate",
         contractAddress,
+        chain: "base",
         bankrUrl: urlMatch ? urlMatch[0] : null,
         sourceAddress: sourceToken.address,
         sourceVolume: sourceToken.volume,
@@ -584,7 +654,7 @@ class BankrLauncher {
       this._savePerformanceData();
 
       await this.notify(
-        `🎯 *INSTANT DUPLICATE DEPLOYED!* [bankr]\n` +
+        `🎯 *INSTANT DUPLICATE DEPLOYED!* [bankr → Base]\n` +
         `Name: ${sourceToken.name} ($${sourceToken.symbol})\n` +
         `Contract: \`${contractAddress}\`\n` +
         `Source token: age=${sourceToken.ageMinutes}min vol=$${sourceToken.volume} txns=${sourceToken.txns}\n` +
@@ -592,7 +662,44 @@ class BankrLauncher {
         `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay} | Total: ${this.tokenData.stats.totalLaunched}`
       );
 
-      this.log.info(`Duplicate deployed at ${contractAddress}`);
+      this.log.info(`Duplicate deployed on Base at ${contractAddress}`);
+
+      // Also deploy on Solana via Agent API
+      if (this._checkDailyLimit()) {
+        try {
+          const solResult = await this._deployViaAgent(sourceToken.name, sourceToken.symbol, "solana");
+          const solRecord = {
+            name: sourceToken.name,
+            symbol: sourceToken.symbol,
+            strategy: "instant_duplicate_solana",
+            contractAddress: solResult.contractAddress,
+            chain: "solana",
+            sourceAddress: sourceToken.address,
+            sourceVolume: sourceToken.volume,
+            sourceAge: sourceToken.ageMinutes,
+            launchedAt: new Date().toISOString(),
+            feesEarned: 0,
+            feesClaimed: 0,
+            volumeData: {},
+          };
+          this.tokenData.tokens.push(solRecord);
+          this.tokenData.stats.totalLaunched++;
+          this.tokenData.launchesToday++;
+          this._saveTokenData();
+          this.perfData.duplications.total++;
+          this._savePerformanceData();
+
+          await this.notify(
+            `🎯 *INSTANT DUPLICATE!* [bankr → Solana]\n` +
+            `Name: ${sourceToken.name} ($${sourceToken.symbol})\n` +
+            `Contract: \`${solResult.contractAddress}\`\n` +
+            `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+          );
+        } catch (e) {
+          this.log.error(`Solana duplicate deploy failed: ${e.message}`);
+        }
+      }
+
       return tokenRecord;
     } catch (e) {
       this.log.error(`Deploy failed: ${e.message}`);
@@ -726,6 +833,9 @@ class BankrLauncher {
   // ── SOLANA SNIPE DEPLOYMENT ──
 
   async _deploySolanaSnipe(token) {
+    const results = [];
+
+    // Deploy on Base (fast REST API)
     try {
       const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
       const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
@@ -735,6 +845,7 @@ class BankrLauncher {
         symbol: token.symbol,
         strategy: "solana_snipe",
         contractAddress,
+        chain: "base",
         bankrUrl: urlMatch ? urlMatch[0] : null,
         sourceAddress: token.address,
         solVolume: token.solVolume,
@@ -749,32 +860,72 @@ class BankrLauncher {
       this.tokenData.stats.totalLaunched++;
       this.tokenData.launchesToday++;
       this._saveTokenData();
-
-      this.duplicatedSources.add(token.address);
-      this.deployedNames.add(`${token.name}::${token.symbol}`);
-      this.lastLaunchTime = Date.now();
       this._scheduleVolumeCheck(tokenRecord);
       this.perfData.duplications.total++;
       this._savePerformanceData();
+      results.push(tokenRecord);
 
       await this.notify(
-        `🌊 *SOLANA SNIPE!* [bankr]\n` +
+        `🌊 *SOLANA SNIPE!* [bankr → Base]\n` +
         `Name: ${token.name} ($${token.symbol})\n` +
         `Contract: \`${contractAddress}\`\n` +
         `Solana vol: $${token.solVolume} | txns: ${token.solTxns}\n` +
         `${urlMatch ? urlMatch[0] + "\n" : ""}` +
         `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
       );
-      return tokenRecord;
     } catch (e) {
-      this.log.error(`Solana snipe deploy failed: ${e.message}`);
-      return null;
+      this.log.error(`Solana snipe Base deploy failed: ${e.message}`);
     }
+
+    // Also deploy on Solana via Agent API (actual Solana launch!)
+    try {
+      const { output, contractAddress, chain } = await this._deployViaAgent(token.name, token.symbol, "solana");
+
+      const tokenRecord = {
+        name: token.name,
+        symbol: token.symbol,
+        strategy: "solana_snipe_native",
+        contractAddress,
+        chain: "solana",
+        sourceAddress: token.address,
+        solVolume: token.solVolume,
+        solTxns: token.solTxns,
+        launchedAt: new Date().toISOString(),
+        feesEarned: 0,
+        feesClaimed: 0,
+        volumeData: {},
+      };
+
+      this.tokenData.tokens.push(tokenRecord);
+      this.tokenData.stats.totalLaunched++;
+      this.tokenData.launchesToday++;
+      this._saveTokenData();
+      this.perfData.duplications.total++;
+      this._savePerformanceData();
+      results.push(tokenRecord);
+
+      await this.notify(
+        `🌊 *SOLANA NATIVE LAUNCH!* [bankr → Solana]\n` +
+        `Name: ${token.name} ($${token.symbol})\n` +
+        `Contract: \`${contractAddress}\`\n` +
+        `Solana vol: $${token.solVolume} | txns: ${token.solTxns}\n` +
+        `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+      );
+    } catch (e) {
+      this.log.error(`Solana native deploy failed: ${e.message}`);
+    }
+
+    this.duplicatedSources.add(token.address);
+    this.deployedNames.add(`${token.name}::${token.symbol}`);
+    this.lastLaunchTime = Date.now();
+
+    return results.length > 0 ? results[0] : null;
   }
 
   // ── WALLET TRACKER DEPLOYMENT ──
 
   async _deployWalletTrack(token) {
+    // Deploy on Base (primary)
     try {
       const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
       const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
@@ -784,6 +935,7 @@ class BankrLauncher {
         symbol: token.symbol,
         strategy: "wallet_tracker",
         contractAddress,
+        chain: "base",
         bankrUrl: urlMatch ? urlMatch[0] : null,
         sourceAddress: token.address,
         trackedWallet: token.trackedWallet,
@@ -806,13 +958,49 @@ class BankrLauncher {
       this._savePerformanceData();
 
       await this.notify(
-        `🔍 *WALLET TRACK DEPLOY!* [bankr]\n` +
+        `🔍 *WALLET TRACK DEPLOY!* [bankr → Base]\n` +
         `Name: ${token.name} ($${token.symbol})\n` +
         `Contract: \`${contractAddress}\`\n` +
         `Tracked deployer: ${token.trackedWallet}\n` +
         `${urlMatch ? urlMatch[0] + "\n" : ""}` +
         `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
       );
+
+      // Also deploy on Solana
+      if (this._checkDailyLimit()) {
+        try {
+          const solResult = await this._deployViaAgent(token.name, token.symbol, "solana");
+          const solRecord = {
+            name: token.name,
+            symbol: token.symbol,
+            strategy: "wallet_tracker_solana",
+            contractAddress: solResult.contractAddress,
+            chain: "solana",
+            sourceAddress: token.address,
+            trackedWallet: token.trackedWallet,
+            launchedAt: new Date().toISOString(),
+            feesEarned: 0,
+            feesClaimed: 0,
+            volumeData: {},
+          };
+          this.tokenData.tokens.push(solRecord);
+          this.tokenData.stats.totalLaunched++;
+          this.tokenData.launchesToday++;
+          this._saveTokenData();
+          this.perfData.duplications.total++;
+          this._savePerformanceData();
+
+          await this.notify(
+            `🔍 *WALLET TRACK DEPLOY!* [bankr → Solana]\n` +
+            `Name: ${token.name} ($${token.symbol})\n` +
+            `Contract: \`${solResult.contractAddress}\`\n` +
+            `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+          );
+        } catch (e) {
+          this.log.error(`Wallet track Solana deploy failed: ${e.message}`);
+        }
+      }
+
       return tokenRecord;
     } catch (e) {
       this.log.error(`Wallet track deploy failed: ${e.message}`);
@@ -1006,6 +1194,7 @@ class BankrLauncher {
           symbol: trend.symbol,
           strategy: "trending_narrative",
           contractAddress,
+          chain: "base",
           bankrUrl: urlMatch ? urlMatch[0] : null,
           sourceAddress: null,
           trendSource: trend.source,
@@ -1026,7 +1215,7 @@ class BankrLauncher {
         this.lastLaunchTime = Date.now();
 
         await this.notify(
-          `🔥 *TRENDING LAUNCH!* [bankr]\n` +
+          `🔥 *TRENDING LAUNCH!* [bankr → Base]\n` +
           `Name: ${trend.name} ($${trend.symbol})\n` +
           `Contract: \`${contractAddress}\`\n` +
           `Trend: ${trend.source} (score: ${trend.score})\n` +
@@ -1034,7 +1223,41 @@ class BankrLauncher {
           `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
         );
 
-        this.log.info(`Trending token deployed at ${contractAddress}`);
+        this.log.info(`Trending token deployed on Base at ${contractAddress}`);
+
+        // Also deploy on Solana via Agent API
+        if (this._checkDailyLimit()) {
+          try {
+            const solResult = await this._deployViaAgent(trend.name, trend.symbol, "solana");
+            const solRecord = {
+              name: trend.name,
+              symbol: trend.symbol,
+              strategy: "trending_narrative_solana",
+              contractAddress: solResult.contractAddress,
+              chain: "solana",
+              trendSource: trend.source,
+              trendScore: trend.score,
+              launchedAt: new Date().toISOString(),
+              feesEarned: 0,
+              feesClaimed: 0,
+              volumeData: {},
+            };
+            this.tokenData.tokens.push(solRecord);
+            this.tokenData.stats.totalLaunched++;
+            this.tokenData.launchesToday++;
+            this._saveTokenData();
+
+            await this.notify(
+              `🔥 *TRENDING LAUNCH!* [bankr → Solana]\n` +
+              `Name: ${trend.name} ($${trend.symbol})\n` +
+              `Contract: \`${solResult.contractAddress}\`\n` +
+              `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+            );
+          } catch (e) {
+            this.log.error(`Trending Solana deploy failed: ${e.message}`);
+          }
+        }
+
         return tokenRecord;
       } catch (e) {
         this.log.error(`Trending launch failed for ${trend.name}: ${e.message}`);
@@ -1081,9 +1304,10 @@ if (require.main === module) {
     },
   });
 
-  log.info("=== BANKR LAUNCHER v5 (INSTANT SNIPER DUPLICATE) STARTING ===");
+  log.info("=== BANKR LAUNCHER v7 (MULTI-CHAIN SNIPER — Base + Solana) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
-  log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT} | API: direct`);
+  log.info(`Chains: Base (REST API) + Solana (Agent API)`);
+  log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT}`);
 
   // CORE: Monitor every 1 minute for hot new tokens to duplicate
   cron.schedule("* * * * *", async () => {
