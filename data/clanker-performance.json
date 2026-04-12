@@ -353,6 +353,21 @@
       "addr": "0x3cDD8819BBDABf3eb18B108413c2AeaFe5c87b07",
       "checkAt": 1776102692689,
       "type": "24h"
+    },
+    {
+      "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
+      "checkAt": 1776021258531,
+      "type": "1h"
+    },
+    {
+      "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
+      "checkAt": 1776039258531,
+      "type": "6h"
+    },
+    {
+      "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
+      "checkAt": 1776104058531,
+      "type": "24h"
     }
   ],
   "lastAdaptation": null,
@@ -417,7 +432,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:23.549Z",
   "duplications": {
-    "total": 31,
+    "total": 32,
     "successful": 0
   }
 }

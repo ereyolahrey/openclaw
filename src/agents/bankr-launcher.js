@@ -351,13 +351,6 @@ class BankrLauncher {
 
     if (hotTokens.length === 0) {
       this.log.info(`No hot tokens found (need $${MIN_VOLUME_TRIGGER}+ vol, ${MIN_TXN_COUNT}+ txns, <${MAX_TOKEN_AGE_MS / 60000}min old).`);
-
-      // FALLBACK: If no launch in 2+ hours, deploy a trending token
-      const timeSinceLastLaunch = Date.now() - this.lastLaunchTime;
-      if (timeSinceLastLaunch > 2 * 60 * 60 * 1000) {
-        this.log.info(`No launch in ${Math.round(timeSinceLastLaunch / 60000)}min — triggering trending fallback...`);
-        await this._launchTrendingToken();
-      }
       return;
     }
 
@@ -1104,14 +1097,6 @@ if (require.main === module) {
       log.info("─── Volume checks ───");
       await launcher.runVolumeChecks();
     } catch (e) { log.error("Volume check error:", e.message); }
-  });
-
-  // Trending narrative launch: Every 3 hours
-  cron.schedule("0 */3 * * *", async () => {
-    try {
-      log.info("─── Trending narrative launch ───");
-      await launcher._launchTrendingToken();
-    } catch (e) { log.error("Trending launch error:", e.message); }
   });
 
   // Wallet tracker: Discover top deployers every 6 hours

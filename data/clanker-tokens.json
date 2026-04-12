@@ -930,14 +930,28 @@
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
       "volumeData": {}
+    },
+    {
+      "name": "TN100x Intern",
+      "symbol": "TN100x",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
+      "chain": "base",
+      "sourceAddress": "0xf997f5c8091670986faf8b7fc0943cbc2c533ba3",
+      "sourceVolume": 505,
+      "sourceAge": 1,
+      "launchedAt": "2026-04-12T18:14:18.529Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 47,
+    "totalLaunched": 48,
     "totalFeesEarned": 0
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 30,
+  "launchesToday": 31,
   "dailyHistory": [
     {
       "date": "2026-04-03",
