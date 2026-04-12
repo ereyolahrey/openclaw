@@ -303,6 +303,36 @@
       "addr": "0x87db22fc095442294d509FE5c0F132caD7a61b07",
       "checkAt": 1776092717488,
       "type": "24h"
+    },
+    {
+      "addr": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
+      "checkAt": 1776010463180,
+      "type": "1h"
+    },
+    {
+      "addr": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
+      "checkAt": 1776028463180,
+      "type": "6h"
+    },
+    {
+      "addr": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
+      "checkAt": 1776093263180,
+      "type": "24h"
+    },
+    {
+      "addr": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
+      "checkAt": 1776010514596,
+      "type": "1h"
+    },
+    {
+      "addr": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
+      "checkAt": 1776028514596,
+      "type": "6h"
+    },
+    {
+      "addr": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
+      "checkAt": 1776093314596,
+      "type": "24h"
     }
   ],
   "lastAdaptation": null,
@@ -367,7 +397,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:23.549Z",
   "duplications": {
-    "total": 21,
+    "total": 23,
     "successful": 0
   }
 }

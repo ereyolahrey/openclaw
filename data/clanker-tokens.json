@@ -639,14 +639,42 @@
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
       "volumeData": {}
+    },
+    {
+      "name": "Pi Network",
+      "symbol": "PI",
+      "strategy": "solana_snipe",
+      "contractAddress": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "sourceAddress": "trend_pi-network",
+      "solVolume": 9951,
+      "solTxns": 100,
+      "launchedAt": "2026-04-12T15:14:23.179Z",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Solana",
+      "symbol": "SOL",
+      "strategy": "solana_snipe",
+      "contractAddress": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "sourceAddress": "trend_solana",
+      "solVolume": 9993,
+      "solTxns": 100,
+      "launchedAt": "2026-04-12T15:15:14.595Z",
+      "feesEarned": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 36,
+    "totalLaunched": 38,
     "totalFeesEarned": 0
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 19,
+  "launchesToday": 21,
   "dailyHistory": [
     {
       "date": "2026-04-03",

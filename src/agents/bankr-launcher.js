@@ -33,10 +33,36 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 minutes old (wider net = more launches)
-const MIN_VOLUME_TRIGGER = 50;                // $50 volume = early traction detected (club = free launches)
-const MIN_TXN_COUNT = 2;                      // At least 2 txns = real interest, not just deployer
+const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Duplicate tokens < 10 min old — speed is everything, GeoMarket was caught at 1 min
+const MIN_VOLUME_TRIGGER = 500;               // $500+ volume = real traction, not just deployer swaps
+const MIN_TXN_COUNT = 3;                      // At least 3 txns = genuine interest from multiple wallets
+const MAX_VOLUME_CAP = 50000;                 // Skip tokens with $50K+ vol — already too many copycats
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
+
+// ── NAME QUALITY FILTER ──
+// Reject tokens with names that are established coins, too generic, or spammy
+const BLOCKED_NAMES = new Set([
+  "bitcoin", "ethereum", "solana", "bnb", "cardano", "dogecoin", "shiba", "xrp",
+  "ripple", "polkadot", "avalanche", "chainlink", "polygon", "uniswap", "litecoin",
+  "pepe", "bonk", "floki", "doge", "tron", "near", "cosmos", "toncoin", "aptos",
+  "sui", "arbitrum", "optimism", "aave", "maker", "compound",
+]);
+function isQualityName(name, symbol) {
+  if (!name || !symbol) return false;
+  const nameLower = name.toLowerCase().trim();
+  const symLower = symbol.toLowerCase().trim();
+  // Block established coin names
+  if (BLOCKED_NAMES.has(nameLower) || BLOCKED_NAMES.has(symLower)) return false;
+  // Block very short names (1-2 chars) — too generic
+  if (name.length < 3 || symbol.length < 2) return false;
+  // Block very long names (>30 chars) — spammy
+  if (name.length > 30 || symbol.length > 12) return false;
+  // Block names that are just numbers or all caps single words with no meaning
+  if (/^\d+$/.test(name)) return false;
+  // Block common spam patterns
+  if (/test|fuck|scam|rug|porn|nsfw/i.test(name)) return false;
+  return true;
+}
 
 // ── BANKR API CONFIG ──
 const BANKR_API_URL = "https://api.bankr.bot";
@@ -469,9 +495,9 @@ class BankrLauncher {
           const vol1h = pair.volume?.h1 || 0;
           const vol = Math.max(vol24, vol1h);
 
-          // CORE FILTER: token < 30 min old AND has real volume + transaction count
+          // CORE FILTER: token < 10 min old, real volume + txns, not over-hyped
           const txnCount = (pair.txns?.h1?.buys || 0) + (pair.txns?.h1?.sells || 0);
-          if (pairAge > 0 && pairAge < MAX_TOKEN_AGE_MS && vol >= MIN_VOLUME_TRIGGER && txnCount >= MIN_TXN_COUNT) {
+          if (pairAge > 0 && pairAge < MAX_TOKEN_AGE_MS && vol >= MIN_VOLUME_TRIGGER && vol <= MAX_VOLUME_CAP && txnCount >= MIN_TXN_COUNT) {
             const name = pair.baseToken?.name;
             const symbol = pair.baseToken?.symbol;
             const addr = pair.baseToken?.address?.toLowerCase();
@@ -479,6 +505,11 @@ class BankrLauncher {
             if (!name || !symbol || !addr) continue;
             if (this.duplicatedSources.has(addr)) continue;
             if (this.deployedNames.has(`${name}::${symbol}`)) continue;
+            // Name quality gate — skip established coins, spam, generic names
+            if (!isQualityName(name, symbol)) {
+              this.log.info(`  SKIP (bad name): ${name} ($${symbol})`);
+              continue;
+            }
 
             const ageMin = Math.round(pairAge / 60000) || 1;
             hot.push({
@@ -501,8 +532,15 @@ class BankrLauncher {
       if (i + 30 < tokens.length) await new Promise(r => setTimeout(r, 500));
     }
 
-    // Sort by momentum (vol per minute) — highest momentum = best sniper target
-    hot.sort((a, b) => b.volPerMin - a.volPerMin);
+    // Sort by FRESHNESS first (youngest = best), then momentum as tiebreak
+    // GeoMarket was caught at 1 min — being first is everything
+    hot.sort((a, b) => {
+      // Tokens <=2 min always beat older ones
+      if (a.ageMinutes <= 2 && b.ageMinutes > 2) return -1;
+      if (b.ageMinutes <= 2 && a.ageMinutes > 2) return 1;
+      // Within same freshness tier, sort by momentum
+      return b.volPerMin - a.volPerMin;
+    });
 
     for (const t of hot) {
       this.log.info(`  HOT: ${t.symbol.padEnd(12)} age=${t.ageMinutes}min vol=$${t.volume} mc=$${t.marketCap} txns=${t.txns} vel=$${t.volPerMin}/min`);
@@ -1043,10 +1081,10 @@ if (require.main === module) {
   log.info("=== BANKR LAUNCHER v9 (BASE SNIPER — FIXED FILTERS) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
   log.info(`Chain: Base (REST API)`);
-  log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT}`);
+  log.info(`Monitor: every 30s | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Max volume: $${MAX_VOLUME_CAP} | Min txns: ${MIN_TXN_COUNT}`);
 
-  // CORE: Monitor every 1 minute for hot new tokens to duplicate
-  cron.schedule("* * * * *", async () => {
+  // CORE: Monitor every 30 seconds — speed is everything, GeoMarket was 1 min old
+  cron.schedule("*/30 * * * * *", async () => {
     try { await launcher.monitorAndDuplicate(); }
     catch (e) { log.error("Monitor cycle error:", e.message); }
   });
