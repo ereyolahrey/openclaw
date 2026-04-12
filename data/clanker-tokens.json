@@ -401,7 +401,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:54:50.423Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:01.101Z"
+        }
+      }
     },
     {
       "name": "Monad",
@@ -415,7 +421,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:54:58.763Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:02.676Z"
+        }
+      }
     },
     {
       "name": "RaveDAO",
@@ -429,7 +441,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:55:08.565Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:03.526Z"
+        }
+      }
     },
     {
       "name": "RaveDAO",
@@ -443,7 +461,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:55:13.098Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:04.445Z"
+        }
+      }
     },
     {
       "name": "Bitcoin",
@@ -457,7 +481,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:55:21.368Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:05.233Z"
+        }
+      }
     },
     {
       "name": "Bittensor",
@@ -471,7 +501,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:55:30.257Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:06.027Z"
+        }
+      }
     },
     {
       "name": "Pudgy Penguins",
@@ -485,7 +521,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:56:14.777Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:06.967Z"
+        }
+      }
     },
     {
       "name": "Siren",
@@ -499,7 +541,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:56:23.279Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:07.837Z"
+        }
+      }
     },
     {
       "name": "OpenVPP",
@@ -513,7 +561,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:56:32.131Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:08.782Z"
+        }
+      }
     },
     {
       "name": "World Liberty Financial",
@@ -527,7 +581,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:57:13.297Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:09.587Z"
+        }
+      }
     },
     {
       "name": "Ethereum",
@@ -541,7 +601,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T13:57:22.087Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:10.405Z"
+        }
+      }
     },
     {
       "name": "Based on Base",
@@ -554,7 +620,13 @@
       "trendScore": 1,
       "launchedAt": "2026-04-12T14:00:10.263Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:11.534Z"
+        }
+      }
     },
     {
       "name": "Hyperliquid",
@@ -568,7 +640,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T14:04:14.160Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:12.364Z"
+        }
+      }
     },
     {
       "name": "Dash",
@@ -582,7 +660,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T14:34:14.180Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:13.190Z"
+        }
+      }
     },
     {
       "name": "BNB",
@@ -596,7 +680,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T14:44:24.889Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T15:45:14.010Z"
+        }
+      }
     },
     {
       "name": "Zcash",
@@ -610,7 +700,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T14:54:16.450Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:01.191Z"
+        }
+      }
     },
     {
       "name": "POL (ex-MATIC)",
@@ -624,7 +720,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T15:04:14.348Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:02.482Z"
+        }
+      }
     },
     {
       "name": "Stage Wise Agent",
@@ -638,7 +740,13 @@
       "launchedAt": "2026-04-12T15:05:17.487Z",
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:03.286Z"
+        }
+      }
     },
     {
       "name": "Pi Network",
@@ -652,7 +760,13 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T15:14:23.179Z",
       "feesEarned": 0,
-      "volumeData": {}
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:04.065Z"
+        }
+      }
     },
     {
       "name": "Solana",
@@ -666,15 +780,164 @@
       "solTxns": 100,
       "launchedAt": "2026-04-12T15:15:14.595Z",
       "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:04.969Z"
+        }
+      }
+    },
+    {
+      "name": "114514",
+      "symbol": "114514",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xD5d5D59596fcc1E5CB64E43503261363a7D2cB07",
+      "chain": "base",
+      "sourceAddress": "0x82dfeee80a66687ca9dd44dd95cb50765cf20ba3",
+      "sourceVolume": 109,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-12T15:23:18.550Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:05.755Z"
+        }
+      }
+    },
+    {
+      "name": "GRANDPA GORK",
+      "symbol": "GORK",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x88925de38eBdb2522D37328836Aa5fEd21D85b07",
+      "chain": "base",
+      "sourceAddress": "0x80405601ab897b54bb9905b7f6d13f101a970ba3",
+      "sourceVolume": 2196,
+      "sourceAge": 1,
+      "launchedAt": "2026-04-12T15:36:20.246Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:06.873Z"
+        }
+      }
+    },
+    {
+      "name": "Polkadot",
+      "symbol": "DOT",
+      "strategy": "solana_snipe",
+      "contractAddress": "0x2d2271ca82A6AAd47569453528407F027e124B07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "sourceAddress": "trend_polkadot",
+      "solVolume": 9957,
+      "solTxns": 100,
+      "launchedAt": "2026-04-12T15:44:15.229Z",
+      "feesEarned": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T16:45:07.771Z"
+        }
+      }
+    },
+    {
+      "name": "NOVA",
+      "symbol": "NOVA",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x94b7CaE109e093E3B9597349FBB1c57D5C8B8B07",
+      "chain": "base",
+      "sourceAddress": "0xb13eb62581fd199aee495bd310a5c7a3179e0ba3",
+      "sourceVolume": 1251,
+      "sourceAge": 4,
+      "launchedAt": "2026-04-12T15:52:18.186Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Venice Token",
+      "symbol": "VVV",
+      "strategy": "solana_snipe",
+      "contractAddress": "0x8FfE95F0De5411a1EF45fF80FbB297AF79025B07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "sourceAddress": "trend_venice-token",
+      "solVolume": 9882,
+      "solTxns": 100,
+      "launchedAt": "2026-04-12T16:14:15.098Z",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "0G",
+      "symbol": "0G",
+      "strategy": "solana_snipe",
+      "contractAddress": "0x064b34023E1356a8B5656Cf4323BCEF397220B07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "sourceAddress": "trend_zero-gravity",
+      "solVolume": 9793,
+      "solTxns": 100,
+      "launchedAt": "2026-04-12T16:44:17.371Z",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Based on Base",
+      "symbol": "bBASED",
+      "strategy": "trending_narrative",
+      "contractAddress": "0xd10a9e1aDdea2F5B1E76C97cdA612981a9829b07",
+      "chain": "base",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "trendSource": "local-trends",
+      "trendScore": 1,
+      "launchedAt": "2026-04-12T17:00:10.320Z",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "Praise be to Allah",
+      "symbol": "PRAISE",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x70B32a710c49D46937814EC9c2f1699a4F240B07",
+      "chain": "base",
+      "sourceAddress": "0x7aee5f1a676985388a74cfa34817290619dbdb07",
+      "sourceVolume": 13868,
+      "sourceAge": 14,
+      "launchedAt": "2026-04-12T17:51:23.157Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
+    },
+    {
+      "name": "YOUNG NIGGA",
+      "symbol": "YN",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x3cDD8819BBDABf3eb18B108413c2AeaFe5c87b07",
+      "chain": "base",
+      "sourceAddress": "0xb31cb01f2842a24856fa5f1a1cc8e4914099bb07",
+      "sourceVolume": 86,
+      "sourceAge": 10,
+      "launchedAt": "2026-04-12T17:51:32.688Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
       "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 38,
+    "totalLaunched": 47,
     "totalFeesEarned": 0
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 21,
+  "launchesToday": 30,
   "dailyHistory": [
     {
       "date": "2026-04-03",

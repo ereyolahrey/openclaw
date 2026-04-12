@@ -33,9 +33,9 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 10 * 60 * 1000;    // Duplicate tokens < 10 min old — speed is everything, GeoMarket was caught at 1 min
-const MIN_VOLUME_TRIGGER = 500;               // $500+ volume = real traction, not just deployer swaps
-const MIN_TXN_COUNT = 3;                      // At least 3 txns = genuine interest from multiple wallets
+const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 min old — wide net, numbers game
+const MIN_VOLUME_TRIGGER = 10;                // $10 volume = at least 1 real buy happened
+const MIN_TXN_COUNT = 1;                      // Even 1 buy is worth duplicating — most tokens get zero
 const MAX_VOLUME_CAP = 50000;                 // Skip tokens with $50K+ vol — already too many copycats
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
 
