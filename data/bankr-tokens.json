@@ -891,17 +891,52 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-11T04:30:02.218Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T03:30:01.011Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T03:30:01.684Z"
+        }
+      }
+    },
+    {
+      "name": "datapizza",
+      "symbol": "DATAPIZZA",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0x50696e2b83B3fC4CbBf65b4c2C749DeDa1277BA3",
+      "bankrUrl": null,
+      "sourceAddress": "0x9a4af60f078a7ed466b600d18e301c5167c4fba3",
+      "sourceVolume": 559,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-11T11:52:12.164Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T03:30:02.473Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T03:30:03.423Z"
         }
       }
     }
   ],
   "stats": {
-    "totalLaunched": 32,
+    "totalLaunched": 33,
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
-  "lastLaunchDate": "2026-04-11",
-  "launchesToday": 1,
+  "lastLaunchDate": "2026-04-12",
+  "launchesToday": 0,
   "dailyHistory": [
     {
       "date": "2026-03-31",
@@ -922,6 +957,10 @@
     {
       "date": "2026-04-10",
       "launched": 1
+    },
+    {
+      "date": "2026-04-11",
+      "launched": 2
     }
   ],
   "clubGoal": {

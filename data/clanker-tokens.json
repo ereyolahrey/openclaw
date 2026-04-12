@@ -318,12 +318,12 @@
         "6h": {
           "vol24": 0,
           "vol1h": 0,
-          "checkedAt": "2026-04-11T00:45:04.751Z"
+          "checkedAt": "2026-04-11T11:45:01.626Z"
         },
         "24h": {
           "vol24": 0,
           "vol1h": 0,
-          "checkedAt": "2026-04-11T00:45:05.417Z"
+          "checkedAt": "2026-04-12T03:45:02.398Z"
         }
       }
     },
@@ -374,8 +374,8 @@
     "totalLaunched": 17,
     "totalFeesEarned": 0
   },
-  "lastLaunchDate": "2026-04-11",
-  "launchesToday": 2,
+  "lastLaunchDate": "2026-04-12",
+  "launchesToday": 0,
   "dailyHistory": [
     {
       "date": "2026-04-03",
@@ -388,6 +388,10 @@
     {
       "date": "2026-04-10",
       "launched": 0
+    },
+    {
+      "date": "2026-04-11",
+      "launched": 2
     }
   ]
 }

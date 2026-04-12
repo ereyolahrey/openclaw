@@ -75,6 +75,9 @@ class BankrLauncher {
       this.tokenData.tokens.map(t => `${t.name}::${t.symbol}`)
     );
 
+    // Track last successful launch time for fallback logic
+    this.lastLaunchTime = Date.now();
+
     this.log.info(
       `Bankr Launcher v5 (instant sniper) initialized. ` +
       `${this.tokenData.tokens.length} tracked, ${this.tokenData.stats.totalLaunched} launched, ` +
@@ -304,6 +307,13 @@ class BankrLauncher {
 
     if (hotTokens.length === 0) {
       this.log.info(`No hot tokens found (need $${MIN_VOLUME_TRIGGER}+ vol, ${MIN_TXN_COUNT}+ txns, <${MAX_TOKEN_AGE_MS / 60000}min old).`);
+
+      // FALLBACK: If no launch in 2+ hours, deploy a trending token
+      const timeSinceLastLaunch = Date.now() - this.lastLaunchTime;
+      if (timeSinceLastLaunch > 2 * 60 * 60 * 1000) {
+        this.log.info(`No launch in ${Math.round(timeSinceLastLaunch / 60000)}min — triggering trending fallback...`);
+        await this._launchTrendingToken();
+      }
       return;
     }
 
@@ -504,6 +514,7 @@ class BankrLauncher {
 
       this.duplicatedSources.add(sourceToken.address);
       this.deployedNames.add(`${sourceToken.name}::${sourceToken.symbol}`);
+      this.lastLaunchTime = Date.now();
 
       this._scheduleVolumeCheck(tokenRecord);
 
@@ -648,6 +659,118 @@ class BankrLauncher {
     }
   }
 
+  // ── TRENDING NARRATIVE LAUNCHES ──
+
+  async _fetchTrendingNarratives() {
+    const narratives = [];
+
+    // Source 1: CoinGecko trending coins
+    try {
+      const data = await this._httpGet("https://api.coingecko.com/api/v3/search/trending");
+      if (data?.coins && Array.isArray(data.coins)) {
+        for (const item of data.coins.slice(0, 10)) {
+          const coin = item.item || item;
+          if (coin.name && coin.symbol) {
+            narratives.push({
+              name: coin.name,
+              symbol: coin.symbol.toUpperCase(),
+              score: coin.score || coin.market_cap_rank || 0,
+              source: "coingecko-trending",
+            });
+          }
+        }
+        this.log.info(`  CoinGecko trending: ${narratives.length} coins`);
+      }
+    } catch (e) {
+      this.log.warn(`CoinGecko trending fetch failed: ${e.message}`);
+    }
+
+    // Source 2: Local social-trends.json fallback
+    try {
+      const trendsFile = path.join(DATA_DIR, "social-trends.json");
+      if (fs.existsSync(trendsFile)) {
+        const trends = JSON.parse(fs.readFileSync(trendsFile, "utf8"));
+        const coins = Array.isArray(trends) ? trends : (trends.coins || []);
+        for (const t of coins.slice(0, 10)) {
+          if (t.name && t.symbol && !narratives.find(n => n.symbol === t.symbol.toUpperCase())) {
+            narratives.push({ name: t.name, symbol: t.symbol.toUpperCase(), score: t.score || 0, source: "local-trends" });
+          }
+        }
+      }
+    } catch {}
+
+    return narratives;
+  }
+
+  async _launchTrendingToken() {
+    if (!this._checkDailyLimit()) {
+      this.log.info("Trending launch skipped — daily limit reached.");
+      return null;
+    }
+
+    const narratives = await this._fetchTrendingNarratives();
+    if (narratives.length === 0) {
+      this.log.info("No trending narratives found for launch.");
+      return null;
+    }
+
+    // Pick a trending coin we haven't deployed yet
+    for (const trend of narratives) {
+      const nameKey = `${trend.name}::${trend.symbol}`;
+      if (this.deployedNames.has(nameKey)) continue;
+
+      this.log.info(`\nTRENDING LAUNCH: ${trend.name} ($${trend.symbol}) [${trend.source}]`);
+
+      try {
+        const { output, contractAddress } = await this._deployFast(trend.name, trend.symbol);
+
+        const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
+
+        const tokenRecord = {
+          name: trend.name,
+          symbol: trend.symbol,
+          strategy: "trending_narrative",
+          contractAddress,
+          bankrUrl: urlMatch ? urlMatch[0] : null,
+          sourceAddress: null,
+          trendSource: trend.source,
+          trendScore: trend.score,
+          launchedAt: new Date().toISOString(),
+          feesEarned: 0,
+          feesClaimed: 0,
+          volumeData: {},
+        };
+
+        this.tokenData.tokens.push(tokenRecord);
+        this.tokenData.stats.totalLaunched++;
+        this.tokenData.launchesToday++;
+        this._saveTokenData();
+
+        this.deployedNames.add(nameKey);
+        this._scheduleVolumeCheck(tokenRecord);
+        this.lastLaunchTime = Date.now();
+
+        await this.notify(
+          `🔥 *TRENDING LAUNCH!* [bankr]\n` +
+          `Name: ${trend.name} ($${trend.symbol})\n` +
+          `Contract: \`${contractAddress}\`\n` +
+          `Trend: ${trend.source} (score: ${trend.score})\n` +
+          `${urlMatch ? urlMatch[0] + "\n" : ""}` +
+          `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+        );
+
+        this.log.info(`Trending token deployed at ${contractAddress}`);
+        return tokenRecord;
+      } catch (e) {
+        this.log.error(`Trending launch failed for ${trend.name}: ${e.message}`);
+        continue;
+      }
+    }
+
+    this.log.info("All trending tokens already deployed.");
+    return null;
+  }
+
   // ── NOTIFICATION & STATS ──
 
   async notify(message) {
@@ -708,6 +831,14 @@ if (require.main === module) {
       log.info("─── Volume checks ───");
       await launcher.runVolumeChecks();
     } catch (e) { log.error("Volume check error:", e.message); }
+  });
+
+  // Trending narrative launch: Every 3 hours
+  cron.schedule("0 */3 * * *", async () => {
+    try {
+      log.info("─── Trending narrative launch ───");
+      await launcher._launchTrendingToken();
+    } catch (e) { log.error("Trending launch error:", e.message); }
   });
 
   // Initial run

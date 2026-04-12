@@ -26,13 +26,8 @@
   },
   "volumeChecks": [
     {
-      "addr": "0x411130F7435db200C5C057939E69029CCD6A5BA3",
-      "checkAt": 1775887632584,
-      "type": "6h"
-    },
-    {
-      "addr": "0x411130F7435db200C5C057939E69029CCD6A5BA3",
-      "checkAt": 1775952432584,
+      "addr": "0x50696e2b83B3fC4CbBf65b4c2C749DeDa1277BA3",
+      "checkAt": 1775994732166,
       "type": "24h"
     }
   ],
@@ -162,7 +157,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:25.519Z",
   "duplications": {
-    "total": 16,
+    "total": 17,
     "successful": 0
   }
 }

@@ -23,28 +23,7 @@
     "duplicate": 2,
     "viral": 2
   },
-  "volumeChecks": [
-    {
-      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "checkAt": 1775897111136,
-      "type": "6h"
-    },
-    {
-      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "checkAt": 1775961911136,
-      "type": "24h"
-    },
-    {
-      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "checkAt": 1775897118659,
-      "type": "6h"
-    },
-    {
-      "addr": "0x43685364dFACbbc1e8Bc7f459d89170384da17aF",
-      "checkAt": 1775961918659,
-      "type": "24h"
-    }
-  ],
+  "volumeChecks": [],
   "lastAdaptation": null,
   "insights": [],
   "freshVolumeTokens": [
