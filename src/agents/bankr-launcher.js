@@ -27,6 +27,7 @@ const { Logger } = require("../utils/logger");
 const DATA_DIR = path.join(__dirname, "..", "..", "data");
 const TOKENS_FILE = path.join(DATA_DIR, "bankr-tokens.json");
 const PERFORMANCE_FILE = path.join(DATA_DIR, "bankr-performance.json");
+const TRACKED_WALLETS_FILE = path.join(DATA_DIR, "tracked-wallets.json");
 
 // ── INSTANT SNIPER CONFIG ──
 const FEE_WALLET = process.env.BANKR_FEE_WALLET;
@@ -35,7 +36,7 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 minutes old (wider net = more launches)
+const MAX_TOKEN_AGE_MS = 15 * 60 * 1000;    // Duplicate tokens < 15 minutes old (speed = everything)
 const MIN_VOLUME_TRIGGER = 500;               // $500 volume = real traction (GeoMarket pattern: $1,120 source vol)
 const MIN_TXN_COUNT = 5;                      // At least 5 txns = real interest, not just 1 bot trade
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
@@ -281,6 +282,26 @@ class BankrLauncher {
       return true;
     });
 
+    // 3b. Solana snipes — already pre-filtered with volume, deploy directly
+    const solanaSnipes = unchecked.filter(t => t.source === "solana-snipe" && t.name && t.symbol);
+    for (const sol of solanaSnipes.slice(0, 3)) {
+      if (!this._checkDailyLimit()) break;
+      const nameKey = `${sol.name}::${sol.symbol}`;
+      if (this.deployedNames.has(nameKey)) continue;
+      this.log.info(`SOLANA SNIPE: ${sol.name} ($${sol.symbol}) sol_vol=$${sol.solVolume} txns=${sol.solTxns}`);
+      await this._deploySolanaSnipe(sol);
+    }
+
+    // 3c. Wallet tracker tokens — pre-verified from top deployers
+    const walletTokens = unchecked.filter(t => t.source === "wallet-tracker" && t.name && t.symbol);
+    for (const wt of walletTokens.slice(0, 3)) {
+      if (!this._checkDailyLimit()) break;
+      const nameKey = `${wt.name}::${wt.symbol}`;
+      if (this.deployedNames.has(nameKey)) continue;
+      this.log.info(`WALLET TRACK: ${wt.name} ($${wt.symbol}) from deployer ${wt.trackedWallet?.slice(0, 10)}...`);
+      await this._deployWalletTrack(wt);
+    }
+
     // 4. Track all candidates as seen
     for (const t of candidates) {
       if (!this.seenTokens.has(t.address)) {
@@ -412,6 +433,47 @@ class BankrLauncher {
         if (count > 0) this.log.info(`  DexScreener new pairs: ${count} Base tokens`);
       }
     } catch (e) {}
+
+    // Source 5: DexScreener Solana hot tokens — copy trending Solana names to Base
+    try {
+      const data = await this._httpGet("https://api.dexscreener.com/latest/dex/pairs/solana?sort=pairAge&order=asc");
+      if (data?.pairs && Array.isArray(data.pairs)) {
+        let count = 0;
+        for (const pair of data.pairs) {
+          if (!pair.baseToken?.name || !pair.baseToken?.symbol) continue;
+          const vol = Math.max(pair.volume?.h24 || 0, pair.volume?.h1 || 0);
+          const txns = (pair.txns?.h1?.buys || 0) + (pair.txns?.h1?.sells || 0);
+          if (vol < MIN_VOLUME_TRIGGER || txns < MIN_TXN_COUNT) continue;
+          // Use a synthetic address to avoid collision with Base addresses
+          const syntheticAddr = `sol_${pair.baseToken.address || pair.pairAddress}`.toLowerCase();
+          if (!all.find(a => a.address === syntheticAddr)) {
+            all.push({
+              name: pair.baseToken.name,
+              symbol: pair.baseToken.symbol,
+              address: syntheticAddr,
+              source: "solana-snipe",
+              solVolume: Math.round(vol),
+              solTxns: txns,
+            });
+            count++;
+          }
+          if (count >= 15) break;
+        }
+        if (count > 0) this.log.info(`  Solana hot tokens: ${count} (for Base duplicates)`);
+      }
+    } catch (e) {}
+
+    // Source 6: Tracked wallets — tokens from top deployers
+    try {
+      const walletTokens = await this._fetchTrackedWalletTokens();
+      for (const t of walletTokens) {
+        if (!all.find(a => a.address === t.address)) {
+          all.push(t);
+        }
+      }
+    } catch (e) {
+      this.log.warn(`Tracked wallet fetch error: ${e.message}`);
+    }
 
     return all;
   }
@@ -661,6 +723,219 @@ class BankrLauncher {
 
   // ── TRENDING NARRATIVE LAUNCHES ──
 
+  // ── SOLANA SNIPE DEPLOYMENT ──
+
+  async _deploySolanaSnipe(token) {
+    try {
+      const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
+      const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
+
+      const tokenRecord = {
+        name: token.name,
+        symbol: token.symbol,
+        strategy: "solana_snipe",
+        contractAddress,
+        bankrUrl: urlMatch ? urlMatch[0] : null,
+        sourceAddress: token.address,
+        solVolume: token.solVolume,
+        solTxns: token.solTxns,
+        launchedAt: new Date().toISOString(),
+        feesEarned: 0,
+        feesClaimed: 0,
+        volumeData: {},
+      };
+
+      this.tokenData.tokens.push(tokenRecord);
+      this.tokenData.stats.totalLaunched++;
+      this.tokenData.launchesToday++;
+      this._saveTokenData();
+
+      this.duplicatedSources.add(token.address);
+      this.deployedNames.add(`${token.name}::${token.symbol}`);
+      this.lastLaunchTime = Date.now();
+      this._scheduleVolumeCheck(tokenRecord);
+      this.perfData.duplications.total++;
+      this._savePerformanceData();
+
+      await this.notify(
+        `🌊 *SOLANA SNIPE!* [bankr]\n` +
+        `Name: ${token.name} ($${token.symbol})\n` +
+        `Contract: \`${contractAddress}\`\n` +
+        `Solana vol: $${token.solVolume} | txns: ${token.solTxns}\n` +
+        `${urlMatch ? urlMatch[0] + "\n" : ""}` +
+        `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+      );
+      return tokenRecord;
+    } catch (e) {
+      this.log.error(`Solana snipe deploy failed: ${e.message}`);
+      return null;
+    }
+  }
+
+  // ── WALLET TRACKER DEPLOYMENT ──
+
+  async _deployWalletTrack(token) {
+    try {
+      const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
+      const urlMatch = output.match(/https:\/\/www\.bankr\.bot\/launches\/0x[a-fA-F0-9]{40}/);
+
+      const tokenRecord = {
+        name: token.name,
+        symbol: token.symbol,
+        strategy: "wallet_tracker",
+        contractAddress,
+        bankrUrl: urlMatch ? urlMatch[0] : null,
+        sourceAddress: token.address,
+        trackedWallet: token.trackedWallet,
+        launchedAt: new Date().toISOString(),
+        feesEarned: 0,
+        feesClaimed: 0,
+        volumeData: {},
+      };
+
+      this.tokenData.tokens.push(tokenRecord);
+      this.tokenData.stats.totalLaunched++;
+      this.tokenData.launchesToday++;
+      this._saveTokenData();
+
+      this.duplicatedSources.add(token.address);
+      this.deployedNames.add(`${token.name}::${token.symbol}`);
+      this.lastLaunchTime = Date.now();
+      this._scheduleVolumeCheck(tokenRecord);
+      this.perfData.duplications.total++;
+      this._savePerformanceData();
+
+      await this.notify(
+        `🔍 *WALLET TRACK DEPLOY!* [bankr]\n` +
+        `Name: ${token.name} ($${token.symbol})\n` +
+        `Contract: \`${contractAddress}\`\n` +
+        `Tracked deployer: ${token.trackedWallet}\n` +
+        `${urlMatch ? urlMatch[0] + "\n" : ""}` +
+        `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+      );
+      return tokenRecord;
+    } catch (e) {
+      this.log.error(`Wallet track deploy failed: ${e.message}`);
+      return null;
+    }
+  }
+
+  // ── WALLET TRACKER: DISCOVER & TRACK TOP DEPLOYERS ──
+
+  _loadTrackedWallets() {
+    try {
+      if (fs.existsSync(TRACKED_WALLETS_FILE)) {
+        return JSON.parse(fs.readFileSync(TRACKED_WALLETS_FILE, "utf8"));
+      }
+    } catch {}
+    return { wallets: [], lastDiscovery: null };
+  }
+
+  _saveTrackedWallets(data) {
+    try { fs.writeFileSync(TRACKED_WALLETS_FILE, JSON.stringify(data, null, 2)); }
+    catch (e) { this.log.error(`Tracked wallets save failed: ${e.message}`); }
+  }
+
+  async discoverTopDeployers() {
+    this.log.info("── Discovering top token deployers ──");
+    const walletData = this._loadTrackedWallets();
+    const deployerMap = new Map(); // deployer → { tokens: [], totalVol }
+
+    // Scan recent bankr launches for successful deployers
+    try {
+      const data = await this._httpGet("https://api.bankr.bot/token-launches");
+      if (data?.launches && Array.isArray(data.launches)) {
+        for (const t of data.launches) {
+          if (!t.tokenAddress || t.status !== "deployed" || !t.deployer) continue;
+          if (!deployerMap.has(t.deployer)) deployerMap.set(t.deployer, { tokens: [], totalVol: 0 });
+          deployerMap.get(t.deployer).tokens.push(t.tokenAddress);
+        }
+      }
+    } catch (e) { this.log.warn(`Bankr deployer scan failed: ${e.message}`); }
+
+    // Scan DexScreener for Base tokens with volume — check their deployers
+    try {
+      const data = await this._httpGet("https://api.dexscreener.com/token-profiles/latest/v1");
+      if (Array.isArray(data)) {
+        const baseTokens = data.filter(t => t.chainId === "base" && t.tokenAddress).slice(0, 50);
+        // Check volume in batches
+        for (let i = 0; i < baseTokens.length; i += 30) {
+          const batch = baseTokens.slice(i, i + 30);
+          const addresses = batch.map(t => t.tokenAddress).join(",");
+          try {
+            const pairData = await this._httpGet(`https://api.dexscreener.com/latest/dex/tokens/${addresses}`);
+            if (pairData?.pairs) {
+              for (const pair of pairData.pairs) {
+                if (pair.chainId !== "base") continue;
+                const vol = pair.volume?.h24 || 0;
+                if (vol > 1000 && pair.info?.deployer) {
+                  const dep = pair.info.deployer.toLowerCase();
+                  if (!deployerMap.has(dep)) deployerMap.set(dep, { tokens: [], totalVol: 0 });
+                  const entry = deployerMap.get(dep);
+                  entry.tokens.push(pair.baseToken?.address);
+                  entry.totalVol += vol;
+                }
+              }
+            }
+          } catch {}
+          if (i + 30 < baseTokens.length) await new Promise(r => setTimeout(r, 500));
+        }
+      }
+    } catch {}
+
+    // Rank deployers by number of tokens with volume
+    const ranked = [...deployerMap.entries()]
+      .filter(([, v]) => v.tokens.length >= 2)
+      .sort((a, b) => b[1].totalVol - a[1].totalVol)
+      .slice(0, 20);
+
+    if (ranked.length > 0) {
+      walletData.wallets = ranked.map(([addr, data]) => ({
+        address: addr,
+        tokenCount: data.tokens.length,
+        totalVolume: Math.round(data.totalVol),
+        trackedSince: new Date().toISOString(),
+        lastTokens: data.tokens.slice(-5),
+      }));
+      walletData.lastDiscovery = new Date().toISOString();
+      this._saveTrackedWallets(walletData);
+      this.log.info(`Discovered ${ranked.length} top deployers. Top: ${ranked[0]?.[0]?.slice(0, 10)}... (${ranked[0]?.[1].tokens.length} tokens, $${Math.round(ranked[0]?.[1].totalVol)} vol)`);
+    } else {
+      this.log.info("No qualifying deployers found this cycle.");
+    }
+  }
+
+  async _fetchTrackedWalletTokens() {
+    const tokens = [];
+    const walletData = this._loadTrackedWallets();
+    if (!walletData.wallets || walletData.wallets.length === 0) return tokens;
+
+    // Check each tracked wallet's recent token launches via bankr API
+    try {
+      const data = await this._httpGet("https://api.bankr.bot/token-launches");
+      if (data?.launches && Array.isArray(data.launches)) {
+        const trackedAddrs = new Set(walletData.wallets.map(w => w.address.toLowerCase()));
+        for (const t of data.launches) {
+          if (!t.deployer || !trackedAddrs.has(t.deployer.toLowerCase())) continue;
+          if (!t.tokenAddress || !t.tokenName || !t.tokenSymbol) continue;
+          if (t.status !== "deployed") continue;
+          tokens.push({
+            name: t.tokenName,
+            symbol: t.tokenSymbol,
+            address: t.tokenAddress.toLowerCase(),
+            source: "wallet-tracker",
+            trackedWallet: t.deployer,
+          });
+        }
+        if (tokens.length > 0) this.log.info(`  Tracked wallets: ${tokens.length} tokens from top deployers`);
+      }
+    } catch (e) {
+      this.log.warn(`Tracked wallet token fetch failed: ${e.message}`);
+    }
+
+    return tokens;
+  }
+
   async _fetchTrendingNarratives() {
     const narratives = [];
 
@@ -841,10 +1116,19 @@ if (require.main === module) {
     } catch (e) { log.error("Trending launch error:", e.message); }
   });
 
+  // Wallet tracker: Discover top deployers every 6 hours
+  cron.schedule("0 */6 * * *", async () => {
+    try {
+      log.info("─── Wallet tracker discovery ───");
+      await launcher.discoverTopDeployers();
+    } catch (e) { log.error("Wallet tracker error:", e.message); }
+  });
+
   // Initial run
   (async () => {
     try {
       log.info("Running initial monitor cycle...");
+      await launcher.discoverTopDeployers();
       await launcher.monitorAndDuplicate();
       await launcher.checkFees();
     } catch (e) {

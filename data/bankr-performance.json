@@ -29,6 +29,26 @@
       "addr": "0x50696e2b83B3fC4CbBf65b4c2C749DeDa1277BA3",
       "checkAt": 1775994732166,
       "type": "24h"
+    },
+    {
+      "addr": "0x7b70384675351E42D00D073B9eE08Bb2257e5ba3",
+      "checkAt": 1775987350821,
+      "type": "6h"
+    },
+    {
+      "addr": "0x7b70384675351E42D00D073B9eE08Bb2257e5ba3",
+      "checkAt": 1776052150821,
+      "type": "24h"
+    },
+    {
+      "addr": "0x522A652Abc68d10Af004357Eb013480A08049Ba3",
+      "checkAt": 1775991609617,
+      "type": "6h"
+    },
+    {
+      "addr": "0x522A652Abc68d10Af004357Eb013480A08049Ba3",
+      "checkAt": 1776056409617,
+      "type": "24h"
     }
   ],
   "lastAdaptation": null,
@@ -157,7 +177,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:25.519Z",
   "duplications": {
-    "total": 17,
+    "total": 18,
     "successful": 0
   }
 }

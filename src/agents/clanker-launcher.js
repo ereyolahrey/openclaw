@@ -31,10 +31,11 @@ const { base } = require("viem/chains");
 const DATA_DIR = path.join(__dirname, "..", "..", "data");
 const CLANKER_TOKENS_FILE = path.join(DATA_DIR, "clanker-tokens.json");
 const CLANKER_PERF_FILE = path.join(DATA_DIR, "clanker-performance.json");
+const TRACKED_WALLETS_FILE = path.join(DATA_DIR, "tracked-wallets.json");
 
 // ── INSTANT SNIPER CONFIG ──
 const WALLET_ADDR = process.env.CLANKER_FEE_WALLET || "0x162ee01a2eab184f6698ec8663ad84c4ee506733";
-const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 minutes old (wider net = more launches)
+const MAX_TOKEN_AGE_MS = 15 * 60 * 1000;    // Duplicate tokens < 15 minutes old (speed = everything)
 const MIN_VOLUME_TRIGGER = 500;               // $500 volume = real traction (filters noise)
 const MIN_TXN_COUNT = 5;                      // At least 5 txns = real interest, not bot wash
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
@@ -168,7 +169,6 @@ class ClankerLauncher {
       tokenAdmin: this._account.address,
       chainId: base.id,
       vanity: true,
-      devBuy: { ethAmount: 0.005 },  // Seed liquidity — initial buy to create real volume
       pool: {
         pairedToken: "WETH",
         positions: POOL_POSITIONS.Standard,
@@ -184,7 +184,7 @@ class ClankerLauncher {
       },
     });
 
-    if (error) throw new Error(`Deploy error: ${error.message}`);
+    if (error) throw new Error(`Deploy error: ${error.message || JSON.stringify(error).substring(0, 300)}`);
 
     const { address, error: txError } = await waitForTransaction();
     if (txError) throw new Error(`Transaction error: ${txError.message}`);
@@ -244,6 +244,26 @@ class ClankerLauncher {
       if (t.name && t.symbol && this.deployedNames.has(`${t.name}::${t.symbol}`)) return false;
       return true;
     });
+
+    // 3b. Solana snipes — already pre-filtered with volume, deploy directly
+    const solanaSnipes = unchecked.filter(t => t.source === "solana-snipe" && t.name && t.symbol);
+    for (const sol of solanaSnipes.slice(0, 3)) {
+      if (!this._checkDailyLimit()) break;
+      const nameKey = `${sol.name}::${sol.symbol}`;
+      if (this.deployedNames.has(nameKey)) continue;
+      this.log.info(`SOLANA SNIPE: ${sol.name} ($${sol.symbol}) sol_vol=$${sol.solVolume} txns=${sol.solTxns}`);
+      await this._deploySolanaSnipe(sol);
+    }
+
+    // 3c. Wallet tracker tokens — pre-verified from top deployers
+    const walletTokens = unchecked.filter(t => t.source === "wallet-tracker" && t.name && t.symbol);
+    for (const wt of walletTokens.slice(0, 3)) {
+      if (!this._checkDailyLimit()) break;
+      const nameKey = `${wt.name}::${wt.symbol}`;
+      if (this.deployedNames.has(nameKey)) continue;
+      this.log.info(`WALLET TRACK: ${wt.name} ($${wt.symbol}) from deployer ${wt.trackedWallet?.slice(0, 10)}...`);
+      await this._deployWalletTrack(wt);
+    }
 
     // 4. Track all candidates as seen
     for (const t of candidates) {
@@ -376,6 +396,46 @@ class ClankerLauncher {
         if (count > 0) this.log.info(`  DexScreener new pairs: ${count} Base tokens`);
       }
     } catch (e) {}
+
+    // Source 5: DexScreener Solana hot tokens — copy trending Solana names to Base
+    try {
+      const data = await this._httpGet("https://api.dexscreener.com/latest/dex/pairs/solana?sort=pairAge&order=asc");
+      if (data?.pairs && Array.isArray(data.pairs)) {
+        let count = 0;
+        for (const pair of data.pairs) {
+          if (!pair.baseToken?.name || !pair.baseToken?.symbol) continue;
+          const vol = Math.max(pair.volume?.h24 || 0, pair.volume?.h1 || 0);
+          const txns = (pair.txns?.h1?.buys || 0) + (pair.txns?.h1?.sells || 0);
+          if (vol < MIN_VOLUME_TRIGGER || txns < MIN_TXN_COUNT) continue;
+          const syntheticAddr = `sol_${pair.baseToken.address || pair.pairAddress}`.toLowerCase();
+          if (!all.find(a => a.address === syntheticAddr)) {
+            all.push({
+              name: pair.baseToken.name,
+              symbol: pair.baseToken.symbol,
+              address: syntheticAddr,
+              source: "solana-snipe",
+              solVolume: Math.round(vol),
+              solTxns: txns,
+            });
+            count++;
+          }
+          if (count >= 15) break;
+        }
+        if (count > 0) this.log.info(`  Solana hot tokens: ${count} (for Base duplicates)`);
+      }
+    } catch (e) {}
+
+    // Source 6: Tracked wallets — tokens from top deployers
+    try {
+      const walletTokens = await this._fetchTrackedWalletTokens();
+      for (const t of walletTokens) {
+        if (!all.find(a => a.address === t.address)) {
+          all.push(t);
+        }
+      }
+    } catch (e) {
+      this.log.warn(`Tracked wallet fetch error: ${e.message}`);
+    }
 
     return all;
   }
@@ -622,6 +682,219 @@ class ClankerLauncher {
     }
   }
 
+  // ── SOLANA SNIPE DEPLOYMENT ──
+
+  async _deploySolanaSnipe(token) {
+    try {
+      const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
+
+      const tokenRecord = {
+        name: token.name,
+        symbol: token.symbol,
+        strategy: "solana_snipe",
+        contractAddress,
+        chain: "base",
+        deployer: WALLET_ADDR,
+        sourceAddress: token.address,
+        solVolume: token.solVolume,
+        solTxns: token.solTxns,
+        launchedAt: new Date().toISOString(),
+        feesEarned: 0,
+        volumeData: {},
+      };
+
+      this.tokenData.tokens.push(tokenRecord);
+      this.tokenData.stats.totalLaunched++;
+      this.tokenData.launchesToday++;
+      this._saveTokenData();
+
+      this.duplicatedSources.add(token.address);
+      this.deployedNames.add(`${token.name}::${token.symbol}`);
+      this.lastLaunchTime = Date.now();
+      this._scheduleVolumeCheck(tokenRecord);
+      this.perfData.duplications.total++;
+      this._savePerformanceData();
+
+      await this.notify(
+        `🌊 *SOLANA SNIPE!* [clanker]\n` +
+        `Name: ${token.name} ($${token.symbol})\n` +
+        `Contract: \`${contractAddress}\`\n` +
+        `Solana vol: $${token.solVolume} | txns: ${token.solTxns}\n` +
+        `View: https://clanker.world/clanker/${contractAddress}\n` +
+        `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+      );
+      return tokenRecord;
+    } catch (e) {
+      this.log.error(`Solana snipe deploy failed: ${e.message}`);
+      return null;
+    }
+  }
+
+  // ── WALLET TRACKER DEPLOYMENT ──
+
+  async _deployWalletTrack(token) {
+    try {
+      const { output, contractAddress } = await this._deployFast(token.name, token.symbol);
+
+      const tokenRecord = {
+        name: token.name,
+        symbol: token.symbol,
+        strategy: "wallet_tracker",
+        contractAddress,
+        chain: "base",
+        deployer: WALLET_ADDR,
+        sourceAddress: token.address,
+        trackedWallet: token.trackedWallet,
+        launchedAt: new Date().toISOString(),
+        feesEarned: 0,
+        volumeData: {},
+      };
+
+      this.tokenData.tokens.push(tokenRecord);
+      this.tokenData.stats.totalLaunched++;
+      this.tokenData.launchesToday++;
+      this._saveTokenData();
+
+      this.duplicatedSources.add(token.address);
+      this.deployedNames.add(`${token.name}::${token.symbol}`);
+      this.lastLaunchTime = Date.now();
+      this._scheduleVolumeCheck(tokenRecord);
+      this.perfData.duplications.total++;
+      this._savePerformanceData();
+
+      await this.notify(
+        `🔍 *WALLET TRACK DEPLOY!* [clanker]\n` +
+        `Name: ${token.name} ($${token.symbol})\n` +
+        `Contract: \`${contractAddress}\`\n` +
+        `Tracked deployer: ${token.trackedWallet}\n` +
+        `View: https://clanker.world/clanker/${contractAddress}\n` +
+        `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
+      );
+      return tokenRecord;
+    } catch (e) {
+      this.log.error(`Wallet track deploy failed: ${e.message}`);
+      return null;
+    }
+  }
+
+  // ── WALLET TRACKER: DISCOVER & TRACK TOP DEPLOYERS ──
+
+  _loadTrackedWallets() {
+    try {
+      if (fs.existsSync(TRACKED_WALLETS_FILE)) {
+        return JSON.parse(fs.readFileSync(TRACKED_WALLETS_FILE, "utf8"));
+      }
+    } catch {}
+    return { wallets: [], lastDiscovery: null };
+  }
+
+  _saveTrackedWallets(data) {
+    try { fs.writeFileSync(TRACKED_WALLETS_FILE, JSON.stringify(data, null, 2)); }
+    catch (e) { this.log.error(`Tracked wallets save failed: ${e.message}`); }
+  }
+
+  async discoverTopDeployers() {
+    this.log.info("── Discovering top token deployers ──");
+    const walletData = this._loadTrackedWallets();
+    const deployerMap = new Map();
+
+    // Scan clanker.world for deployers
+    try {
+      const data = await this._httpGet("https://www.clanker.world/api/tokens?sort=desc&limit=50");
+      if (data?.data && Array.isArray(data.data)) {
+        for (const t of data.data) {
+          const deployer = t.deployer || t.creator;
+          const addr = t.contract_address || t.address;
+          if (!deployer || !addr) continue;
+          const dep = deployer.toLowerCase();
+          if (!deployerMap.has(dep)) deployerMap.set(dep, { tokens: [], totalVol: 0 });
+          deployerMap.get(dep).tokens.push(addr);
+        }
+      }
+    } catch (e) { this.log.warn(`Clanker deployer scan failed: ${e.message}`); }
+
+    // Scan DexScreener for Base tokens with volume
+    try {
+      const data = await this._httpGet("https://api.dexscreener.com/token-profiles/latest/v1");
+      if (Array.isArray(data)) {
+        const baseTokens = data.filter(t => t.chainId === "base" && t.tokenAddress).slice(0, 50);
+        for (let i = 0; i < baseTokens.length; i += 30) {
+          const batch = baseTokens.slice(i, i + 30);
+          const addresses = batch.map(t => t.tokenAddress).join(",");
+          try {
+            const pairData = await this._httpGet(`https://api.dexscreener.com/latest/dex/tokens/${addresses}`);
+            if (pairData?.pairs) {
+              for (const pair of pairData.pairs) {
+                if (pair.chainId !== "base") continue;
+                const vol = pair.volume?.h24 || 0;
+                if (vol > 1000 && pair.info?.deployer) {
+                  const dep = pair.info.deployer.toLowerCase();
+                  if (!deployerMap.has(dep)) deployerMap.set(dep, { tokens: [], totalVol: 0 });
+                  const entry = deployerMap.get(dep);
+                  entry.tokens.push(pair.baseToken?.address);
+                  entry.totalVol += vol;
+                }
+              }
+            }
+          } catch {}
+          if (i + 30 < baseTokens.length) await new Promise(r => setTimeout(r, 500));
+        }
+      }
+    } catch {}
+
+    const ranked = [...deployerMap.entries()]
+      .filter(([, v]) => v.tokens.length >= 2)
+      .sort((a, b) => b[1].totalVol - a[1].totalVol)
+      .slice(0, 20);
+
+    if (ranked.length > 0) {
+      walletData.wallets = ranked.map(([addr, data]) => ({
+        address: addr,
+        tokenCount: data.tokens.length,
+        totalVolume: Math.round(data.totalVol),
+        trackedSince: new Date().toISOString(),
+        lastTokens: data.tokens.slice(-5),
+      }));
+      walletData.lastDiscovery = new Date().toISOString();
+      this._saveTrackedWallets(walletData);
+      this.log.info(`Discovered ${ranked.length} top deployers.`);
+    } else {
+      this.log.info("No qualifying deployers found this cycle.");
+    }
+  }
+
+  async _fetchTrackedWalletTokens() {
+    const tokens = [];
+    const walletData = this._loadTrackedWallets();
+    if (!walletData.wallets || walletData.wallets.length === 0) return tokens;
+
+    // Check clanker.world for tokens from tracked wallets
+    try {
+      const data = await this._httpGet("https://www.clanker.world/api/tokens?sort=desc&limit=50");
+      if (data?.data && Array.isArray(data.data)) {
+        const trackedAddrs = new Set(walletData.wallets.map(w => w.address.toLowerCase()));
+        for (const t of data.data) {
+          const deployer = (t.deployer || t.creator || "").toLowerCase();
+          if (!trackedAddrs.has(deployer)) continue;
+          const addr = (t.contract_address || t.address || "").toLowerCase();
+          if (!addr || !t.name || !t.symbol) continue;
+          tokens.push({
+            name: t.name,
+            symbol: t.symbol,
+            address: addr,
+            source: "wallet-tracker",
+            trackedWallet: deployer,
+          });
+        }
+        if (tokens.length > 0) this.log.info(`  Tracked wallets: ${tokens.length} tokens from top deployers`);
+      }
+    } catch (e) {
+      this.log.warn(`Tracked wallet token fetch failed: ${e.message}`);
+    }
+
+    return tokens;
+  }
+
   // ── TRENDING NARRATIVE LAUNCHES ──
 
   async _fetchTrendingNarratives() {
@@ -684,12 +957,16 @@ class ClankerLauncher {
 
       this.log.info(`\nTRENDING LAUNCH: ${trend.name} ($${trend.symbol}) [${trend.source}]`);
 
+      // Add suffix to avoid SDK blocking exact matches of existing coins
+      const launchName = `${trend.name} on Base`;
+      const launchSymbol = `b${trend.symbol}`;
+
       try {
-        const { output, contractAddress } = await this._deployFast(trend.name, trend.symbol);
+        const { output, contractAddress } = await this._deployFast(launchName, launchSymbol);
 
         const tokenRecord = {
-          name: trend.name,
-          symbol: trend.symbol,
+          name: launchName,
+          symbol: launchSymbol,
           strategy: "trending_narrative",
           contractAddress,
           chain: "base",
@@ -799,10 +1076,19 @@ if (require.main === module) {
     } catch (e) { log.error("Trending launch error:", e.message); }
   });
 
+  // Wallet tracker: Discover top deployers every 6 hours
+  cron.schedule("0 */6 * * *", async () => {
+    try {
+      log.info("─── Wallet tracker discovery ───");
+      await launcher.discoverTopDeployers();
+    } catch (e) { log.error("Wallet tracker error:", e.message); }
+  });
+
   // Initial run
   (async () => {
     try {
       log.info("Running initial monitor cycle...");
+      await launcher.discoverTopDeployers();
       await launcher.monitorAndDuplicate();
       await launcher.claimRewards();
     } catch (e) {
