@@ -10,8 +10,7 @@
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
  *   4. clanker.world API — newest clanker tokens (cross-platform snipe)
- *   5. CoinGecko trending — hot coins to duplicate as Base tokens
- *   6. Tracked wallets — tokens from top deployers
+ *   5. Tracked wallets — tokens from top deployers
  */
 
 require("dotenv").config();
@@ -432,32 +431,7 @@ class BankrLauncher {
       }
     } catch (e) {}
 
-    // Source 5: CoinGecko trending — hot coins to duplicate as Base tokens
-    try {
-      const data = await this._httpGet("https://api.coingecko.com/api/v3/search/trending");
-      if (data?.coins && Array.isArray(data.coins)) {
-        let count = 0;
-        for (const item of data.coins.slice(0, 10)) {
-          const coin = item.item || item;
-          if (!coin.name || !coin.symbol) continue;
-          const syntheticAddr = `trend_${coin.id || coin.symbol}`.toLowerCase();
-          if (!all.find(a => a.address === syntheticAddr)) {
-            all.push({
-              name: coin.name,
-              symbol: coin.symbol.toUpperCase(),
-              address: syntheticAddr,
-              source: "solana-snipe",
-              solVolume: coin.market_cap_rank ? 10000 - coin.market_cap_rank : 1000,
-              solTxns: 100,
-            });
-            count++;
-          }
-        }
-        if (count > 0) this.log.info(`  CoinGecko trending: ${count} hot coins`);
-      }
-    } catch (e) {}
-
-    // Source 6: Tracked wallets — tokens from top deployers
+    // Source 5: Tracked wallets — tokens from top deployers
     try {
       const walletTokens = await this._fetchTrackedWalletTokens();
       for (const t of walletTokens) {
@@ -943,28 +917,7 @@ class BankrLauncher {
   async _fetchTrendingNarratives() {
     const narratives = [];
 
-    // Source 1: CoinGecko trending coins
-    try {
-      const data = await this._httpGet("https://api.coingecko.com/api/v3/search/trending");
-      if (data?.coins && Array.isArray(data.coins)) {
-        for (const item of data.coins.slice(0, 10)) {
-          const coin = item.item || item;
-          if (coin.name && coin.symbol) {
-            narratives.push({
-              name: coin.name,
-              symbol: coin.symbol.toUpperCase(),
-              score: coin.score || coin.market_cap_rank || 0,
-              source: "coingecko-trending",
-            });
-          }
-        }
-        this.log.info(`  CoinGecko trending: ${narratives.length} coins`);
-      }
-    } catch (e) {
-      this.log.warn(`CoinGecko trending fetch failed: ${e.message}`);
-    }
-
-    // Source 2: Local social-trends.json fallback
+    // Local social-trends.json
     try {
       const trendsFile = path.join(DATA_DIR, "social-trends.json");
       if (fs.existsSync(trendsFile)) {
