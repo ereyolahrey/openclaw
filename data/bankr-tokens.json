@@ -946,6 +946,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-12T06:30:01.403Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T10:30:01.419Z"
         }
       }
     },
@@ -968,15 +973,51 @@
           "checkedAt": "2026-04-12T06:30:02.228Z"
         }
       }
+    },
+    {
+      "name": "RaveDAO",
+      "symbol": "RAVE",
+      "strategy": "trending_narrative",
+      "contractAddress": "0xFe96C819C136Ec22Eed42872fC66672d71026BA3",
+      "chain": "base",
+      "bankrUrl": null,
+      "sourceAddress": null,
+      "trendSource": "coingecko-trending",
+      "trendScore": 82,
+      "launchedAt": "2026-04-12T09:24:11.757Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {
+        "1h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T10:30:02.372Z"
+        }
+      }
+    },
+    {
+      "name": "OpenVPP",
+      "symbol": "OVPP",
+      "strategy": "trending_narrative",
+      "contractAddress": "0xbf9640263105493591DC87b7C10B1d2D39AA9ba3",
+      "chain": "base",
+      "bankrUrl": null,
+      "sourceAddress": null,
+      "trendSource": "coingecko-trending",
+      "trendScore": 963,
+      "launchedAt": "2026-04-12T11:45:11.837Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 35,
+    "totalLaunched": 37,
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 2,
+  "launchesToday": 4,
   "dailyHistory": [
     {
       "date": "2026-03-31",

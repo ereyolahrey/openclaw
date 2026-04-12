@@ -1,20 +1,16 @@
 /**
- * Clanker Token Launcher Agent v5 — Multi-Chain SDK Sniper Engine
+ * Clanker Token Launcher Agent v6 — Base-Only SDK Sniper Engine
  *
  * STRATEGY: Monitor for brand-new token launches every 1 minute.
  * When a fresh token (<15 min old) shows real traction ($500+ vol, 5+ txns),
- * deploy duplicates on BOTH Base AND BNB Chain via Clanker SDK v4.
- *
- * Multi-chain deployment:
- *   - Base: chainId 8453, WETH pairing, DynamicBasic fees
- *   - BNB (BSC): chainId 56, WBNB pairing, DynamicBasic fees
+ * deploy duplicates on Base via Clanker SDK v4.
  *
  * Sources monitored:
  *   1. clanker.world API — newest clanker token launches
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
  *   4. DexScreener new pairs — freshly created Base pairs
- *   5. DexScreener Solana pairs — hot Solana tokens to duplicate
+ *   5. DexScreener Solana pairs — hot Solana tokens to duplicate as Base tokens
  *   6. Tracked wallets — tokens from top deployers
  */
 
@@ -26,10 +22,10 @@ const { Logger } = require("../utils/logger");
 
 // ── Clanker SDK + viem ──
 const { Clanker } = require("clanker-sdk/v4");
-const { FEE_CONFIGS, POOL_POSITIONS, WBNB_ADDRESS } = require("clanker-sdk");
+const { FEE_CONFIGS, POOL_POSITIONS } = require("clanker-sdk");
 const { createPublicClient, createWalletClient, http } = require("viem");
 const { privateKeyToAccount } = require("viem/accounts");
-const { base, bsc } = require("viem/chains");
+const { base } = require("viem/chains");
 
 // ── FILE PATHS ──
 const DATA_DIR = path.join(__dirname, "..", "..", "data");
@@ -141,23 +137,21 @@ class ClankerLauncher {
 
   // ── SDK INITIALIZATION (lazy, per-chain) ──
 
-  _initSdk(chain = "base") {
-    const cacheKey = `_clanker_${chain}`;
-    if (this[cacheKey]) return this[cacheKey];
+  _initSdk() {
+    if (this._clanker) return this._clanker;
 
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) throw new Error("PRIVATE_KEY not set — cannot deploy");
 
     const account = privateKeyToAccount(privateKey.startsWith("0x") ? privateKey : `0x${privateKey}`);
-    const chainConfig = chain === "bsc" ? bsc : base;
-    const rpcUrl = chain === "bsc" ? (process.env.BSC_RPC_URL || "https://bsc-dataseed.binance.org") : process.env.RPC_URL;
-    const publicClient = createPublicClient({ chain: chainConfig, transport: http(rpcUrl) });
-    const wallet = createWalletClient({ account, chain: chainConfig, transport: http(rpcUrl) });
+    const rpcUrl = process.env.RPC_URL;
+    const publicClient = createPublicClient({ chain: base, transport: http(rpcUrl) });
+    const wallet = createWalletClient({ account, chain: base, transport: http(rpcUrl) });
 
-    this[cacheKey] = new Clanker({ wallet, publicClient });
+    this._clanker = new Clanker({ wallet, publicClient });
     this._account = account;
-    this.log.info(`SDK initialized for ${chain}. Deployer: ${account.address}`);
-    return this[cacheKey];
+    this.log.info(`SDK initialized for Base. Deployer: ${account.address}`);
+    return this._clanker;
   }
 
   // Deploy via Clanker SDK on Base (direct JS API)
@@ -166,7 +160,7 @@ class ClankerLauncher {
     const safeSymbol = this._sanitizeName(symbol);
     if (!safeName || !safeSymbol) throw new Error(`Invalid name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
 
-    const clanker = this._initSdk("base");
+    const clanker = this._initSdk();
 
     this.log.info(`SDK DEPLOY: ${safeName} ($${safeSymbol}) → Base | rewards→${WALLET_ADDR.slice(0, 10)}...`);
 
@@ -199,49 +193,6 @@ class ClankerLauncher {
 
     this.log.info(`Base deploy success: ${address} (tx: ${txHash})`);
     return { output: JSON.stringify({ txHash, address }), contractAddress: address, chain: "base" };
-  }
-
-  // Deploy via Clanker SDK on BNB Chain (BSC)
-  async _deployBnb(name, symbol) {
-    const safeName = this._sanitizeName(name);
-    const safeSymbol = this._sanitizeName(symbol);
-    if (!safeName || !safeSymbol) throw new Error(`Invalid name/symbol after sanitization: "${safeName}" / "${safeSymbol}"`);
-
-    const clanker = this._initSdk("bsc");
-
-    this.log.info(`SDK DEPLOY: ${safeName} ($${safeSymbol}) → BNB Chain | rewards→${WALLET_ADDR.slice(0, 10)}...`);
-
-    const pairedToken = WBNB_ADDRESS || "WBNB";
-
-    const { txHash, waitForTransaction, error } = await clanker.deploy({
-      name: safeName,
-      symbol: safeSymbol,
-      tokenAdmin: this._account.address,
-      chainId: bsc.id,
-      vanity: true,
-      pool: {
-        pairedToken,
-        positions: POOL_POSITIONS.Standard,
-      },
-      fees: FEE_CONFIGS.DynamicBasic,
-      rewards: {
-        recipients: [{
-          admin: WALLET_ADDR,
-          recipient: WALLET_ADDR,
-          bps: 10000,
-          token: "Both",
-        }],
-      },
-    });
-
-    if (error) throw new Error(`BNB Deploy error: ${error.message || JSON.stringify(error).substring(0, 300)}`);
-
-    const { address, error: txError } = await waitForTransaction();
-    if (txError) throw new Error(`BNB Transaction error: ${txError.message}`);
-    if (!address) throw new Error("BNB deploy succeeded but no token address returned");
-
-    this.log.info(`BNB deploy success: ${address} (tx: ${txHash})`);
-    return { output: JSON.stringify({ txHash, address }), contractAddress: address, chain: "bsc" };
   }
 
   // Sanitize external input
@@ -603,42 +554,6 @@ class ClankerLauncher {
 
       this.log.info(`Duplicate deployed on Base at ${contractAddress}`);
 
-      // Also deploy on BNB Chain
-      if (this._checkDailyLimit()) {
-        try {
-          const bnbResult = await this._deployBnb(sourceToken.name, sourceToken.symbol);
-          const bnbRecord = {
-            name: sourceToken.name,
-            symbol: sourceToken.symbol,
-            strategy: "instant_duplicate_bnb",
-            contractAddress: bnbResult.contractAddress,
-            chain: "bsc",
-            sourceAddress: sourceToken.address,
-            sourceVolume: sourceToken.volume,
-            sourceAge: sourceToken.ageMinutes,
-            launchedAt: new Date().toISOString(),
-            deployer: WALLET_ADDR,
-            feesEarned: 0,
-            volumeData: {},
-          };
-          this.tokenData.tokens.push(bnbRecord);
-          this.tokenData.stats.totalLaunched++;
-          this.tokenData.launchesToday++;
-          this._saveTokenData();
-          this.perfData.duplications.total++;
-          this._savePerformanceData();
-
-          await this.notify(
-            `🎯 *INSTANT DUPLICATE!* [clanker → BNB]\n` +
-            `Name: ${sourceToken.name} ($${sourceToken.symbol})\n` +
-            `Contract: \`${bnbResult.contractAddress}\`\n` +
-            `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
-          );
-        } catch (e) {
-          this.log.error(`BNB duplicate deploy failed: ${e.message}`);
-        }
-      }
-
       return tokenRecord;
     } catch (e) {
       this.log.error(`Deploy failed: ${e.message}`);
@@ -811,42 +726,6 @@ class ClankerLauncher {
         `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
       );
 
-      // Also deploy on BNB
-      if (this._checkDailyLimit()) {
-        try {
-          const bnbResult = await this._deployBnb(token.name, token.symbol);
-          const bnbRecord = {
-            name: token.name,
-            symbol: token.symbol,
-            strategy: "solana_snipe_bnb",
-            contractAddress: bnbResult.contractAddress,
-            chain: "bsc",
-            deployer: WALLET_ADDR,
-            sourceAddress: token.address,
-            solVolume: token.solVolume,
-            solTxns: token.solTxns,
-            launchedAt: new Date().toISOString(),
-            feesEarned: 0,
-            volumeData: {},
-          };
-          this.tokenData.tokens.push(bnbRecord);
-          this.tokenData.stats.totalLaunched++;
-          this.tokenData.launchesToday++;
-          this._saveTokenData();
-          this.perfData.duplications.total++;
-          this._savePerformanceData();
-
-          await this.notify(
-            `🌊 *SOLANA SNIPE!* [clanker → BNB]\n` +
-            `Name: ${token.name} ($${token.symbol})\n` +
-            `Contract: \`${bnbResult.contractAddress}\`\n` +
-            `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
-          );
-        } catch (e) {
-          this.log.error(`Solana snipe BNB deploy failed: ${e.message}`);
-        }
-      }
-
       return tokenRecord;
     } catch (e) {
       this.log.error(`Solana snipe deploy failed: ${e.message}`);
@@ -894,41 +773,6 @@ class ClankerLauncher {
         `View: https://clanker.world/clanker/${contractAddress}\n` +
         `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
       );
-
-      // Also deploy on BNB
-      if (this._checkDailyLimit()) {
-        try {
-          const bnbResult = await this._deployBnb(token.name, token.symbol);
-          const bnbRecord = {
-            name: token.name,
-            symbol: token.symbol,
-            strategy: "wallet_tracker_bnb",
-            contractAddress: bnbResult.contractAddress,
-            chain: "bsc",
-            deployer: WALLET_ADDR,
-            sourceAddress: token.address,
-            trackedWallet: token.trackedWallet,
-            launchedAt: new Date().toISOString(),
-            feesEarned: 0,
-            volumeData: {},
-          };
-          this.tokenData.tokens.push(bnbRecord);
-          this.tokenData.stats.totalLaunched++;
-          this.tokenData.launchesToday++;
-          this._saveTokenData();
-          this.perfData.duplications.total++;
-          this._savePerformanceData();
-
-          await this.notify(
-            `🔍 *WALLET TRACK!* [clanker → BNB]\n` +
-            `Name: ${token.name} ($${token.symbol})\n` +
-            `Contract: \`${bnbResult.contractAddress}\`\n` +
-            `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
-          );
-        } catch (e) {
-          this.log.error(`Wallet track BNB deploy failed: ${e.message}`);
-        }
-      }
 
       return tokenRecord;
     } catch (e) {
@@ -1158,41 +1002,6 @@ class ClankerLauncher {
 
         this.log.info(`Trending token deployed on Base at ${contractAddress}`);
 
-        // Also deploy on BNB Chain with BNB-specific naming
-        if (this._checkDailyLimit()) {
-          try {
-            const bnbName = `${trend.name} on BNB`;
-            const bnbSymbol = `bnb${trend.symbol}`;
-            const bnbResult = await this._deployBnb(bnbName, bnbSymbol);
-            const bnbRecord = {
-              name: bnbName,
-              symbol: bnbSymbol,
-              strategy: "trending_narrative_bnb",
-              contractAddress: bnbResult.contractAddress,
-              chain: "bsc",
-              deployer: WALLET_ADDR,
-              trendSource: trend.source,
-              trendScore: trend.score,
-              launchedAt: new Date().toISOString(),
-              feesEarned: 0,
-              volumeData: {},
-            };
-            this.tokenData.tokens.push(bnbRecord);
-            this.tokenData.stats.totalLaunched++;
-            this.tokenData.launchesToday++;
-            this._saveTokenData();
-
-            await this.notify(
-              `🔥 *TRENDING LAUNCH!* [clanker → BNB]\n` +
-              `Name: ${bnbName} ($${bnbSymbol})\n` +
-              `Contract: \`${bnbResult.contractAddress}\`\n` +
-              `Today: ${this.tokenData.launchesToday}/${this.config.maxLaunchesPerDay}`
-            );
-          } catch (e) {
-            this.log.error(`Trending BNB deploy failed: ${e.message}`);
-          }
-        }
-
         return tokenRecord;
       } catch (e) {
         this.log.error(`Trending launch failed for ${trend.name}: ${e.message}`);
@@ -1238,9 +1047,9 @@ if (require.main === module) {
     },
   });
 
-  log.info("=== CLANKER LAUNCHER v5 (MULTI-CHAIN SDK — Base + BNB) STARTING ===");
+  log.info("=== CLANKER LAUNCHER v6 (BASE-ONLY SDK) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay}`);
-  log.info(`Chains: Base (WETH) + BNB/BSC (WBNB)`);
+  log.info(`Chain: Base (WETH)`);
   log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT}`);
 
   // CORE: Monitor every 1 minute for hot new tokens to duplicate
