@@ -298,24 +298,15 @@ class BankrLauncher {
     // 2. Fetch candidate tokens from all sources
     const candidates = await this._fetchAllSources();
 
-    // 3. Filter out already-duplicated and already-deployed
+    // 3. Filter out already-duplicated, already-deployed, and bad names
     const unchecked = candidates.filter(t => {
       if (this.duplicatedSources.has(t.address)) return false;
       if (t.name && t.symbol && this.deployedNames.has(`${t.name}::${t.symbol}`)) return false;
+      if (t.name && t.symbol && !isQualityName(t.name, t.symbol)) return false;
       return true;
     });
 
-    // 3b. Solana snipes — already pre-filtered with volume, deploy directly
-    const solanaSnipes = unchecked.filter(t => t.source === "solana-snipe" && t.name && t.symbol);
-    for (const sol of solanaSnipes.slice(0, 3)) {
-      if (!this._checkDailyLimit()) break;
-      const nameKey = `${sol.name}::${sol.symbol}`;
-      if (this.deployedNames.has(nameKey)) continue;
-      this.log.info(`SOLANA SNIPE: ${sol.name} ($${sol.symbol}) sol_vol=$${sol.solVolume} txns=${sol.solTxns}`);
-      await this._deploySolanaSnipe(sol);
-    }
-
-    // 3c. Wallet tracker tokens — pre-verified from top deployers
+    // 3b. Wallet tracker tokens — pre-verified from top deployers
     const walletTokens = unchecked.filter(t => t.source === "wallet-tracker" && t.name && t.symbol);
     for (const wt of walletTokens.slice(0, 3)) {
       if (!this._checkDailyLimit()) break;
