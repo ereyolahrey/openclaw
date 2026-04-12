@@ -926,6 +926,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-12T03:30:03.423Z"
+        },
+        "24h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T12:30:01.308Z"
         }
       }
     },
@@ -971,6 +976,11 @@
           "vol24": 0,
           "vol1h": 0,
           "checkedAt": "2026-04-12T06:30:02.228Z"
+        },
+        "6h": {
+          "vol24": 0,
+          "vol1h": 0,
+          "checkedAt": "2026-04-12T12:30:02.165Z"
         }
       }
     },
@@ -1009,15 +1019,30 @@
       "feesEarned": 0,
       "feesClaimed": 0,
       "volumeData": {}
+    },
+    {
+      "name": "AgentCRM",
+      "symbol": "AgentCRM",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
+      "chain": "base",
+      "bankrUrl": null,
+      "sourceAddress": "0x6b3d145b6a7c7b2ca1d2f299fa54b3f1d5ba5ba3",
+      "sourceVolume": 1596,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-12T12:44:11.868Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 37,
+    "totalLaunched": 38,
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 4,
+  "launchesToday": 5,
   "dailyHistory": [
     {
       "date": "2026-03-31",

@@ -26,19 +26,9 @@
   },
   "volumeChecks": [
     {
-      "addr": "0x50696e2b83B3fC4CbBf65b4c2C749DeDa1277BA3",
-      "checkAt": 1775994732166,
-      "type": "24h"
-    },
-    {
       "addr": "0x7b70384675351E42D00D073B9eE08Bb2257e5ba3",
       "checkAt": 1776052150821,
       "type": "24h"
-    },
-    {
-      "addr": "0x522A652Abc68d10Af004357Eb013480A08049Ba3",
-      "checkAt": 1775991609617,
-      "type": "6h"
     },
     {
       "addr": "0x522A652Abc68d10Af004357Eb013480A08049Ba3",
@@ -68,6 +58,21 @@
     {
       "addr": "0xbf9640263105493591DC87b7C10B1d2D39AA9ba3",
       "checkAt": 1776080711839,
+      "type": "24h"
+    },
+    {
+      "addr": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
+      "checkAt": 1776001451869,
+      "type": "1h"
+    },
+    {
+      "addr": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
+      "checkAt": 1776019451869,
+      "type": "6h"
+    },
+    {
+      "addr": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
+      "checkAt": 1776084251869,
       "type": "24h"
     }
   ],
@@ -197,7 +202,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:25.519Z",
   "duplications": {
-    "total": 18,
+    "total": 19,
     "successful": 0
   }
 }

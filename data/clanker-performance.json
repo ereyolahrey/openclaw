@@ -23,7 +23,23 @@
     "duplicate": 2,
     "viral": 2
   },
-  "volumeChecks": [],
+  "volumeChecks": [
+    {
+      "addr": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
+      "checkAt": 1776004572019,
+      "type": "1h"
+    },
+    {
+      "addr": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
+      "checkAt": 1776022572019,
+      "type": "6h"
+    },
+    {
+      "addr": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
+      "checkAt": 1776087372019,
+      "type": "24h"
+    }
+  ],
   "lastAdaptation": null,
   "insights": [],
   "freshVolumeTokens": [
@@ -86,7 +102,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:23.549Z",
   "duplications": {
-    "total": 3,
+    "total": 4,
     "successful": 0
   }
 }

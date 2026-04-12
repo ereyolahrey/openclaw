@@ -368,14 +368,28 @@
       "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
       "feesEarned": 0,
       "volumeData": {}
+    },
+    {
+      "name": "Shelly",
+      "symbol": "SHELLY",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
+      "chain": "base",
+      "sourceAddress": "0xf2b5c332d8feba27bd1b99333252fc3e93decb07",
+      "sourceVolume": 1843,
+      "sourceAge": 2,
+      "launchedAt": "2026-04-12T13:36:12.018Z",
+      "deployer": "0x162ee01a2eab184f6698ec8663ad84c4ee506733",
+      "feesEarned": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 17,
+    "totalLaunched": 18,
     "totalFeesEarned": 0
   },
   "lastLaunchDate": "2026-04-12",
-  "launchesToday": 0,
+  "launchesToday": 1,
   "dailyHistory": [
     {
       "date": "2026-04-03",

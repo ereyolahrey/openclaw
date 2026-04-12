@@ -1,16 +1,16 @@
 /**
- * Bankr Token Launcher Agent v8 — Base-Only Sniper Engine
+ * Bankr Token Launcher Agent v9 — Base Sniper Engine (Fixed Filters)
  *
  * STRATEGY: Monitor for brand-new token launches every minute.
- * When a fresh token (<15 min old) shows traction ($500+ vol, 5+ txns),
+ * When a fresh token (<30 min old) shows traction ($50+ vol, 2+ txns),
  * deploy duplicates on Base via REST API.
  *
  * Sources monitored:
  *   1. api.bankr.bot/token-launches — bankr's own fresh token launches
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
- *   4. DexScreener new pairs — freshly created Base pairs
- *   5. DexScreener Solana pairs — hot Solana tokens to duplicate as Base tokens
+ *   4. clanker.world API — newest clanker tokens (cross-platform snipe)
+ *   5. CoinGecko trending — hot coins to duplicate as Base tokens
  *   6. Tracked wallets — tokens from top deployers
  */
 
@@ -34,9 +34,9 @@ if (!FEE_WALLET) {
   process.exit(1);
 }
 const BANKR_CLUB_ACTIVE = true;               // Club subscription active — unlimited launches, 95% fee share
-const MAX_TOKEN_AGE_MS = 15 * 60 * 1000;    // Duplicate tokens < 15 minutes old (speed = everything)
-const MIN_VOLUME_TRIGGER = 500;               // $500 volume = real traction (GeoMarket pattern: $1,120 source vol)
-const MIN_TXN_COUNT = 5;                      // At least 5 txns = real interest, not just 1 bot trade
+const MAX_TOKEN_AGE_MS = 30 * 60 * 1000;    // Duplicate tokens < 30 minutes old (wider net = more launches)
+const MIN_VOLUME_TRIGGER = 50;                // $50 volume = early traction detected (club = free launches)
+const MIN_TXN_COUNT = 2;                      // At least 2 txns = real interest, not just deployer
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
 
 // ── BANKR API CONFIG ──
@@ -409,55 +409,51 @@ class BankrLauncher {
       }
     } catch (e) {}
 
-    // Source 4: DexScreener new pairs — freshly created Base pairs (catches tokens before they trend)
+    // Source 4: clanker.world API — newest clanker tokens (cross-platform snipe)
     try {
-      const data = await this._httpGet("https://api.dexscreener.com/latest/dex/pairs/base?sort=pairAge&order=asc");
-      if (data?.pairs && Array.isArray(data.pairs)) {
+      const data = await this._httpGet("https://www.clanker.world/api/tokens?sort=desc&limit=30");
+      if (data?.data && Array.isArray(data.data)) {
         let count = 0;
-        for (const pair of data.pairs) {
-          if (!pair.baseToken?.address) continue;
-          const addr = pair.baseToken.address.toLowerCase();
+        for (const t of data.data) {
+          const addr = (t.contract_address || t.address || "").toLowerCase();
+          if (!addr || !t.name || !t.symbol) continue;
           if (!all.find(a => a.address === addr)) {
             all.push({
-              name: pair.baseToken.name || null,
-              symbol: pair.baseToken.symbol || null,
+              name: t.name,
+              symbol: t.symbol,
               address: addr,
-              source: "dex-new-pairs",
+              source: "clanker-cross",
             });
             count++;
           }
           if (count >= 30) break;
         }
-        if (count > 0) this.log.info(`  DexScreener new pairs: ${count} Base tokens`);
+        if (count > 0) this.log.info(`  Clanker cross-snipe: ${count} tokens`);
       }
     } catch (e) {}
 
-    // Source 5: DexScreener Solana hot tokens — copy trending Solana names to Base
+    // Source 5: CoinGecko trending — hot coins to duplicate as Base tokens
     try {
-      const data = await this._httpGet("https://api.dexscreener.com/latest/dex/pairs/solana?sort=pairAge&order=asc");
-      if (data?.pairs && Array.isArray(data.pairs)) {
+      const data = await this._httpGet("https://api.coingecko.com/api/v3/search/trending");
+      if (data?.coins && Array.isArray(data.coins)) {
         let count = 0;
-        for (const pair of data.pairs) {
-          if (!pair.baseToken?.name || !pair.baseToken?.symbol) continue;
-          const vol = Math.max(pair.volume?.h24 || 0, pair.volume?.h1 || 0);
-          const txns = (pair.txns?.h1?.buys || 0) + (pair.txns?.h1?.sells || 0);
-          if (vol < MIN_VOLUME_TRIGGER || txns < MIN_TXN_COUNT) continue;
-          // Use a synthetic address to avoid collision with Base addresses
-          const syntheticAddr = `sol_${pair.baseToken.address || pair.pairAddress}`.toLowerCase();
+        for (const item of data.coins.slice(0, 10)) {
+          const coin = item.item || item;
+          if (!coin.name || !coin.symbol) continue;
+          const syntheticAddr = `trend_${coin.id || coin.symbol}`.toLowerCase();
           if (!all.find(a => a.address === syntheticAddr)) {
             all.push({
-              name: pair.baseToken.name,
-              symbol: pair.baseToken.symbol,
+              name: coin.name,
+              symbol: coin.symbol.toUpperCase(),
               address: syntheticAddr,
               source: "solana-snipe",
-              solVolume: Math.round(vol),
-              solTxns: txns,
+              solVolume: coin.market_cap_rank ? 10000 - coin.market_cap_rank : 1000,
+              solTxns: 100,
             });
             count++;
           }
-          if (count >= 15) break;
         }
-        if (count > 0) this.log.info(`  Solana hot tokens: ${count} (for Base duplicates)`);
+        if (count > 0) this.log.info(`  CoinGecko trending: ${count} hot coins`);
       }
     } catch (e) {}
 
@@ -1091,9 +1087,9 @@ if (require.main === module) {
     },
   });
 
-  log.info("=== BANKR LAUNCHER v8 (BASE-ONLY SNIPER) STARTING ===");
+  log.info("=== BANKR LAUNCHER v9 (BASE SNIPER — FIXED FILTERS) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
-  log.info(`Chains: Base (REST API)`);
+  log.info(`Chain: Base (REST API)`);
   log.info(`Monitor: every 1 min | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Min txns: ${MIN_TXN_COUNT}`);
 
   // CORE: Monitor every 1 minute for hot new tokens to duplicate
