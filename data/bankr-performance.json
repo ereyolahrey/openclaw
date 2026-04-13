@@ -26,24 +26,9 @@
   },
   "volumeChecks": [
     {
-      "addr": "0x7b70384675351E42D00D073B9eE08Bb2257e5ba3",
-      "checkAt": 1776052150821,
-      "type": "24h"
-    },
-    {
-      "addr": "0x522A652Abc68d10Af004357Eb013480A08049Ba3",
-      "checkAt": 1776056409617,
-      "type": "24h"
-    },
-    {
       "addr": "0xFe96C819C136Ec22Eed42872fC66672d71026BA3",
       "checkAt": 1776072251759,
       "type": "24h"
-    },
-    {
-      "addr": "0xbf9640263105493591DC87b7C10B1d2D39AA9ba3",
-      "checkAt": 1776015911839,
-      "type": "6h"
     },
     {
       "addr": "0xbf9640263105493591DC87b7C10B1d2D39AA9ba3",
@@ -52,18 +37,8 @@
     },
     {
       "addr": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
-      "checkAt": 1776019451869,
-      "type": "6h"
-    },
-    {
-      "addr": "0xD3Dd8495e6e7Bcd93e9a858FeB2fe869C69fBbA3",
       "checkAt": 1776084251869,
       "type": "24h"
-    },
-    {
-      "addr": "0x734f0ac638f4BAeBF2a6790792d376D89d9A0ba3",
-      "checkAt": 1776023682003,
-      "type": "6h"
     },
     {
       "addr": "0x734f0ac638f4BAeBF2a6790792d376D89d9A0ba3",
@@ -72,18 +47,8 @@
     },
     {
       "addr": "0x45C9f3c4FCCc00F9A91A7506deBDf16fF868Cba3",
-      "checkAt": 1776023688018,
-      "type": "6h"
-    },
-    {
-      "addr": "0x45C9f3c4FCCc00F9A91A7506deBDf16fF868Cba3",
       "checkAt": 1776088488018,
       "type": "24h"
-    },
-    {
-      "addr": "0x992c19b57Bb8910Fcb9fA2DeAB9DC1dD67f1cBA3",
-      "checkAt": 1776023829987,
-      "type": "6h"
     },
     {
       "addr": "0x992c19b57Bb8910Fcb9fA2DeAB9DC1dD67f1cBA3",
@@ -92,18 +57,8 @@
     },
     {
       "addr": "0xb4450C8836d4bA7D0DB5d6A904aC3d5088652bA3",
-      "checkAt": 1776023835960,
-      "type": "6h"
-    },
-    {
-      "addr": "0xb4450C8836d4bA7D0DB5d6A904aC3d5088652bA3",
       "checkAt": 1776088635960,
       "type": "24h"
-    },
-    {
-      "addr": "0xE3445DAc1FF657fD4CF47281d89882e147088BA3",
-      "checkAt": 1776023842083,
-      "type": "6h"
     },
     {
       "addr": "0xE3445DAc1FF657fD4CF47281d89882e147088BA3",
@@ -112,18 +67,8 @@
     },
     {
       "addr": "0x241CE1239678e783cf7980DdD6e5DFFF4cd93ba3",
-      "checkAt": 1776023892061,
-      "type": "6h"
-    },
-    {
-      "addr": "0x241CE1239678e783cf7980DdD6e5DFFF4cd93ba3",
       "checkAt": 1776088692061,
       "type": "24h"
-    },
-    {
-      "addr": "0xf33E23D3fc119FEC40d91d926C382528192CDBA3",
-      "checkAt": 1776023898043,
-      "type": "6h"
     },
     {
       "addr": "0xf33E23D3fc119FEC40d91d926C382528192CDBA3",
@@ -132,18 +77,8 @@
     },
     {
       "addr": "0xB80Faeac8191AdF7Bf03a6828a3cB73A49c7bbA3",
-      "checkAt": 1776024007879,
-      "type": "6h"
-    },
-    {
-      "addr": "0xB80Faeac8191AdF7Bf03a6828a3cB73A49c7bbA3",
       "checkAt": 1776088807879,
       "type": "24h"
-    },
-    {
-      "addr": "0x7D4794A6987eFC5673357c12bB6219Cd1E6ACBA3",
-      "checkAt": 1776024249984,
-      "type": "6h"
     },
     {
       "addr": "0x7D4794A6987eFC5673357c12bB6219Cd1E6ACBA3",
@@ -152,38 +87,13 @@
     },
     {
       "addr": "0x64e2B40F2f554D9f63268CC6dC2622dffAf14ba3",
-      "checkAt": 1776024880130,
-      "type": "6h"
-    },
-    {
-      "addr": "0x64e2B40F2f554D9f63268CC6dC2622dffAf14ba3",
       "checkAt": 1776089680130,
       "type": "24h"
     },
     {
       "addr": "0x005d4d0b5fa0A37aD7DC54ff3f266ab310A5CbA3",
-      "checkAt": 1776008050193,
-      "type": "1h"
-    },
-    {
-      "addr": "0x005d4d0b5fa0A37aD7DC54ff3f266ab310A5CbA3",
-      "checkAt": 1776026050193,
-      "type": "6h"
-    },
-    {
-      "addr": "0x005d4d0b5fa0A37aD7DC54ff3f266ab310A5CbA3",
       "checkAt": 1776090850193,
       "type": "24h"
-    },
-    {
-      "addr": "0xc4b85E88b51571980870eD84a56d1C2441776bA3",
-      "checkAt": 1776008650463,
-      "type": "1h"
-    },
-    {
-      "addr": "0xc4b85E88b51571980870eD84a56d1C2441776bA3",
-      "checkAt": 1776026650463,
-      "type": "6h"
     },
     {
       "addr": "0xc4b85E88b51571980870eD84a56d1C2441776bA3",

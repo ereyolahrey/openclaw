@@ -26,18 +26,8 @@
   "volumeChecks": [
     {
       "addr": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
-      "checkAt": 1776022572019,
-      "type": "6h"
-    },
-    {
-      "addr": "0xE5c2874878950e1a10Ca9314671D7e9257745b07",
       "checkAt": 1776087372019,
       "type": "24h"
-    },
-    {
-      "addr": "0xfAFf1e46DF5A12B0C5c4775ce767892dd909Ab07",
-      "checkAt": 1776023690424,
-      "type": "6h"
     },
     {
       "addr": "0xfAFf1e46DF5A12B0C5c4775ce767892dd909Ab07",
@@ -46,18 +36,8 @@
     },
     {
       "addr": "0xa5eCec48b557265eE3c4b9D1321d19c56121ab07",
-      "checkAt": 1776023698764,
-      "type": "6h"
-    },
-    {
-      "addr": "0xa5eCec48b557265eE3c4b9D1321d19c56121ab07",
       "checkAt": 1776088498764,
       "type": "24h"
-    },
-    {
-      "addr": "0x5d5393935697C9Ba9fB065Ed60A67ec32437bb07",
-      "checkAt": 1776023708566,
-      "type": "6h"
     },
     {
       "addr": "0x5d5393935697C9Ba9fB065Ed60A67ec32437bb07",
@@ -66,18 +46,8 @@
     },
     {
       "addr": "0x33A266E831283C363Af0377274337F1656D98b07",
-      "checkAt": 1776023713099,
-      "type": "6h"
-    },
-    {
-      "addr": "0x33A266E831283C363Af0377274337F1656D98b07",
       "checkAt": 1776088513099,
       "type": "24h"
-    },
-    {
-      "addr": "0xB9196fb22b01AbEb24F677A635D63Aef1fa87b07",
-      "checkAt": 1776023721369,
-      "type": "6h"
     },
     {
       "addr": "0xB9196fb22b01AbEb24F677A635D63Aef1fa87b07",
@@ -86,18 +56,8 @@
     },
     {
       "addr": "0x6e609EB6dD28b63363049c497f343Af18681AB07",
-      "checkAt": 1776023730258,
-      "type": "6h"
-    },
-    {
-      "addr": "0x6e609EB6dD28b63363049c497f343Af18681AB07",
       "checkAt": 1776088530258,
       "type": "24h"
-    },
-    {
-      "addr": "0xa2f69B31D83f43476854Af20D9133A9c7F7e8B07",
-      "checkAt": 1776023774777,
-      "type": "6h"
     },
     {
       "addr": "0xa2f69B31D83f43476854Af20D9133A9c7F7e8B07",
@@ -106,18 +66,8 @@
     },
     {
       "addr": "0x9393164B271A006Bcbc75d0000145e7b6938Db07",
-      "checkAt": 1776023783280,
-      "type": "6h"
-    },
-    {
-      "addr": "0x9393164B271A006Bcbc75d0000145e7b6938Db07",
       "checkAt": 1776088583280,
       "type": "24h"
-    },
-    {
-      "addr": "0xb4dC689Cf9Bde613569C4933f78c966f78d4AB07",
-      "checkAt": 1776023792132,
-      "type": "6h"
     },
     {
       "addr": "0xb4dC689Cf9Bde613569C4933f78c966f78d4AB07",
@@ -126,18 +76,8 @@
     },
     {
       "addr": "0x634367db22De04338991Ec20357C3bf8c1510B07",
-      "checkAt": 1776023833298,
-      "type": "6h"
-    },
-    {
-      "addr": "0x634367db22De04338991Ec20357C3bf8c1510B07",
       "checkAt": 1776088633298,
       "type": "24h"
-    },
-    {
-      "addr": "0xDBef4165697d4F216e44dC0028E26B4274142b07",
-      "checkAt": 1776023842088,
-      "type": "6h"
     },
     {
       "addr": "0xDBef4165697d4F216e44dC0028E26B4274142b07",
@@ -146,18 +86,8 @@
     },
     {
       "addr": "0xe4fFd40f5a7703F69942Db6f0d8DA2D32bc09B07",
-      "checkAt": 1776024010264,
-      "type": "6h"
-    },
-    {
-      "addr": "0xe4fFd40f5a7703F69942Db6f0d8DA2D32bc09B07",
       "checkAt": 1776088810264,
       "type": "24h"
-    },
-    {
-      "addr": "0x20bbdd61E1589981715B1e0B9a81f1B04947bB07",
-      "checkAt": 1776024254160,
-      "type": "6h"
     },
     {
       "addr": "0x20bbdd61E1589981715B1e0B9a81f1B04947bB07",
@@ -166,18 +96,8 @@
     },
     {
       "addr": "0x40f423414cfF77E82828926407c96EE6eb443B07",
-      "checkAt": 1776026054181,
-      "type": "6h"
-    },
-    {
-      "addr": "0x40f423414cfF77E82828926407c96EE6eb443B07",
       "checkAt": 1776090854181,
       "type": "24h"
-    },
-    {
-      "addr": "0x940966B9CF3F1936408a5cC8523BeDDEfB3dEB07",
-      "checkAt": 1776026664890,
-      "type": "6h"
     },
     {
       "addr": "0x940966B9CF3F1936408a5cC8523BeDDEfB3dEB07",
@@ -186,18 +106,8 @@
     },
     {
       "addr": "0x37a694Da6cae43bF6A44b4Fca269A26d2cBe2B07",
-      "checkAt": 1776027256451,
-      "type": "6h"
-    },
-    {
-      "addr": "0x37a694Da6cae43bF6A44b4Fca269A26d2cBe2B07",
       "checkAt": 1776092056451,
       "type": "24h"
-    },
-    {
-      "addr": "0x970D9Fdd89040fE7730b046530bC233339ECDB07",
-      "checkAt": 1776027854350,
-      "type": "6h"
     },
     {
       "addr": "0x970D9Fdd89040fE7730b046530bC233339ECDB07",
@@ -206,18 +116,8 @@
     },
     {
       "addr": "0x87db22fc095442294d509FE5c0F132caD7a61b07",
-      "checkAt": 1776027917488,
-      "type": "6h"
-    },
-    {
-      "addr": "0x87db22fc095442294d509FE5c0F132caD7a61b07",
       "checkAt": 1776092717488,
       "type": "24h"
-    },
-    {
-      "addr": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
-      "checkAt": 1776028463180,
-      "type": "6h"
     },
     {
       "addr": "0x3f9018aF9167F0845CE53F308f8BcC926C9e3b07",
@@ -226,18 +126,8 @@
     },
     {
       "addr": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
-      "checkAt": 1776028514596,
-      "type": "6h"
-    },
-    {
-      "addr": "0x05f35c76456b3F14aa54a0E4DCd454619b91db07",
       "checkAt": 1776093314596,
       "type": "24h"
-    },
-    {
-      "addr": "0xD5d5D59596fcc1E5CB64E43503261363a7D2cB07",
-      "checkAt": 1776028998551,
-      "type": "6h"
     },
     {
       "addr": "0xD5d5D59596fcc1E5CB64E43503261363a7D2cB07",
@@ -246,18 +136,8 @@
     },
     {
       "addr": "0x88925de38eBdb2522D37328836Aa5fEd21D85b07",
-      "checkAt": 1776029780247,
-      "type": "6h"
-    },
-    {
-      "addr": "0x88925de38eBdb2522D37328836Aa5fEd21D85b07",
       "checkAt": 1776094580247,
       "type": "24h"
-    },
-    {
-      "addr": "0x2d2271ca82A6AAd47569453528407F027e124B07",
-      "checkAt": 1776030255231,
-      "type": "6h"
     },
     {
       "addr": "0x2d2271ca82A6AAd47569453528407F027e124B07",
@@ -266,28 +146,8 @@
     },
     {
       "addr": "0x94b7CaE109e093E3B9597349FBB1c57D5C8B8B07",
-      "checkAt": 1776012738187,
-      "type": "1h"
-    },
-    {
-      "addr": "0x94b7CaE109e093E3B9597349FBB1c57D5C8B8B07",
-      "checkAt": 1776030738187,
-      "type": "6h"
-    },
-    {
-      "addr": "0x94b7CaE109e093E3B9597349FBB1c57D5C8B8B07",
       "checkAt": 1776095538187,
       "type": "24h"
-    },
-    {
-      "addr": "0x8FfE95F0De5411a1EF45fF80FbB297AF79025B07",
-      "checkAt": 1776014055099,
-      "type": "1h"
-    },
-    {
-      "addr": "0x8FfE95F0De5411a1EF45fF80FbB297AF79025B07",
-      "checkAt": 1776032055099,
-      "type": "6h"
     },
     {
       "addr": "0x8FfE95F0De5411a1EF45fF80FbB297AF79025B07",
@@ -296,28 +156,8 @@
     },
     {
       "addr": "0x064b34023E1356a8B5656Cf4323BCEF397220B07",
-      "checkAt": 1776015857373,
-      "type": "1h"
-    },
-    {
-      "addr": "0x064b34023E1356a8B5656Cf4323BCEF397220B07",
-      "checkAt": 1776033857373,
-      "type": "6h"
-    },
-    {
-      "addr": "0x064b34023E1356a8B5656Cf4323BCEF397220B07",
       "checkAt": 1776098657373,
       "type": "24h"
-    },
-    {
-      "addr": "0xd10a9e1aDdea2F5B1E76C97cdA612981a9829b07",
-      "checkAt": 1776016810321,
-      "type": "1h"
-    },
-    {
-      "addr": "0xd10a9e1aDdea2F5B1E76C97cdA612981a9829b07",
-      "checkAt": 1776034810321,
-      "type": "6h"
     },
     {
       "addr": "0xd10a9e1aDdea2F5B1E76C97cdA612981a9829b07",
@@ -326,28 +166,8 @@
     },
     {
       "addr": "0x70B32a710c49D46937814EC9c2f1699a4F240B07",
-      "checkAt": 1776019883159,
-      "type": "1h"
-    },
-    {
-      "addr": "0x70B32a710c49D46937814EC9c2f1699a4F240B07",
-      "checkAt": 1776037883159,
-      "type": "6h"
-    },
-    {
-      "addr": "0x70B32a710c49D46937814EC9c2f1699a4F240B07",
       "checkAt": 1776102683159,
       "type": "24h"
-    },
-    {
-      "addr": "0x3cDD8819BBDABf3eb18B108413c2AeaFe5c87b07",
-      "checkAt": 1776019892689,
-      "type": "1h"
-    },
-    {
-      "addr": "0x3cDD8819BBDABf3eb18B108413c2AeaFe5c87b07",
-      "checkAt": 1776037892689,
-      "type": "6h"
     },
     {
       "addr": "0x3cDD8819BBDABf3eb18B108413c2AeaFe5c87b07",
@@ -356,17 +176,172 @@
     },
     {
       "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
-      "checkAt": 1776021258531,
-      "type": "1h"
+      "checkAt": 1776104058531,
+      "type": "24h"
     },
     {
-      "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
-      "checkAt": 1776039258531,
+      "addr": "0x81e0410F2778DadA2f2C4e71a4A72C9A96C22B07",
+      "checkAt": 1776104659370,
+      "type": "24h"
+    },
+    {
+      "addr": "0xB2ebD9f8Ba8710968B64594A15Ec3A10Df70cB07",
+      "checkAt": 1776104716941,
+      "type": "24h"
+    },
+    {
+      "addr": "0x41be395147276de9235Ab99Fa29EA7e780Ca4B07",
+      "checkAt": 1776104778454,
+      "type": "24h"
+    },
+    {
+      "addr": "0x5D9cB45923180526B8d0e944b4686E094785eB07",
+      "checkAt": 1776060557159,
       "type": "6h"
     },
     {
-      "addr": "0x8CC04bE8156039316978180876346Df4F0Ce5B07",
-      "checkAt": 1776104058531,
+      "addr": "0x5D9cB45923180526B8d0e944b4686E094785eB07",
+      "checkAt": 1776125357159,
+      "type": "24h"
+    },
+    {
+      "addr": "0xA080e0160f3E7170f05d77f27Bd46783316a9b07",
+      "checkAt": 1776060564880,
+      "type": "6h"
+    },
+    {
+      "addr": "0xA080e0160f3E7170f05d77f27Bd46783316a9b07",
+      "checkAt": 1776125364880,
+      "type": "24h"
+    },
+    {
+      "addr": "0x5CDC1A95C6E3b79008AA163c89b86Cc50dd15b07",
+      "checkAt": 1776060572278,
+      "type": "6h"
+    },
+    {
+      "addr": "0x5CDC1A95C6E3b79008AA163c89b86Cc50dd15b07",
+      "checkAt": 1776125372278,
+      "type": "24h"
+    },
+    {
+      "addr": "0x7f87b9d00403819666a02A78c6C84B187E341b07",
+      "checkAt": 1776061513994,
+      "type": "6h"
+    },
+    {
+      "addr": "0x7f87b9d00403819666a02A78c6C84B187E341b07",
+      "checkAt": 1776126313994,
+      "type": "24h"
+    },
+    {
+      "addr": "0x36BeF4C1aa5a9Bc98D501a4545613a2553439B07",
+      "checkAt": 1776067397429,
+      "type": "6h"
+    },
+    {
+      "addr": "0x36BeF4C1aa5a9Bc98D501a4545613a2553439B07",
+      "checkAt": 1776132197429,
+      "type": "24h"
+    },
+    {
+      "addr": "0x96E5A7911Cc7D91B5696523D506330F26a1adb07",
+      "checkAt": 1776067405549,
+      "type": "6h"
+    },
+    {
+      "addr": "0x96E5A7911Cc7D91B5696523D506330F26a1adb07",
+      "checkAt": 1776132205549,
+      "type": "24h"
+    },
+    {
+      "addr": "0xACD79CfCC003Fe642f86f626AAE25857c2583b07",
+      "checkAt": 1776067413679,
+      "type": "6h"
+    },
+    {
+      "addr": "0xACD79CfCC003Fe642f86f626AAE25857c2583b07",
+      "checkAt": 1776132213679,
+      "type": "24h"
+    },
+    {
+      "addr": "0xAc3e2d22f95F665f7D2CC9a723c965f75d844b07",
+      "checkAt": 1776068964104,
+      "type": "6h"
+    },
+    {
+      "addr": "0xAc3e2d22f95F665f7D2CC9a723c965f75d844b07",
+      "checkAt": 1776133764104,
+      "type": "24h"
+    },
+    {
+      "addr": "0x40DEc1754Eb3E0C8C96CeE7aC7b6E94248944b07",
+      "checkAt": 1776070036791,
+      "type": "6h"
+    },
+    {
+      "addr": "0x40DEc1754Eb3E0C8C96CeE7aC7b6E94248944b07",
+      "checkAt": 1776134836791,
+      "type": "24h"
+    },
+    {
+      "addr": "0xd90EC403c1B2bAc1233f3369044305B00CA96B07",
+      "checkAt": 1776070457322,
+      "type": "6h"
+    },
+    {
+      "addr": "0xd90EC403c1B2bAc1233f3369044305B00CA96B07",
+      "checkAt": 1776135257322,
+      "type": "24h"
+    },
+    {
+      "addr": "0x972E55f9b5B4F02Db91a6649AFFFb92421805b07",
+      "checkAt": 1776073875180,
+      "type": "6h"
+    },
+    {
+      "addr": "0x972E55f9b5B4F02Db91a6649AFFFb92421805b07",
+      "checkAt": 1776138675180,
+      "type": "24h"
+    },
+    {
+      "addr": "0x94276b74a52fE5aF9737Dfa4206632a1c0D28B07",
+      "checkAt": 1776075079266,
+      "type": "6h"
+    },
+    {
+      "addr": "0x94276b74a52fE5aF9737Dfa4206632a1c0D28B07",
+      "checkAt": 1776139879266,
+      "type": "24h"
+    },
+    {
+      "addr": "0xB27C8a2d1fda1f3b4C5E05289065f3DDEA416b07",
+      "checkAt": 1776059954133,
+      "type": "1h"
+    },
+    {
+      "addr": "0xB27C8a2d1fda1f3b4C5E05289065f3DDEA416b07",
+      "checkAt": 1776077954133,
+      "type": "6h"
+    },
+    {
+      "addr": "0xB27C8a2d1fda1f3b4C5E05289065f3DDEA416b07",
+      "checkAt": 1776142754133,
+      "type": "24h"
+    },
+    {
+      "addr": "0xd3416A9a6405878620b137ca4Fd9b7e2ed0caB07",
+      "checkAt": 1776060009450,
+      "type": "1h"
+    },
+    {
+      "addr": "0xd3416A9a6405878620b137ca4Fd9b7e2ed0caB07",
+      "checkAt": 1776078009450,
+      "type": "6h"
+    },
+    {
+      "addr": "0xd3416A9a6405878620b137ca4Fd9b7e2ed0caB07",
+      "checkAt": 1776142809450,
       "type": "24h"
     }
   ],
@@ -432,7 +407,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:23.549Z",
   "duplications": {
-    "total": 32,
+    "total": 48,
     "successful": 0
   }
 }

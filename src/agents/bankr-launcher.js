@@ -1,12 +1,12 @@
 /**
- * Bankr Token Launcher Agent v9 — Base Sniper Engine (Fixed Filters)
+ * Bankr Token Launcher Agent v10 — Base Sniper Engine (GeckoTerminal)
  *
- * STRATEGY: Monitor for brand-new token launches every minute.
- * When a fresh token (<30 min old) shows traction ($50+ vol, 2+ txns),
+ * STRATEGY: Monitor for brand-new token launches every 30s.
+ * When a fresh token (<10 min old) shows traction (1+ buy),
  * deploy duplicates on Base via REST API.
  *
  * Sources monitored:
- *   1. api.bankr.bot/token-launches — bankr's own fresh token launches
+ *   1. api.bankr.bot/token-launches — bankr's own fresh token launches (checked via GeckoTerminal)
  *   2. DexScreener token profiles — newly promoted Base tokens
  *   3. DexScreener token boosts — boosted Base tokens
  *   4. clanker.world API — newest clanker tokens (cross-platform snipe)
@@ -341,7 +341,7 @@ class BankrLauncher {
     const hotTokens = await this._findHotTokens(toCheck);
 
     if (hotTokens.length === 0) {
-      this.log.info(`No hot tokens found (need $${MIN_VOLUME_TRIGGER}+ vol, ${MIN_TXN_COUNT}+ txns, <${MAX_TOKEN_AGE_MS / 60000}min old).`);
+      this.log.info(`No hot tokens found (need ${MIN_TXN_COUNT}+ buys, <${MAX_TOKEN_AGE_MS / 60000}min old).`);
       return;
     }
 
@@ -373,6 +373,8 @@ class BankrLauncher {
             name: t.tokenName,
             symbol: t.tokenSymbol,
             address: t.tokenAddress.toLowerCase(),
+            poolId: t.poolId || null,
+            createdAt: t.timestamp || null,
             source: "bankr",
           });
         }
@@ -462,9 +464,84 @@ class BankrLauncher {
     const hot = [];
     const now = Date.now();
 
-    // Batch check via DexScreener (max 30 addresses per call)
-    for (let i = 0; i < tokens.length; i += 30) {
-      const batch = tokens.slice(i, i + 30);
+    // Split tokens: bankr tokens use GeckoTerminal (poolId), others use DexScreener
+    const bankrTokens = tokens.filter(t => t.poolId);
+    const otherTokens = tokens.filter(t => !t.poolId);
+
+    // ── GeckoTerminal: batch check bankr tokens by poolId (max 30 per call) ──
+    for (let i = 0; i < bankrTokens.length; i += 30) {
+      const batch = bankrTokens.slice(i, i + 30);
+      const poolIds = batch.map(t => t.poolId).join(",");
+
+      try {
+        const data = await this._httpGet(`https://api.geckoterminal.com/api/v2/networks/base/pools/multi/${poolIds}`);
+        if (!data?.data) continue;
+
+        // Map poolId → candidate for quick lookup
+        const poolMap = new Map(batch.map(t => [t.poolId.toLowerCase(), t]));
+
+        for (const pool of data.data) {
+          const attr = pool.attributes;
+          if (!attr) continue;
+
+          const poolAddr = pool.id?.replace("base_", "") || "";
+          const candidate = poolMap.get(poolAddr.toLowerCase()) || poolMap.get(attr.address?.toLowerCase());
+          if (!candidate) continue;
+
+          // Age check: use candidate.createdAt from bankr API, or pool_created_at from GeckoTerminal
+          const createdAt = candidate.createdAt ? new Date(candidate.createdAt).getTime() : (attr.pool_created_at ? new Date(attr.pool_created_at).getTime() : 0);
+          const pairAge = createdAt ? (now - createdAt) : 0;
+
+          // PRIMARY SIGNAL: buys — if someone bought, it has traction
+          const buys = (attr.transactions?.h1?.buys || 0) + (attr.transactions?.m5?.buys || 0);
+          const sells = (attr.transactions?.h1?.sells || 0);
+          const txnCount = buys + sells;
+
+          // SECONDARY SIGNAL: volume (may be null for very new pools)
+          const vol = parseFloat(attr.volume_usd?.h24 || 0) || parseFloat(attr.volume_usd?.h1 || 0) || 0;
+
+          // CORE FILTER: token within age window AND has at least 1 buy
+          const withinAge = pairAge > 0 && pairAge < MAX_TOKEN_AGE_MS;
+          const hasTraction = buys >= MIN_TXN_COUNT;
+          const notOverhyped = vol <= MAX_VOLUME_CAP;
+
+          if (withinAge && hasTraction && notOverhyped) {
+            const name = candidate.name;
+            const symbol = candidate.symbol;
+            const addr = candidate.address;
+
+            if (!name || !symbol || !addr) continue;
+            if (this.duplicatedSources.has(addr)) continue;
+            if (this.deployedNames.has(`${name}::${symbol}`)) continue;
+            if (!isQualityName(name, symbol)) {
+              this.log.info(`  SKIP (bad name): ${name} ($${symbol})`);
+              continue;
+            }
+
+            const ageMin = Math.round(pairAge / 60000) || 1;
+            hot.push({
+              name,
+              symbol,
+              address: addr,
+              volume: Math.round(vol),
+              ageMinutes: ageMin,
+              marketCap: 0,
+              txns: txnCount,
+              buys,
+              volPerMin: ageMin > 0 ? Math.round(vol / ageMin) : 0,
+            });
+          }
+        }
+      } catch (e) {
+        this.log.warn(`GeckoTerminal batch check failed: ${e.message}`);
+      }
+
+      if (i + 30 < bankrTokens.length) await new Promise(r => setTimeout(r, 500));
+    }
+
+    // ── DexScreener: batch check non-bankr tokens (clanker, dex-profile, etc.) ──
+    for (let i = 0; i < otherTokens.length; i += 30) {
+      const batch = otherTokens.slice(i, i + 30);
       const addresses = batch.map(t => t.address).join(",");
 
       try {
@@ -475,13 +552,11 @@ class BankrLauncher {
           if (pair.chainId !== "base") continue;
 
           const pairAge = now - (pair.pairCreatedAt || 0);
-          const vol24 = pair.volume?.h24 || 0;
-          const vol1h = pair.volume?.h1 || 0;
-          const vol = Math.max(vol24, vol1h);
+          const vol = Math.max(pair.volume?.h24 || 0, pair.volume?.h1 || 0);
+          const buys = pair.txns?.h1?.buys || 0;
+          const txnCount = buys + (pair.txns?.h1?.sells || 0);
 
-          // CORE FILTER: token < 10 min old, real volume + txns, not over-hyped
-          const txnCount = (pair.txns?.h1?.buys || 0) + (pair.txns?.h1?.sells || 0);
-          if (pairAge > 0 && pairAge < MAX_TOKEN_AGE_MS && vol >= MIN_VOLUME_TRIGGER && vol <= MAX_VOLUME_CAP && txnCount >= MIN_TXN_COUNT) {
+          if (pairAge > 0 && pairAge < MAX_TOKEN_AGE_MS && buys >= MIN_TXN_COUNT && vol <= MAX_VOLUME_CAP) {
             const name = pair.baseToken?.name;
             const symbol = pair.baseToken?.symbol;
             const addr = pair.baseToken?.address?.toLowerCase();
@@ -489,7 +564,6 @@ class BankrLauncher {
             if (!name || !symbol || !addr) continue;
             if (this.duplicatedSources.has(addr)) continue;
             if (this.deployedNames.has(`${name}::${symbol}`)) continue;
-            // Name quality gate — skip established coins, spam, generic names
             if (!isQualityName(name, symbol)) {
               this.log.info(`  SKIP (bad name): ${name} ($${symbol})`);
               continue;
@@ -504,7 +578,8 @@ class BankrLauncher {
               ageMinutes: ageMin,
               marketCap: Math.round(pair.marketCap || 0),
               txns: txnCount,
-              volPerMin: Math.round(vol / ageMin),  // momentum score
+              buys,
+              volPerMin: ageMin > 0 ? Math.round(vol / ageMin) : 0,
             });
           }
         }
@@ -512,22 +587,21 @@ class BankrLauncher {
         this.log.warn(`DexScreener batch check failed: ${e.message}`);
       }
 
-      // Brief pause between batches
-      if (i + 30 < tokens.length) await new Promise(r => setTimeout(r, 500));
+      if (i + 30 < otherTokens.length) await new Promise(r => setTimeout(r, 500));
     }
 
-    // Sort by FRESHNESS first (youngest = best), then momentum as tiebreak
+    // Sort by FRESHNESS first (youngest = best), then buys as tiebreak
     // GeoMarket was caught at 1 min — being first is everything
     hot.sort((a, b) => {
-      // Tokens <=2 min always beat older ones
       if (a.ageMinutes <= 2 && b.ageMinutes > 2) return -1;
       if (b.ageMinutes <= 2 && a.ageMinutes > 2) return 1;
-      // Within same freshness tier, sort by momentum
+      // Within same freshness tier, sort by buys then momentum
+      if (b.buys !== a.buys) return b.buys - a.buys;
       return b.volPerMin - a.volPerMin;
     });
 
     for (const t of hot) {
-      this.log.info(`  HOT: ${t.symbol.padEnd(12)} age=${t.ageMinutes}min vol=$${t.volume} mc=$${t.marketCap} txns=${t.txns} vel=$${t.volPerMin}/min`);
+      this.log.info(`  HOT: ${t.symbol.padEnd(12)} age=${t.ageMinutes}min buys=${t.buys} vol=$${t.volume} txns=${t.txns} vel=$${t.volPerMin}/min`);
     }
 
     return hot;
