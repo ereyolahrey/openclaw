@@ -1383,15 +1383,30 @@
           "checkedAt": "2026-04-13T02:30:11.633Z"
         }
       }
+    },
+    {
+      "name": "The Bull",
+      "symbol": "BULL",
+      "strategy": "instant_duplicate",
+      "contractAddress": "0xeb41CC648a80799BE6f391016dB085270B29BBa3",
+      "chain": "base",
+      "bankrUrl": null,
+      "sourceAddress": "0xeaec24dd1a6b45835c12e28f1c327ea65ace4ba3",
+      "sourceVolume": 7,
+      "sourceAge": 9,
+      "launchedAt": "2026-04-13T06:26:41.032Z",
+      "feesEarned": 0,
+      "feesClaimed": 0,
+      "volumeData": {}
     }
   ],
   "stats": {
-    "totalLaunched": 50,
+    "totalLaunched": 51,
     "totalFeesEarned": 0.010007,
     "totalFeesClaimed": 0.010006
   },
   "lastLaunchDate": "2026-04-13",
-  "launchesToday": 0,
+  "launchesToday": 1,
   "dailyHistory": [
     {
       "date": "2026-03-31",

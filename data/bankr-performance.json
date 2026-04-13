@@ -99,6 +99,21 @@
       "addr": "0xc4b85E88b51571980870eD84a56d1C2441776bA3",
       "checkAt": 1776091450463,
       "type": "24h"
+    },
+    {
+      "addr": "0xeb41CC648a80799BE6f391016dB085270B29BBa3",
+      "checkAt": 1776065201034,
+      "type": "1h"
+    },
+    {
+      "addr": "0xeb41CC648a80799BE6f391016dB085270B29BBa3",
+      "checkAt": 1776083201034,
+      "type": "6h"
+    },
+    {
+      "addr": "0xeb41CC648a80799BE6f391016dB085270B29BBa3",
+      "checkAt": 1776148001034,
+      "type": "24h"
     }
   ],
   "lastAdaptation": null,
@@ -227,7 +242,7 @@
   ],
   "lastFreshScan": "2026-04-03T14:30:25.519Z",
   "duplications": {
-    "total": 30,
+    "total": 31,
     "successful": 0
   }
 }

@@ -38,6 +38,10 @@ const MIN_VOLUME_TRIGGER = 10;                // $10 volume = at least 1 real bu
 const MIN_TXN_COUNT = 1;                      // Even 1 buy is worth duplicating — most tokens get zero
 const MAX_VOLUME_CAP = 50000;                 // Skip tokens with $50K+ vol — already too many copycats
 const SEEN_TOKEN_TTL_MS = 2 * 60 * 60 * 1000; // Forget tokens seen > 2 hours ago
+const DEPLOY_RETRY_DELAYS = [60, 120, 300]; // Backoff in seconds: 1min, 2min, 5min
+const DEPLOY_COOLDOWN_MS = 10 * 60 * 1000;  // Cool down a token for 10min after failed deploy
+const GLOBAL_BACKOFF_BASE_MS = 2 * 60 * 1000; // 2min base backoff on 429
+const SCAN_INTERVAL_MS = 2 * 60 * 1000;      // 2 minute scan interval
 
 // ── NAME QUALITY FILTER ──
 // Reject tokens with names that are established coins, too generic, or spammy
@@ -101,6 +105,11 @@ class BankrLauncher {
 
     // Track last successful launch time for fallback logic
     this.lastLaunchTime = Date.now();
+
+    // 429 backoff state
+    this._backoffUntil = 0;          // Timestamp — skip deploys until this time
+    this._consecutiveRateLimits = 0; // Escalating backoff counter
+    this._failedTokenCooldowns = new Map(); // address → retryAfterTimestamp
 
     this.log.info(
       `Bankr Launcher v5 (instant sniper) initialized. ` +
@@ -285,7 +294,7 @@ class BankrLauncher {
 
   async monitorAndDuplicate() {
     const remaining = this.config.maxLaunchesPerDay - this.tokenData.launchesToday;
-    this.log.info(`── Monitor cycle | ${remaining} launches remaining today | seen=${this.seenTokens.size} ──`);
+    this.log.info(`── Monitor cycle | ${remaining} launches remaining today | seen=${this.seenTokens.size} | backoff=${this._backoffUntil > Date.now() ? Math.round((this._backoffUntil - Date.now()) / 1000) + 's' : 'none'} ──`);
 
     if (!this._checkDailyLimit()) {
       this.log.info("Daily limit reached. Monitoring paused until tomorrow.");
@@ -347,11 +356,22 @@ class BankrLauncher {
 
     this.log.info(`${hotTokens.length} HOT TOKEN(S) detected! Deploying duplicates...`);
 
-    // 7. Deploy duplicates for each hot token (up to daily limit)
+    // 7. Deploy duplicates for each hot token (up to daily limit), respecting backoff
     for (const hot of hotTokens) {
       if (!this._checkDailyLimit()) {
         this.log.info("Daily limit reached mid-cycle.");
         break;
+      }
+      // Skip tokens in cooldown from previous failures
+      const cooldownUntil = this._failedTokenCooldowns.get(hot.address) || 0;
+      if (Date.now() < cooldownUntil) {
+        this.log.info(`  SKIP (cooldown ${Math.round((cooldownUntil - Date.now()) / 1000)}s): ${hot.name} ($${hot.symbol})`);
+        continue;
+      }
+      // Skip all deploys during global backoff
+      if (Date.now() < this._backoffUntil) {
+        this.log.info(`  SKIP (global backoff ${Math.round((this._backoffUntil - Date.now()) / 1000)}s): ${hot.name} ($${hot.symbol})`);
+        continue;
       }
       await this._deployDuplicate(hot);
     }
@@ -643,6 +663,10 @@ class BankrLauncher {
       this.deployedNames.add(`${sourceToken.name}::${sourceToken.symbol}`);
       this.lastLaunchTime = Date.now();
 
+      // Reset backoff on successful deploy
+      this._consecutiveRateLimits = 0;
+      this._backoffUntil = 0;
+
       this._scheduleVolumeCheck(tokenRecord);
 
       this.perfData.duplications.total++;
@@ -661,8 +685,27 @@ class BankrLauncher {
 
       return tokenRecord;
     } catch (e) {
-      this.log.error(`Deploy failed: ${e.message}`);
-      await this.notify(`❌ Bankr deploy failed: ${sourceToken.name} ($${sourceToken.symbol}) — ${e.message.substring(0, 200)}`);
+      const msg = e.message || '';
+      const is429 = msg.includes('429') || msg.includes('Rate limit') || msg.includes('Too many');
+
+      if (is429) {
+        this._consecutiveRateLimits++;
+        // Exponential backoff: 2min, 4min, 8min, 16min... capped at 30min
+        const backoffMs = Math.min(
+          GLOBAL_BACKOFF_BASE_MS * Math.pow(2, this._consecutiveRateLimits - 1),
+          30 * 60 * 1000
+        );
+        this._backoffUntil = Date.now() + backoffMs;
+        // Also put this specific token on cooldown
+        this._failedTokenCooldowns.set(sourceToken.address, Date.now() + DEPLOY_COOLDOWN_MS);
+        this.log.warn(`429 RATE LIMITED (streak=${this._consecutiveRateLimits}). Global backoff: ${Math.round(backoffMs / 1000)}s. Token cooldown: ${DEPLOY_COOLDOWN_MS / 1000}s.`);
+        this.log.warn(`  Error: ${msg.substring(0, 200)}`);
+      } else {
+        // Non-429 failure: cooldown this token, don't backoff globally
+        this._failedTokenCooldowns.set(sourceToken.address, Date.now() + DEPLOY_COOLDOWN_MS);
+        this.log.error(`Deploy failed (non-429): ${msg}`);
+        await this.notify(`❌ Bankr deploy failed: ${sourceToken.name} ($${sourceToken.symbol}) — ${msg.substring(0, 200)}`);
+      }
       return null;
     }
   }
@@ -1136,16 +1179,20 @@ if (require.main === module) {
     },
   });
 
-  log.info("=== BANKR LAUNCHER v9 (BASE SNIPER — FIXED FILTERS) STARTING ===");
+  log.info("=== BANKR LAUNCHER v11 (BASE SNIPER — 429 BACKOFF) STARTING ===");
   log.info(`Max launches/day: ${launcher.config.maxLaunchesPerDay} (Club: ACTIVE — unlimited, 95% fees)`);
   log.info(`Chain: Base (REST API)`);
-  log.info(`Monitor: every 30s | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Max volume: $${MAX_VOLUME_CAP} | Min txns: ${MIN_TXN_COUNT}`);
+  log.info(`Monitor: every ${SCAN_INTERVAL_MS / 1000}s | Max token age: ${MAX_TOKEN_AGE_MS / 60000} min | Min volume: $${MIN_VOLUME_TRIGGER} | Max volume: $${MAX_VOLUME_CAP} | Min txns: ${MIN_TXN_COUNT}`);
 
-  // CORE: Monitor every 30 seconds — speed is everything, GeoMarket was 1 min old
-  cron.schedule("*/30 * * * * *", async () => {
+  // CORE: Monitor every 2 minutes with 429 backoff
+  let monitorRunning = false;
+  setInterval(async () => {
+    if (monitorRunning) return; // Prevent overlapping cycles
+    monitorRunning = true;
     try { await launcher.monitorAndDuplicate(); }
     catch (e) { log.error("Monitor cycle error:", e.message); }
-  });
+    finally { monitorRunning = false; }
+  }, SCAN_INTERVAL_MS);
 
   // Fee check: Every 2 hours
   cron.schedule("15 */2 * * *", async () => {
